@@ -19,10 +19,17 @@ const AuthProvider = ({children}) => {
 
   useEffect(() => {
     
-  const cancelSubscription = onAuthStateChanged(auth , (user) => {
-    setUser(user);
-    setLoading(false);
-  });
+  const cancelSubscription = onAuthStateChanged(
+    auth,
+    (user) => {
+      setUser(user);
+      setLoading(false);
+    },
+    (error) => {
+      console.error("Auth initialization error:", error);
+      setLoading(false);
+    }
+  );
 
   return cancelSubscription;
   

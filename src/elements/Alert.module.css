@@ -1,0 +1,50 @@
+.alertContainer {
+  z-index: 1000;
+  width: 100%;
+  left: 0;
+  top: 1.25rem;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideDown 4s ease forwards;
+}
+
+.message {
+  background: #000;
+  color: #fff;
+  padding: 1.25rem 2.5rem;
+  border-radius: 0.31rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.error {
+  background: #e34747;
+}
+
+.success {
+  background: #43a854;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-1.25rem);
+    opacity: 0;
+  }
+
+  10% {
+    transform: translateY(1.25rem);
+    opacity: 1;
+  }
+
+  90% {
+    transform: translateY(1.25rem);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(1.25rem);
+    opacity: 0;
+  }
+}

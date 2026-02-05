@@ -12,27 +12,36 @@ import EditExpense from "./components/EditExpense.jsx";
 import { Helmet } from "react-helmet";
 import favicon from "./images/logo.png";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { getMissingFirebaseEnv } from "./config/firebaseEnv.js";
+import ConfigErrorScreen from "./components/ConfigErrorScreen.jsx";
+
+const missingFirebaseEnv = getMissingFirebaseEnv(import.meta.env);
+const hasFirebaseConfigError = missingFirebaseEnv.length > 0;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <>
-      <Helmet>
-        <link rel="shortcut icon" href={favicon} type="image/x-icon" />
-      </Helmet>
-      <AuthProvider>
-        <Router>
-          <Container>
-            <Routes>
-              <Route path="/log-in" element={<LogIn />} />
-              <Route path="/user-registration" element={<UserRegistration />} />
-              <Route path="/expenses-by-category" element={<ExpensesByCategory />} />
-              <Route path="/list-of-expenses" element={<ListOfExpenses />} />
-              <Route path="/edit-expense/:id" element={<EditExpense />} />
-              <Route path="/" element={<App />} />
-            </Routes>
-          </Container>
-        </Router>
-      </AuthProvider>
-    </>
+    {hasFirebaseConfigError ? (
+      <ConfigErrorScreen missingFirebaseEnv={missingFirebaseEnv} />
+    ) : (
+      <>
+        <Helmet>
+          <link rel="shortcut icon" href={favicon} type="image/x-icon" />
+        </Helmet>
+        <AuthProvider>
+          <Router>
+            <Container>
+              <Routes>
+                <Route path="/log-in" element={<LogIn />} />
+                <Route path="/user-registration" element={<UserRegistration />} />
+                <Route path="/expenses-by-category" element={<ExpensesByCategory />} />
+                <Route path="/list-of-expenses" element={<ListOfExpenses />} />
+                <Route path="/edit-expense/:id" element={<EditExpense />} />
+                <Route path="/" element={<App />} />
+              </Routes>
+            </Container>
+          </Router>
+        </AuthProvider>
+      </>
+    )}
   </StrictMode>
 );

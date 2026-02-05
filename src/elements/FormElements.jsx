@@ -1,65 +1,20 @@
-import styled from "styled-components";
-import theme from "./../theme";
+import PropTypes from "prop-types";
+import styles from "./FormElements.module.css";
 
-const FilterContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.87rem; /* 30px */
+const FilterContainer = ({ children }) => <div className={styles.filterContainer}>{children}</div>;
+const Form = ({ children, ...props }) => (
+  <form className={styles.form} {...props}>
+    {children}
+  </form>
+);
+const Input = (props) => <input className={styles.input} {...props} />;
+const BigInput = (props) => <input className={`${styles.input} ${styles.bigInput}`} {...props} />;
+const ButtonContainer = ({ children }) => <div className={styles.buttonContainer}>{children}</div>;
 
-  @media (max-width: 60rem) {
-    /* 950px */
-    flex-direction: column;
+const childrenShape = PropTypes.node.isRequired;
 
-    & > * {
-      width: 100%;
-      margin-bottom: 0.62rem; /* 10px */
-    }
-  }
-`;
-
-const Form = styled.form`
-  padding: 0 2.5rem; /* 40px */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  /*justify-content: space-around;*/
-  input {
-    width: 100%;
-    text-align: center;
-    padding: 1rem 0;
-    font-family: "Work Sans", sans-serif;
-    &::placeholder {
-      color: rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  @media (max-width: 60rem) {
-    /* 950px */
-    justify-content: start;
-  }
-`;
-
-const Input = styled.input`
-  font-size: 2rem; /* 40px */
-  border: none;
-  border-bottom: 2px solid ${theme.grisClaro};
-  outline: none;
-
-  @media (max-width: 60rem) {
-    /* 950px */
-    font-size: 1.6rem; /* 24px */
-  }
-`;
-
-const BigInput = styled(Input)`
-  font-size: 4.37rem; /* 70px */
-  font-weight: bold;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0; /* 40px */
-`;
+FilterContainer.propTypes = { children: childrenShape };
+Form.propTypes = { children: childrenShape };
+ButtonContainer.propTypes = { children: childrenShape };
 
 export { FilterContainer, Form, Input, BigInput, ButtonContainer };

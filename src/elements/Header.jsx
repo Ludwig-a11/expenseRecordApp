@@ -1,49 +1,16 @@
-import styled from 'styled-components';
+import PropTypes from "prop-types";
+import styles from "./Header.module.css";
 
-const Header = styled.div`
-    width: 100%;
-    padding: 2.5rem; /* 40px */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
- 
-    @media(max-width: 60rem){ /* 950px */
-        justify-content: start;
-    }
-`;
- 
-const Title = styled.h1`
-    font-weight: normal;
-    /*text-transform: uppercase;*/
-    font-size: 2.5rem; /* 40px */
- 
-    @media(max-width: 60rem){ /* 950px */
-        font-size: 2rem; /* 32px */
-    }
-`;
- 
-const HeaderContainer = styled.div`
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
- 
-    @media(max-width: 60rem){ /* 950px */
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
- 
-        & > div {
-            display: flex;
-            margin-bottom: 1.25rem; /* 20px */
-            justify-content: end;
-        }
-    }
-`;
- 
-const ButtonsContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
+const Header = ({ children }) => <div className={styles.header}>{children}</div>;
+const Title = ({ children }) => <h1 className={styles.title}>{children}</h1>;
+const HeaderContainer = ({ children }) => <div className={styles.headerContainer}>{children}</div>;
+const ButtonsContainer = ({ children }) => <div className={styles.buttonsContainer}>{children}</div>;
 
-export {Header, Title, HeaderContainer, ButtonsContainer};
+const childrenShape = PropTypes.node.isRequired;
+
+Header.propTypes = { children: childrenShape };
+Title.propTypes = { children: childrenShape };
+HeaderContainer.propTypes = { children: childrenShape };
+ButtonsContainer.propTypes = { children: childrenShape };
+
+export { Header, Title, HeaderContainer, ButtonsContainer };

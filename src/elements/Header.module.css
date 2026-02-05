@@ -1,0 +1,45 @@
+.header {
+  width: 100%;
+  padding: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 2.5rem;
+}
+
+.headerContainer {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 60rem) {
+  .header {
+    justify-content: flex-start;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .headerContainer {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .headerContainer > div {
+    display: flex;
+    margin-bottom: 1.25rem;
+    justify-content: flex-end;
+  }
+}
