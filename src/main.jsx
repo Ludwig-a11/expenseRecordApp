@@ -14,6 +14,7 @@ import favicon from "./images/logo.png";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { getMissingFirebaseEnv } from "./config/firebaseEnv.js";
 import ConfigErrorScreen from "./components/ConfigErrorScreen.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 const missingFirebaseEnv = getMissingFirebaseEnv(import.meta.env);
 const hasFirebaseConfigError = missingFirebaseEnv.length > 0;
@@ -33,10 +34,30 @@ createRoot(document.getElementById("root")).render(
               <Routes>
                 <Route path="/log-in" element={<LogIn />} />
                 <Route path="/user-registration" element={<UserRegistration />} />
-                <Route path="/expenses-by-category" element={<ExpensesByCategory />} />
-                <Route path="/list-of-expenses" element={<ListOfExpenses />} />
-                <Route path="/edit-expense/:id" element={<EditExpense />} />
-                <Route path="/" element={<App />} />
+                
+                <Route path="/expenses-by-category" element={
+                <PrivateRoute>
+                  <ExpensesByCategory />
+                </PrivateRoute>
+                } />
+
+                <Route path="/list-of-expenses" element={
+                  <PrivateRoute>
+                    <ListOfExpenses />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/edit-expense/:id" element={
+                  <PrivateRoute>
+                    <EditExpense />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/" element={
+                  <PrivateRoute>
+                    <App />
+                  </PrivateRoute>
+                } />
               </Routes>
             </Container>
           </Router>

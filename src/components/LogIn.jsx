@@ -50,6 +50,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (error) {
+      console.log(error)
       setAlertState(true);
       
       let message;
