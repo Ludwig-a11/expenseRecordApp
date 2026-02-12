@@ -8,6 +8,7 @@ import {
 } from "./elements/Header";
 import Button from "./elements/Button";
 import LogOutButton from "./components/LogOutButton";
+import ExpenseForm from "./components/ExpenseForm";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           </ButtonsContainer>
         </HeaderContainer>
       </Header>
+      <ExpenseForm />
     </>
   );
 }
