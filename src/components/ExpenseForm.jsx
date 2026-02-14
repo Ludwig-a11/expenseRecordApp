@@ -7,11 +7,13 @@ import {
   ButtonContainer,
 } from "./../elements/FormElements";
 import Button from "./../elements/Button";
+import SelectCategories from "./SelectCategories";
 
 const ExpenseForm = () => {
 
     const [inputDescription, setInputDescription] = useState('');
     const [inputAmount, setInputAmount] = useState('');
+    const [category, setCategory] = useState('Home');
 
     const handleChange = (e) => {
     if (e.target.name === 'description') {
@@ -42,7 +44,10 @@ const ExpenseForm = () => {
   return (
     <Form>
       <FilterContainer>
-        <p>Category Select</p>
+        <SelectCategories 
+          category={category}
+          setCategory={setCategory}
+        />
         <p>Date Picker</p>
       </FilterContainer>
       <div>
