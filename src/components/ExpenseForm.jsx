@@ -8,12 +8,14 @@ import {
 } from "./../elements/FormElements";
 import Button from "./../elements/Button";
 import SelectCategories from "./SelectCategories";
+import DatePicker from './DatePicker';
 
 const ExpenseForm = () => {
 
     const [inputDescription, setInputDescription] = useState('');
     const [inputAmount, setInputAmount] = useState('');
     const [category, setCategory] = useState('Home');
+    const [date, setDate] = useState(new Date());
 
     const handleChange = (e) => {
     if (e.target.name === 'description') {
@@ -48,7 +50,10 @@ const ExpenseForm = () => {
           category={category}
           setCategory={setCategory}
         />
-        <p>Date Picker</p>
+        <DatePicker 
+          date={date}
+          setDate={setDate}        
+        />
       </FilterContainer>
       <div>
         <Input
