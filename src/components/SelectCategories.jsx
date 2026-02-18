@@ -11,14 +11,14 @@ const SelectCategories = ({ category, setCategory }) => {
   const [showSelect, setShowSelect] = useState(false);
 
   const categories = [
-    { id: "food", text: "Food" },
-    { id: "accounts and payments", text: "Accounts and Payments" },
-    { id: "home", text: "Home" },
-    { id: "transport", text: "Transport" },
-    { id: "clothing", text: "Clothing" },
-    { id: "health and hygiene", text: "Health and Hygiene" },
-    { id: "shopping", text: "Shopping" },
-    { id: "fun", text: "Fun" },
+    { id: "Food", text: "Food" },
+    { id: "Accounts and Payments", text: "Accounts and Payments" },
+    { id: "Home", text: "Home" },
+    { id: "Transport", text: "Transport" },
+    { id: "Clothing", text: "Clothing" },
+    { id: "Health and Hygiene", text: "Health and Hygiene" },
+    { id: "Shopping", text: "Shopping" },
+    { id: "Fun", text: "Fun" },
   ];
 
   const handleClick = (e) => {

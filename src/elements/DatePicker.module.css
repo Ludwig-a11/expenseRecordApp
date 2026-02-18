@@ -1,0 +1,49 @@
+.datePickerContainer {
+  position: relative;
+  width: 35%;
+}
+
+.input {
+  font-family: "Work Sans", sans-serif;
+  box-sizing: border-box;
+  background: #e8eff1;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.625rem;
+  height: 5rem;
+  width: 100%;
+  padding: 0 1.25rem;
+  font-size: 1.3rem;
+  text-align: center;
+  outline: none;
+}
+
+.input:hover{
+  background: #cbdde2;
+}
+
+.calendarContainer {
+  position: absolute;
+  top: 5.62rem;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+}
+
+.calendarContainer :global(.rdp-months) {
+  display: flex;
+  justify-content: center;
+}
+
+.calendarContainer :global(.rdp-month) {
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0 0.1875rem 0.5rem;
+  padding: 1.25rem;
+  border-radius: 0.625rem;
+}
+
+@media (max-width: 60rem) {
+  .datePickerContainer {
+    width: 100%;
+  }
+}
