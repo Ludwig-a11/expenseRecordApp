@@ -9,6 +9,11 @@ import {
 import Button from "./../elements/Button";
 import SelectCategories from "./SelectCategories";
 import DatePicker from './DatePicker';
+import { getUnixTime, fromUnixTime } from "date-fns";
+import addExpense from './../firebase/addExpense';
+import { useAuth } from './../context/AuthContext';
+import Alert from './../elements/Alert';
+
 
 const ExpenseForm = () => {
 
@@ -16,6 +21,9 @@ const ExpenseForm = () => {
     const [inputAmount, setInputAmount] = useState('');
     const [category, setCategory] = useState('Home');
     const [date, setDate] = useState(new Date());
+    const [stateAlert, setStateAlert] = useState(false);
+    const [alert, setAlert] = useState({});
+    const {user} = useAuth();
 
     const handleChange = (e) => {
     if (e.target.name === 'description') {
@@ -43,8 +51,47 @@ const ExpenseForm = () => {
     }
 };
 
+const handleSubmit = (e) =>{
+  e.preventDefault();
+  //Transforming amount in number with 2 decimals
+  let amount = parseFloat(inputAmount).toFixed(2);
+  
+  //Checking exits description and value
+  if(inputDescription !== '' && inputAmount !== ''){
+    if(amount){
+      addExpense({
+        category: category,
+        description: inputDescription,
+        amount: amount,
+        date: getUnixTime(date),
+        uidUser: user.uid
+      })
+      .then(()=>{
+        setCategory('Home');
+        setInputDescription('');
+        setInputAmount('');
+        setDate(new Date());
+
+        setStateAlert(true);
+        setAlert({type: 'success', message: 'Your expense has been added successfully'})
+      }) 
+      .catch((error)=>{
+        setStateAlert(true);
+        setAlert({type: 'error', message: 'Something went wrong. Try again later'})
+      })
+    } else {
+      setStateAlert(true);
+      setAlert({type: 'error', message: 'The value you entered is not correct'})
+    }
+  } else {
+    setStateAlert(true);
+    setAlert({type: 'error', message: 'Fill in all the fields'})
+  }  
+
+}
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <FilterContainer>
         <SelectCategories 
           category={category}
@@ -78,6 +125,12 @@ const ExpenseForm = () => {
             Add New Expense
         </Button>
       </ButtonContainer>
+      <Alert 
+        type={alert.type}
+        message={alert.message}
+        alertState={stateAlert}
+        setAlertState={setStateAlert}
+      />
     </Form>
   );
 };
