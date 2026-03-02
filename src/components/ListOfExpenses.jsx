@@ -2,6 +2,7 @@ import { Header, Title, HeaderContainer, ButtonsContainer} from "./../elements/H
 import { Helmet } from "react-helmet";
 import BackButton from "../elements/BackButton";
 import { useAuth } from "./../context/AuthContext";
+import TotalSpentBar from "./TotalSpentBar";
 
 const ListOfExpenses = () => {
 
@@ -21,6 +22,7 @@ const ListOfExpenses = () => {
           </ButtonsContainer>
         </HeaderContainer>
       </Header>
+      <TotalSpentBar />
     </>
   );
 };

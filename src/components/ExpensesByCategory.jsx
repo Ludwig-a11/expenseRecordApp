@@ -1,7 +1,7 @@
 import {Header, Title, HeaderContainer, ButtonsContainer} from "./../elements/Header"
 import {Helmet} from "react-helmet"
 import BackButton from "../elements/BackButton"
-
+import TotalSpentBar from "./TotalSpentBar"
 
 const ExpensesByCategory = () => {
   return (
@@ -18,6 +18,7 @@ const ExpensesByCategory = () => {
           </ButtonsContainer>
         </HeaderContainer>
       </Header>
+      <TotalSpentBar />
     </>
   )
 }

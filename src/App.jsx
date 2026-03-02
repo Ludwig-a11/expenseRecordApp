@@ -9,6 +9,7 @@ import {
 import Button from "./elements/Button";
 import LogOutButton from "./components/LogOutButton";
 import ExpenseForm from "./components/ExpenseForm";
+import TotalSpentBar from "./components/TotalSpentBar";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         </HeaderContainer>
       </Header>
       <ExpenseForm />
+      <TotalSpentBar />
     </>
   );
 }
