@@ -9,7 +9,7 @@ import {
 import Button from "./../elements/Button";
 import SelectCategories from "./SelectCategories";
 import DatePicker from './DatePicker';
-import { getUnixTime, fromUnixTime } from "date-fns";
+import { getUnixTime } from "date-fns";
 import addExpense from './../firebase/addExpense';
 import { useAuth } from './../context/AuthContext';
 import Alert from './../elements/Alert';
@@ -78,6 +78,7 @@ const handleSubmit = (e) =>{
       .catch((error)=>{
         setStateAlert(true);
         setAlert({type: 'error', message: 'Something went wrong. Try again later'})
+        console.log(error);
       })
     } else {
       setStateAlert(true);

@@ -1,0 +1,188 @@
+.list {
+  list-style: none;
+  padding: 0 2.5rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.list li {
+  grid-template-columns: 1fr 1fr 1fr auto;
+}
+
+.listElement {
+  padding: 1.25rem 0;
+  border-bottom: 2px solid #f2f2f2;
+  display: grid;
+  gap: 0.31rem;
+  justify-content: space-between;
+}
+
+.listElement > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.listElement:hover button,
+.listElement:hover a {
+  opacity: 1;
+}
+
+.listOfCategories {
+  list-style: none;
+  padding: 0 2.5rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.elementListOfCategories {
+  padding: 1.25rem 0;
+  border-bottom: 2px solid #f2f2f2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.category {
+  font-weight: 500;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.category svg {
+  width: 3.12rem;
+  height: auto;
+  margin-right: 1.25rem;
+  border-radius: 0.62rem;
+}
+
+.description {
+  justify-content: center;
+  font-size: 1.25rem;
+  text-transform: capitalize;
+}
+
+.value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  justify-content: end;
+}
+
+.date {
+  border-radius: 0.31rem;
+  background: #5b69e2;
+  text-align: center;
+  color: #fff;
+  padding: 0.62rem 3.12rem;
+  display: inline-block;
+  margin: 1.25rem 0;
+}
+
+.buttonsContainerOfList {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actionButton {
+  outline: none;
+  background: #e8eff1;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 0.31rem;
+  margin-left: 0.625rem;
+  transition: 0.3s ease all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  color: #4d4d4d;
+  text-decoration: none;
+}
+
+.actionButton:hover {
+  background: #cbdde2;
+}
+
+.actionButton svg {
+  width: 1.125rem;
+  height: auto;
+}
+
+.subtitleContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.subtitle {
+  color: #5b69e2;
+  font-weight: 400;
+  font-size: 2.5rem;
+  padding: 2.5rem 0;
+}
+
+.centralButonContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem;
+}
+
+.uploadMoreButton {
+  background: #5b69e2;
+  border: none;
+  border-radius: 0.44rem;
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  padding: 1rem 1.87rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  outline: none;
+  transition: 0.3s ease all;
+}
+
+.uploadMoreButton:hover {
+  background: #4a57c7;
+}
+
+@media (max-width: 50rem) {
+  .list li {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .category {
+    font-size: 1.12rem;
+  }
+
+  .description {
+    justify-content: end;
+  }
+
+  .value {
+    justify-content: start;
+  }
+
+  .date {
+    width: 100%;
+  }
+
+  .buttonsContainerOfList {
+    justify-content: end;
+  }
+
+  .actionButton {
+    opacity: 1;
+  }
+}
