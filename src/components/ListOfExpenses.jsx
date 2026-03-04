@@ -1,21 +1,21 @@
 import { Header, Title, HeaderContainer, ButtonsContainer} from "./../elements/Header";
 import { Helmet } from "react-helmet";
 import BackButton from "../elements/BackButton";
-import { useAuth } from "./../context/AuthContext";
+//import { useAuth } from "./../context/AuthContext";
 import TotalSpentBar from "./TotalSpentBar";
 import useGetExpenses from "./../hooks/useGetExpenses";
 import {
   List,
   ListElement,
-  ListOfCategories,
-  ElementListOfCategories,
+  //ListOfCategories,
+  //ElementListOfCategories,
   Category,
   Description,
   Value,
   DateBadge,
-  ButtonsContainerOfList,
+  //ButtonsContainerOfList,
   ActionButton,
-  ActionLink,
+  //ActionLink,
   SubtitleContainer,
   Subtitle,
   CentralButtonContainer,
@@ -25,11 +25,12 @@ import convertToCurrency from "./../functions/convertToCurrency";
 import {Link} from "react-router-dom";
 import Button from "./../elements/Button";
 import { format, fromUnixTime } from "date-fns";
+import deleteExpense from "./../firebase/deleteExpense";
 
 const ListOfExpenses = () => {
   //const {user} = useAuth();
   //console.log(user)
-  const [expenses, getMoreExpenses, thereIsMoreToUpload] = useGetExpenses();
+  const [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState] = useGetExpenses();
 
   const formatDate = (date) => {
     return format(fromUnixTime(date),"dd 'de' MMMM 'de' yyyy");
@@ -50,6 +51,15 @@ const ListOfExpenses = () => {
     return false;
   }
 
+  const handleDeleteExpense = async (expenseId) => {
+    try {
+      await deleteExpense(expenseId);
+      removeExpenseFromState(expenseId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   return (
     <>
@@ -58,10 +68,10 @@ const ListOfExpenses = () => {
       </Helmet>
       <Header>
         <HeaderContainer>
-          <Title>List Of Expenses</Title>
           <ButtonsContainer>
             <BackButton />
           </ButtonsContainer>
+          <Title>List Of Expenses</Title>
         </HeaderContainer>
       </Header>
       <List>
@@ -78,10 +88,10 @@ const ListOfExpenses = () => {
                 </Description>
                 <Value>{convertToCurrency(expense.amount)}</Value>
                 <ButtonsContainer>
-                  <ActionButton as={Link} to={`/edit/${expense.id}`}>
+                  <ActionButton as={Link} to={`/edit-expense/${expense.id}`}>
                     Edit
                   </ActionButton>
-                  <ActionButton >
+                  <ActionButton onClick={() => handleDeleteExpense(expense.id)}>
                     Delete
                   </ActionButton>
                 </ButtonsContainer>

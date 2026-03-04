@@ -39,11 +39,21 @@ const ButtonsContainerOfList = ({ children }) => (
 );
 
 
-const ActionButton = ({ children, ...props }) => (
-  <button className={styles.actionButton} type="button" {...props}>
-    {children}
-  </button>
-);
+const ActionButton = ({ as: Component = "button", children, ...props }) => {
+  if (Component === "button") {
+    return (
+      <button className={styles.actionButton} type="button" {...props}>
+        {children}
+      </button>
+    );
+  }
+
+  return (
+    <Component className={styles.actionButton} {...props}>
+      {children}
+    </Component>
+  );
+};
 
 
 const ActionLink = ({ children, ...props }) => (
@@ -82,7 +92,10 @@ Value.propTypes = { children: childrenShape };
 DateBadge.propTypes = { children: childrenShape };
 
 ButtonsContainerOfList.propTypes = { children: childrenShape };
-ActionButton.propTypes = { children: childrenShape };
+ActionButton.propTypes = {
+  as: PropTypes.elementType,
+  children: childrenShape,
+};
 ActionLink.propTypes = { children: childrenShape };
 
 SubtitleContainer.propTypes = { children: childrenShape };

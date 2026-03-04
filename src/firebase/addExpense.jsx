@@ -5,7 +5,7 @@ const addExpense = ({ category, description, amount, date, uidUser }) => {
     return addDoc(collection(db, 'expenses'),{
         category: category,
         description: description,
-        amount:amount,
+        amount:Number(amount),
         date: date,
         uidUser: uidUser
     });

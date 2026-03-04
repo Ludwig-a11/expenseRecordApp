@@ -12,10 +12,10 @@ const ExpensesByCategory = () => {
 
       <Header>
         <HeaderContainer>
-          <Title>Expenses by Category</Title>
           <ButtonsContainer>
             <BackButton />
           </ButtonsContainer>
+          <Title>Expenses by Category</Title>
         </HeaderContainer>
       </Header>
       <TotalSpentBar />

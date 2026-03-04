@@ -9,6 +9,12 @@ const useGetExpenses = () => {
     const [lastExpense, setLastExpense] = useState(null);
     const [thereIsMoreToUpload, setThereIsMoreToUpload] = useState(false);
 
+    const removeExpenseFromState = (expenseId) => {
+        setExpenses((previousExpenses) =>
+            previousExpenses.filter((expense) => expense.id !== expenseId)
+        );
+    };
+
     const getMoreExpenses = async () => {
         if (!user?.uid || !lastExpense) return;
 
@@ -74,7 +80,7 @@ const useGetExpenses = () => {
         getFirstExpensesPage();
     }, [user]);
     
-    return [expenses, getMoreExpenses, thereIsMoreToUpload];
+    return [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState];
 }
 
 export default useGetExpenses
