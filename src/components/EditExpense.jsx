@@ -4,14 +4,16 @@ import BackButton from "../elements/BackButton"
 import TotalSpentBar from "./TotalSpentBar"
 import ExpenseForm from "./ExpenseForm";
 import { useParams } from "react-router-dom";
-
+import useGetExpense from "../hooks/useGetExpense";
 
 
 
 const EditExpense = () => {
 
   const {id} = useParams();
+  const [expense] = useGetExpense(id);
 
+  console.log(expense);
 
   return (
     <>
