@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import ArrowIcon from "./../images/flecha.svg";
 import styles from "./BackButton.module.css";
+import PropTypes from 'prop-types';
 
-const BackButton = () => {
+const BackButton = ({route = "/"}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/");
+    navigate(route);;
   };
 
   return (
@@ -14,6 +15,10 @@ const BackButton = () => {
       <img className={styles.icon} src={ArrowIcon} alt="Back" />
     </button>
   );
+};
+
+BackButton.propTypes = {
+  route:PropTypes.string,
 };
 
 export default BackButton;

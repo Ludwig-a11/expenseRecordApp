@@ -8,12 +8,13 @@ import useGetExpense from "../hooks/useGetExpense";
 
 
 
+
 const EditExpense = () => {
 
   const {id} = useParams();
   const [expense] = useGetExpense(id);
-
-  console.log(expense);
+  
+  
 
   return (
     <>
@@ -24,12 +25,12 @@ const EditExpense = () => {
       <Header>
         <HeaderContainer>
           <ButtonsContainer>
-            <BackButton />
+            <BackButton route="/list-of-expenses" />
           </ButtonsContainer>
           <Title>Edit Expense</Title>
         </HeaderContainer>
       </Header>
-      <ExpenseForm />
+      <ExpenseForm expense={expense} />
       <TotalSpentBar />
     </>
   )
