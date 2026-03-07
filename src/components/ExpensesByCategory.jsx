@@ -2,8 +2,12 @@ import {Header, Title, HeaderContainer, ButtonsContainer} from "./../elements/He
 import {Helmet} from "react-helmet"
 import BackButton from "../elements/BackButton"
 import TotalSpentBar from "./TotalSpentBar"
+import useGetMonthlyExpenses from './../hooks/useGetMonthlyExpenses';
 
 const ExpensesByCategory = () => {
+
+  useGetMonthlyExpenses();
+
   return (
     <>
       <Helmet>
