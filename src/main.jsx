@@ -15,6 +15,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import { getMissingFirebaseEnv } from "./config/firebaseEnv.js";
 import ConfigErrorScreen from "./components/ConfigErrorScreen.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import { TotalSpentProvider } from "./context/MonthlyTotalSpent.jsx";
 
 const missingFirebaseEnv = getMissingFirebaseEnv(import.meta.env);
 const hasFirebaseConfigError = missingFirebaseEnv.length > 0;
@@ -29,38 +30,40 @@ createRoot(document.getElementById("root")).render(
           <link rel="shortcut icon" href={favicon} type="image/x-icon" />
         </Helmet>
         <AuthProvider>
-          <Router>
-            <Container>
-              <Routes>
-                <Route path="/log-in" element={<LogIn />} />
-                <Route path="/user-registration" element={<UserRegistration />} />
-                
-                <Route path="/expenses-by-category" element={
-                <PrivateRoute>
-                  <ExpensesByCategory />
-                </PrivateRoute>
-                } />
-
-                <Route path="/list-of-expenses" element={
+          <TotalSpentProvider>
+            <Router>
+              <Container>
+                <Routes>
+                  <Route path="/log-in" element={<LogIn />} />
+                  <Route path="/user-registration" element={<UserRegistration />} />
+                  
+                  <Route path="/expenses-by-category" element={
                   <PrivateRoute>
-                    <ListOfExpenses />
+                    <ExpensesByCategory />
                   </PrivateRoute>
-                } />
+                  } />
 
-                <Route path="/edit-expense/:id" element={
-                  <PrivateRoute>
-                    <EditExpense />
-                  </PrivateRoute>
-                } />
+                  <Route path="/list-of-expenses" element={
+                    <PrivateRoute>
+                      <ListOfExpenses />
+                    </PrivateRoute>
+                  } />
 
-                <Route path="/" element={
-                  <PrivateRoute>
-                    <App />
-                  </PrivateRoute>
-                } />
-              </Routes>
-            </Container>
-          </Router>
+                  <Route path="/edit-expense/:id" element={
+                    <PrivateRoute>
+                      <EditExpense />
+                    </PrivateRoute>
+                  } />
+
+                  <Route path="/" element={
+                    <PrivateRoute>
+                      <App />
+                    </PrivateRoute>
+                  } />
+                </Routes>
+              </Container>
+            </Router>
+          </TotalSpentProvider>
         </AuthProvider>
       </>
     )}

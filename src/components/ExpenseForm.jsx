@@ -18,7 +18,7 @@ import {useNavigate} from 'react-router-dom';
 import editExpense from "./../firebase/editExpense";
 
 
-const ExpenseForm = ({expense}) => {
+const ExpenseForm = ({expense = null}) => {
 
     const [inputDescription, setInputDescription] = useState('');
     const [inputAmount, setInputAmount] = useState('');
@@ -179,10 +179,6 @@ ExpenseForm.propTypes = {
     id:PropTypes.string,
     data:PropTypes.func,  //Firebase DocumentSnapshot.data()
   }),
-};
-
-ExpenseForm.defaultProps = {
-  expense: null,
 };
 
 export default ExpenseForm;
