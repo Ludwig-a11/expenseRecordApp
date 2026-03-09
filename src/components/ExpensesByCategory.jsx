@@ -2,11 +2,20 @@ import {Header, Title, HeaderContainer, ButtonsContainer} from "./../elements/He
 import {Helmet} from "react-helmet"
 import BackButton from "../elements/BackButton"
 import TotalSpentBar from "./TotalSpentBar"
-import useGetMonthlyExpenses from './../hooks/useGetMonthlyExpenses';
+import useMonthlyExpensesByCategory from "../hooks/useMonthlyExpensesByCategory";
+import {
+  ListOfCategories,
+  ElementListOfCategories,
+  Category,
+  Value
+} from './../elements/ElementsOfList';
+import convertToCurrency from './../functions/convertToCurrency';
+
 
 const ExpensesByCategory = () => {
 
-  useGetMonthlyExpenses();
+  const expensesbyCategory = useMonthlyExpensesByCategory();
+  //console.log(expenses);
 
   return (
     <>
@@ -22,6 +31,17 @@ const ExpensesByCategory = () => {
           <Title>Expenses by Category</Title>
         </HeaderContainer>
       </Header>
+      <ListOfCategories>
+        {expensesbyCategory.map((element, index)=>{
+          return (
+            <ElementListOfCategories key={index}>
+              <Category>{element.category}</Category>
+              <Value>{convertToCurrency(element.amount)}</Value>
+
+            </ElementListOfCategories>
+          )
+        })}
+      </ListOfCategories>
       <TotalSpentBar />
     </>
   )
