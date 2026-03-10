@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Expense Tracker</title>
+        <title>Expense Tracker App</title>
       </Helmet>
 
       <Header>
