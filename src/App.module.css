@@ -1,0 +1,234 @@
+.page {
+  --primary: #2563eb;
+  --secondary: #1d4ed8;
+  --background: #f8fafc;
+  --cards: #ffffff;
+  --text: #0f172a;
+
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.9rem;
+  padding: 1.2rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.2), rgba(37, 99, 235, 0) 32%),
+    radial-gradient(circle at 86% 86%, rgba(29, 78, 216, 0.19), rgba(29, 78, 216, 0) 35%), var(--background);
+  border-radius: 0.625rem;
+}
+
+.topBar {
+  background: var(--cards);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.title {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.65rem;
+  line-height: 1.05;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(15, 23, 42, 0.64);
+  font-size: 0.92rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.actionLink,
+.logoutButton {
+  margin-left: 0;
+  min-height: 2.45rem;
+  padding: 0.58rem 1.05rem;
+  border-radius: 0.78rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #ffffff;
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.actionLink:hover,
+.logoutButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba(37, 99, 235, 0.44);
+  box-shadow: 0 0.55rem 1.2rem rgba(37, 99, 235, 0.15);
+}
+
+.logoutButton {
+  background: linear-gradient(95deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.logoutButton:hover {
+  box-shadow: 0 0.75rem 1.35rem rgba(29, 78, 216, 0.25);
+}
+
+.totalWrap {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0.9rem 1.7rem rgba(29, 78, 216, 0.18);
+}
+
+.contentGrid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 0.9rem;
+}
+
+.formShell {
+  background: var(--cards);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1.05rem;
+  box-shadow: 0 1rem 2rem rgba(15, 23, 42, 0.07);
+  overflow: auto;
+}
+
+.sidePanel {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.9rem;
+  min-height: 0;
+}
+
+.panelCard,
+.tipsCard {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.panelText {
+  margin: 0.55rem 0 0;
+  color: rgba(15, 23, 42, 0.68);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.quickStats {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.statItem {
+  background: rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  color: #1d4ed8;
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.tipList {
+  margin: 0.7rem 0 0;
+  padding-left: 1.05rem;
+  color: rgba(15, 23, 42, 0.74);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.tipList li + li {
+  margin-top: 0.45rem;
+}
+
+@media (max-width: 75rem) {
+  .page {
+    padding: 0.95rem;
+    gap: 0.75rem;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidePanel {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+@media (max-width: 60rem) {
+  .page {
+    padding: 0.75rem;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.85rem;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .actionLink,
+  .logoutButton {
+    flex: 1;
+    min-width: 9rem;
+  }
+
+  .title {
+    font-size: 1.42rem;
+  }
+
+  .sidePanel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 30rem) {
+  .page {
+    padding: 0.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .actionLink,
+  .logoutButton {
+    width: 100%;
+    min-width: 0;
+  }
+}

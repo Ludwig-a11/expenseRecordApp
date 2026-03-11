@@ -1,0 +1,311 @@
+.loginPage {
+  --primary: #2563eb;
+  --secondary: #1d4ed8;
+  --background: #f8fafc;
+  --cards: #ffffff;
+  --success: #22c55e;
+  --text: #0f172a;
+
+  width: 100%;
+  min-height: 100%;
+  background: radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.2), rgba(37, 99, 235, 0) 34%),
+    radial-gradient(circle at 88% 85%, rgba(29, 78, 216, 0.24), rgba(29, 78, 216, 0) 36%),
+    var(--background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  border-radius: 0.625rem;
+}
+
+.card {
+  width: min(100%, 64rem);
+  min-height: 33rem;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  background: var(--cards);
+  box-shadow: 0 1.25rem 2.5rem rgba(15, 23, 42, 0.12);
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+}
+
+.heroPanel {
+  position: relative;
+  background: linear-gradient(165deg, var(--secondary) 0%, var(--primary) 100%);
+  color: var(--cards);
+  padding: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  isolation: isolate;
+}
+
+.heroPanel::before {
+  content: "";
+  position: absolute;
+  width: 23rem;
+  height: 23rem;
+  border-radius: 50%;
+  background: rgba(248, 250, 252, 0.16);
+  top: -8rem;
+  left: -6rem;
+  z-index: -1;
+}
+
+.heroPanel::after {
+  content: "";
+  position: absolute;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 50%;
+  background: rgba(248, 250, 252, 0.12);
+  right: -5rem;
+  bottom: -6rem;
+  z-index: -1;
+}
+
+.illustration {
+  position: absolute;
+  top: 2.5rem;
+  left: 3.2rem;
+  width: 10.5rem;
+  height: 10.5rem;
+  border-radius: 1.5rem;
+  background: rgba(248, 250, 252, 0.2);
+  display: grid;
+  place-items: center;
+  font-size: 3.2rem;
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+.heroText {
+  margin: 0.75rem 0 0;
+  color: rgba(248, 250, 252, 0.9);
+  max-width: 27ch;
+  font-size: 1.02rem;
+}
+
+.formPanel {
+  padding: 3.2rem 2.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.35rem;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  margin: 0;
+  color: var(--text);
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(15, 23, 42, 0.68);
+  font-size: 0.96rem;
+}
+
+.registerLink {
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  color: var(--primary);
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fieldLabel {
+  font-size: 0.86rem;
+  color: rgba(15, 23, 42, 0.72);
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 0.8rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.98rem;
+  color: var(--text);
+  background: var(--cards);
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: rgba(15, 23, 42, 0.42);
+}
+
+.input:focus {
+  border-color: rgba(37, 99, 235, 0.7);
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.16);
+}
+
+.submitButton {
+  margin-top: 0.35rem;
+  width: 100%;
+  border: none;
+  border-radius: 0.9rem;
+  padding: 0.95rem 1rem;
+  background: linear-gradient(95deg, var(--primary) 0%, var(--secondary) 100%);
+  color: var(--cards);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.submitButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0.8rem 1.6rem rgba(29, 78, 216, 0.28);
+}
+
+.submitButton:active {
+  transform: translateY(0);
+}
+
+.submitButton:focus-visible,
+.registerLink:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 75rem) {
+  .loginPage {
+    padding: 1.4rem;
+  }
+
+  .card {
+    min-height: 30rem;
+    grid-template-columns: 0.92fr 1fr;
+  }
+
+  .heroPanel,
+  .formPanel {
+    padding: 2.2rem;
+  }
+
+  .illustration {
+    left: 2.2rem;
+    top: 1.9rem;
+  }
+}
+
+@media (max-width: 60rem) {
+  .loginPage {
+    padding: 1rem;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .heroPanel {
+    padding: 2rem 1.6rem;
+    min-height: 14rem;
+  }
+
+  .illustration {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 1rem;
+    font-size: 1.8rem;
+    left: 1.6rem;
+    top: 1.3rem;
+  }
+
+  .heroTitle {
+    font-size: 1.56rem;
+    margin-top: 3.8rem;
+  }
+
+  .heroText {
+    font-size: 0.93rem;
+    max-width: 100%;
+  }
+
+  .formPanel {
+    padding: 1.7rem 1.3rem 1.9rem;
+    gap: 1rem;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .title {
+    font-size: 1.58rem;
+  }
+
+  .registerLink {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .input,
+  .submitButton {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .loginPage {
+    padding: 0.65rem;
+  }
+
+  .card {
+    border-radius: 1.2rem;
+  }
+
+  .heroPanel {
+    border-radius: 0;
+  }
+
+  .formPanel {
+    padding: 1.35rem 1rem 1.45rem;
+  }
+
+  .title {
+    font-size: 1.38rem;
+  }
+
+  .subtitle {
+    font-size: 0.87rem;
+  }
+
+  .input {
+    padding: 0.75rem 0.85rem;
+    border-radius: 0.72rem;
+  }
+
+  .submitButton {
+    padding: 0.85rem;
+    border-radius: 0.72rem;
+  }
+}

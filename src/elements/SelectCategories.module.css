@@ -1,19 +1,20 @@
 .selectContainer {
   font-family: "Work Sans", sans-serif;
-  background: #e8eff1;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.16);
   cursor: pointer;
-  border-radius: 0.62rem;
+  border-radius: 0.85rem;
   position: relative;
-  /*height: 5.5rem;*/
-  width: 30%;
-  padding: 0 1.25rem;
+  width: 55%;
+  padding: 0 1rem;
+  min-height: 3.25rem;
   display: flex;
   align-items: center;
-  transition: 0.3s ease all;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .selectContainer:hover {
-  background: #cbdde2;
+  border-color: rgba(37, 99, 235, 0.45);
 }
 
 .selectedOption {
@@ -21,8 +22,8 @@
   width: 100%;
   border: none;
   background: transparent;
-  /*text-transform: uppercase;*/
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: #0f172a;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,16 +31,17 @@
 }
 
 .options {
-  background: #e8eff1;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.12);
   position: absolute;
-  top: 5.62rem;
+  top: 3.5rem;
   left: 0;
   width: 100%;
-  border-radius: 0.62rem;
-  max-height: 18.75rem;
+  border-radius: 0.8rem;
+  max-height: 16rem;
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow: 0 0.31rem 0.93rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.85rem 1.5rem rgba(15, 23, 42, 0.12);
   z-index: 10;
 }
 
@@ -47,8 +49,9 @@
   font-family: inherit;
   width: 100%;
   box-sizing: border-box;
-  padding: 1rem 1.25rem;
+  padding: 0.8rem 1rem;
   border: none;
+  color: #0f172a;
   background: transparent;
   display: flex;
   align-items: center;
@@ -57,17 +60,23 @@
 }
 
 .option:hover {
-  background: #cbdde2;
+  background: rgba(37, 99, 235, 0.08);
 }
 
 .optionIcon {
-  width: 1.75rem;
+  width: 1.5rem;
   height: auto;
-  margin-right: 1rem;
+  margin-right: 0.75rem;
 }
 
 @media (max-width: 60rem) {
   .selectContainer {
     width: 100%;
+    min-height: 3rem;
+    border-radius: 0.75rem;
+  }
+
+  .selectedOption {
+    font-size: 0.94rem;
   }
 }

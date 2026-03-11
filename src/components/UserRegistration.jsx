@@ -1,12 +1,10 @@
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-import { Header, Title, HeaderContainer } from "../elements/Header";
-import { Form, Input, ButtonContainer } from "./../elements/FormElements";
-import Button from "../elements/Button";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "./../firebase/firebase.config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import Alert from "./../elements/Alert";
+import styles from "./UserRegistration.module.css";
 
 const UserRegistration = () => {
   const navigate = useNavigate();
@@ -31,6 +29,7 @@ const UserRegistration = () => {
         break;
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAlertState(false);
@@ -54,6 +53,7 @@ const UserRegistration = () => {
       });
       return;
     }
+
     if (password !== password2) {
       setAlertState(true);
       setAlert({
@@ -62,6 +62,7 @@ const UserRegistration = () => {
       });
       return;
     }
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate("/");
@@ -82,7 +83,7 @@ const UserRegistration = () => {
           message = "An error occurred";
           break;
       }
-      setAlert({ type: "error", message: message });
+      setAlert({ type: "error", message });
     }
   };
 
@@ -91,49 +92,79 @@ const UserRegistration = () => {
       <Helmet>
         <title>Create Account</title>
       </Helmet>
-      <Header>
-        <HeaderContainer>
-          <Title>Create Account</Title>
-          <div>
-            <Button to="/log-in">Log In</Button>
-          </div>
-        </HeaderContainer>
-      </Header>
 
-      <Form onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={handleChange}
-        />
-        <Input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={handleChange}
-        />
-        <Input
-          type="password"
-          name="password2"
-          placeholder="Confirm Password"
-          value={password2}
-          onChange={handleChange}
-        />
-        <ButtonContainer>
-          <Button as="button" primario type="submit">
-            Create Account
-          </Button>
-        </ButtonContainer>
-      </Form>
-      <Alert
-        type={alert.type}
-        message={alert.message}
-        alertState={alertState}
-        setAlertState={setAlertState}
-      />
+      <section className={styles.signupPage}>
+        <div className={styles.card}>
+          <div className={styles.formPanel}>
+            <div className={styles.headerRow}>
+              <h1 className={styles.title}>Create Account</h1>
+              <Link to="/log-in" className={styles.loginLink}>
+                Log In
+              </Link>
+            </div>
+
+            <p className={styles.subtitle}>Create your account and start tracking your spending.</p>
+
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <label className={styles.fieldLabel} htmlFor="register-email">
+                Email
+              </label>
+              <input
+                id="register-email"
+                type="email"
+                name="email"
+                placeholder="you@email.com"
+                value={email}
+                onChange={handleChange}
+                className={styles.input}
+                autoComplete="email"
+              />
+
+              <label className={styles.fieldLabel} htmlFor="register-password">
+                Password
+              </label>
+              <input
+                id="register-password"
+                type="password"
+                name="password"
+                placeholder="Choose a secure password"
+                value={password}
+                onChange={handleChange}
+                className={styles.input}
+                autoComplete="new-password"
+              />
+
+              <label className={styles.fieldLabel} htmlFor="register-password2">
+                Confirm Password
+              </label>
+              <input
+                id="register-password2"
+                type="password"
+                name="password2"
+                placeholder="Repeat your password"
+                value={password2}
+                onChange={handleChange}
+                className={styles.input}
+                autoComplete="new-password"
+              />
+
+              <button type="submit" className={styles.submitButton}>
+                Create Account
+              </button>
+            </form>
+          </div>
+
+          <aside className={styles.heroPanel}>
+            <div className={styles.illustration} aria-hidden="true">
+              ✍️
+            </div>
+            <h2 className={styles.heroTitle}>Ready To Start?</h2>
+            <p className={styles.heroText}>Set up your profile once and keep your expense records organized every month.</p>
+          </aside>
+        </div>
+      </section>
+
+      <Alert type={alert.type} message={alert.message} alertState={alertState} setAlertState={setAlertState} />
     </>
   );
 };

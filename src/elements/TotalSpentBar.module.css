@@ -1,21 +1,48 @@
 .totalBar {
-    background-color: #2f855a;
-    font-size: 1.25rem; /* 20px */
-    letter-spacing: 1px;
-    font-weight: 500;
-    text-transform: uppercase;
-    padding: 0.62rem 2.25rem; /* 10px 40px */
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
+  background: linear-gradient(98deg, #1d4ed8 0%, #2563eb 100%);
+  padding: 1rem 1.25rem;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@media (max-width: 31.25rem) { /* 500px */
-    .totalBar{
-        flex-direction: column;
-        font-size: 14px;
-    } 
-    }
+.totalBar p {
+  margin: 0;
+}
+
+.totalBar p:first-child {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.95;
+}
+
+.totalBar p:last-child {
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.75rem;
+  background: rgba(248, 250, 252, 0.16);
+}
+
+@media (max-width: 50rem) {
+  .totalBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    padding: 0.85rem 1rem;
+  }
+
+  .totalBar p:first-child {
+    font-size: 0.82rem;
+  }
+
+  .totalBar p:last-child {
+    font-size: 1.28rem;
+  }
+}

@@ -1,60 +1,78 @@
 .filterContainer {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1.87rem;
+  gap: 0.75rem;
+  margin-bottom: 0;
 }
 
 .form {
-  padding: 0 2.5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0.95rem;
+  box-sizing: border-box;
 }
 
 .form input {
   width: 100%;
-  text-align: center;
-  padding: 1rem 0;
+  text-align: left;
   font-family: "Work Sans", sans-serif;
 }
 
 .form input::placeholder {
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(15, 23, 42, 0.42);
 }
 
 .input {
-  font-size: 2rem;
-  border: none;
-  border-bottom: 2px solid #e8eff1;
+  font-size: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  border-radius: 0.8rem;
+  padding: 0.78rem 0.92rem;
   outline: none;
+  color: #0f172a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: rgba(37, 99, 235, 0.72);
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.14);
 }
 
 .bigInput {
-  font-size: 4.37rem;
+  font-size: 1.9rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 0.9rem 0.95rem;
 }
 
 .buttonContainer {
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 @media (max-width: 60rem) {
   .filterContainer {
     flex-direction: column;
+    gap: 0.62rem;
   }
 
   .filterContainer > * {
     width: 100%;
-    margin-bottom: 0.62rem;
   }
 
   .form {
-    justify-content: flex-start;
+    padding: 0.75rem;
   }
 
   .input {
-    font-size: 1.6rem;
+    font-size: 0.95rem;
+    border-radius: 0.72rem;
+    padding: 0.72rem 0.82rem;
+  }
+
+  .bigInput {
+    font-size: 1.55rem;
+    padding: 0.8rem 0.85rem;
   }
 }

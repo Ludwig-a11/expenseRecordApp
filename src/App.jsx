@@ -1,15 +1,9 @@
-import "./App.css";
 import { Helmet } from "react-helmet";
-import {
-  Header,
-  Title,
-  HeaderContainer,
-  ButtonsContainer,
-} from "./elements/Header";
-import Button from "./elements/Button";
-import LogOutButton from "./components/LogOutButton";
+import { Link } from "react-router-dom";
 import ExpenseForm from "./components/ExpenseForm";
 import TotalSpentBar from "./components/TotalSpentBar";
+import LogOutButton from "./components/LogOutButton";
+import styles from "./App.module.css";
 
 function App() {
   return (
@@ -18,18 +12,55 @@ function App() {
         <title>Expense Tracker App</title>
       </Helmet>
 
-      <Header>
-        <HeaderContainer>
-          <Title>Add Expense</Title>
-          <ButtonsContainer>
-            <Button to="/expenses-by-category">Categories</Button>
-            <Button to="/list-of-expenses">List of Expenses</Button>
-            <LogOutButton />
-          </ButtonsContainer>
-        </HeaderContainer>
-      </Header>
-      <ExpenseForm />
-      <TotalSpentBar />
+      <main className={styles.page}>
+        <header className={styles.topBar}>
+          <div className={styles.titleBlock}>
+            <h1 className={styles.title}>Add Expense</h1>
+            <p className={styles.subtitle}>Capture expenses quickly and keep your monthly budget under control.</p>
+          </div>
+
+          <nav className={styles.actions}>
+            <Link to="/expenses-by-category" className={styles.actionLink}>
+              Categories
+            </Link>
+            <Link to="/list-of-expenses" className={styles.actionLink}>
+              List of Expenses
+            </Link>
+            <LogOutButton className={styles.logoutButton} />
+          </nav>
+        </header>
+
+        <div className={styles.totalWrap}>
+          <TotalSpentBar />
+        </div>
+
+        <section className={styles.contentGrid}>
+          <div className={styles.formShell}>
+            <ExpenseForm />
+          </div>
+
+          <aside className={styles.sidePanel}>
+            <article className={styles.panelCard}>
+              <h2 className={styles.panelTitle}>Quick Summary</h2>
+              <p className={styles.panelText}>Use short descriptions and register each expense as soon as it happens.</p>
+              <div className={styles.quickStats}>
+                <div className={styles.statItem}>Tip: Keep names under 35 characters.</div>
+                <div className={styles.statItem}>Tip: Add amount first, then category.</div>
+                <div className={styles.statItem}>Tip: Review categories once per week.</div>
+              </div>
+            </article>
+
+            <article className={styles.tipsCard}>
+              <h2 className={styles.panelTitle}>Suggested Workflow</h2>
+              <ul className={styles.tipList}>
+                <li>Add recurring expenses first (rent, services, transport).</li>
+                <li>Register small daily expenses before ending the day.</li>
+                <li>Check the monthly total and adjust spending early.</li>
+              </ul>
+            </article>
+          </aside>
+        </section>
+      </main>
     </>
   );
 }

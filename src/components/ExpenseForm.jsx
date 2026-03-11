@@ -16,6 +16,7 @@ import { useAuth } from './../context/AuthContext';
 import Alert from './../elements/Alert';
 import {useNavigate} from 'react-router-dom';
 import editExpense from "./../firebase/editExpense";
+import styles from "./ExpenseForm.module.css";
 
 
 const ExpenseForm = ({expense = null}) => {
@@ -30,12 +31,7 @@ const ExpenseForm = ({expense = null}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      //Comprobamos si ya hay un gasto
-      //De ser asi establecemos todo el state con los valores del gasto
-
       if(expense){
-        //Comprobamos que el gasto sea del usuario actual
-        
         if(expense.data().uidUser === user.uid){
           setCategory(expense.data().category)
           setDate(fromUnixTime(expense.data().date))
@@ -55,16 +51,13 @@ const ExpenseForm = ({expense = null}) => {
 
         let value = e.target.value;
 
-        // Elimina todo lo que no sea número o punto
         value = value.replace(/[^0-9.]/g, '');
 
-        // Permite solo un punto decimal
         const parts = value.split('.');
         if (parts.length > 2) {
             value = parts[0] + '.' + parts.slice(1).join('');
         }
 
-        // Limita a 2 decimales
         if (value.includes('.')) {
             const [integer, decimal] = value.split('.');
             value = integer + '.' + decimal.slice(0, 2);
@@ -76,10 +69,8 @@ const ExpenseForm = ({expense = null}) => {
 
 const handleSubmit = (e) =>{
   e.preventDefault();
-  //Transforming amount in number with 2 decimals
   let amount = parseFloat(inputAmount).toFixed(2);
-  
-  //Checking exits description and value
+
   if(inputDescription !== '' && inputAmount !== ''){
     if(amount){
       if(expense){
@@ -107,10 +98,10 @@ const handleSubmit = (e) =>{
           setInputDescription('');
           setInputAmount('');
           setDate(new Date());
-  
+
           setStateAlert(true);
           setAlert({type: 'success', message: 'Your expense has been added successfully'})
-        }) 
+        })
         .catch((error)=>{
           setStateAlert(true);
           setAlert({type: 'error', message: 'Something went wrong. Try again later'})
@@ -124,46 +115,62 @@ const handleSubmit = (e) =>{
   } else {
     setStateAlert(true);
     setAlert({type: 'error', message: 'Fill in all the fields'})
-  }  
+  }
 
 }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FilterContainer>
-        <SelectCategories 
-          category={category}
-          setCategory={setCategory}
-        />
-        <DatePicker 
-          date={date}
-          setDate={setDate}        
-        />
-      </FilterContainer>
-      <div>
-        <Input
-            type="text"
-            name="description"
-            id="description"
-            placeholder="Description"
-            value={inputDescription}
-            onChange={handleChange}
-        />
-        <BigInput 
-            type="text" 
-            name="amount" 
-            id="amount" 
-            placeholder="$0.00" 
-            value={inputAmount}
-            onChange={handleChange}
-        />
+      <div className={styles.formLayout}>
+        <div className={styles.topControls}>
+          <FilterContainer>
+            <SelectCategories
+              category={category}
+              setCategory={setCategory}
+            />
+            <DatePicker
+              date={date}
+              setDate={setDate}
+            />
+          </FilterContainer>
+        </div>
+
+        <div className={styles.fieldsGrid}>
+          <div className={styles.fieldBlock}>
+            <label htmlFor="description" className={styles.fieldLabel}>Description</label>
+            <Input
+                type="text"
+                name="description"
+                id="description"
+                placeholder="Example: Weekly groceries"
+                value={inputDescription}
+                onChange={handleChange}
+            />
+          </div>
+
+          <div className={styles.fieldBlock}>
+            <label htmlFor="amount" className={styles.fieldLabel}>Amount</label>
+            <BigInput
+                type="text"
+                name="amount"
+                id="amount"
+                placeholder="$0.00"
+                value={inputAmount}
+                onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className={styles.submitRow}>
+          <ButtonContainer>
+            <Button as="button" primario type="submit">
+                {expense ? 'Save Changes': 'Add Expense'}
+            </Button>
+          </ButtonContainer>
+        </div>
       </div>
-      <ButtonContainer>
-        <Button as="button" primario type="submit">
-            {expense ? 'Edit Expense': 'Add New Expense'}
-        </Button>
-      </ButtonContainer>
-      <Alert 
+
+      <Alert
         type={alert.type}
         message={alert.message}
         alertState={stateAlert}
@@ -174,10 +181,10 @@ const handleSubmit = (e) =>{
 };
 
 ExpenseForm.propTypes = {
-  
+
   expense:PropTypes.shape({
     id:PropTypes.string,
-    data:PropTypes.func,  //Firebase DocumentSnapshot.data()
+    data:PropTypes.func,
   }),
 };
 

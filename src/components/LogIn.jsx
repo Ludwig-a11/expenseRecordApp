@@ -1,12 +1,10 @@
 import { Helmet } from "react-helmet";
-import { Header, Title, HeaderContainer } from "../elements/Header";
-import { Form, Input, ButtonContainer } from "./../elements/FormElements";
-import Button from "../elements/Button";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./../firebase/firebase.config";
-import { useNavigate } from "react-router-dom";
 import Alert from "./../elements/Alert";
+import styles from "./LogIn.module.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,13 +44,13 @@ const Login = () => {
       });
       return;
     }
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (error) {
-      console.log(error)
       setAlertState(true);
-      
+
       let message;
       switch (error.code) {
         case "auth/wrong-password":
@@ -65,7 +63,7 @@ const Login = () => {
           message = "An error occurred";
           break;
       }
-      setAlert({ type: "error", message: message });
+      setAlert({ type: "error", message });
     }
   };
 
@@ -74,43 +72,65 @@ const Login = () => {
       <Helmet>
         <title>Log In</title>
       </Helmet>
-      <Header>
-        <HeaderContainer>
-          <Title>Log In</Title>
-          <div>
-            <Button to="/user-registration">Create Account</Button>
+
+      <section className={styles.loginPage}>
+        <div className={styles.card}>
+          <aside className={styles.heroPanel}>
+            <div className={styles.illustration} aria-hidden="true">
+              📘
+            </div>
+            <h1 className={styles.heroTitle}>Welcome Back!</h1>
+            <p className={styles.heroText}>Track your expenses faster and keep your monthly goals under control.</p>
+          </aside>
+
+          <div className={styles.formPanel}>
+            <div className={styles.headerRow}>
+              <h2 className={styles.title}>Log In</h2>
+              <Link to="/user-registration" className={styles.registerLink}>
+                Create account
+              </Link>
+            </div>
+
+            <p className={styles.subtitle}>Welcome back, we missed you.</p>
+
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <label className={styles.fieldLabel} htmlFor="login-email">
+                Email
+              </label>
+              <input
+                id="login-email"
+                type="email"
+                name="email"
+                placeholder="you@email.com"
+                value={email}
+                onChange={handleChange}
+                className={styles.input}
+                autoComplete="email"
+              />
+
+              <label className={styles.fieldLabel} htmlFor="login-password">
+                Password
+              </label>
+              <input
+                id="login-password"
+                type="password"
+                name="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={handleChange}
+                className={styles.input}
+                autoComplete="current-password"
+              />
+
+              <button type="submit" className={styles.submitButton}>
+                Sign In
+              </button>
+            </form>
           </div>
-        </HeaderContainer>
-      </Header>
+        </div>
+      </section>
 
-      <Form onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={handleChange}
-        />
-
-        <Input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={handleChange}
-        />
-
-        <ButtonContainer>
-          <Button as="button" primario type="submit">
-            Log In
-          </Button>
-        </ButtonContainer>
-      </Form>
-      <Alert
-        type={alert.type}
-        message={alert.message}
-        alertState={alertState}
-        setAlertState={setAlertState} />
+      <Alert type={alert.type} message={alert.message} alertState={alertState} setAlertState={setAlertState} />
     </>
   );
 };
