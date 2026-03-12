@@ -19,7 +19,12 @@ import editExpense from "./../firebase/editExpense";
 import styles from "./ExpenseForm.module.css";
 
 
-const ExpenseForm = ({expense = null}) => {
+const normalizeAmount = (value) => {
+  const parsedValue = parseFloat(value);
+  return Number.isNaN(parsedValue) ? "" : parsedValue.toFixed(2);
+};
+
+const ExpenseForm = ({ expense = null, onDirtyChange = null }) => {
 
     const [inputDescription, setInputDescription] = useState('');
     const [inputAmount, setInputAmount] = useState('');
@@ -27,22 +32,62 @@ const ExpenseForm = ({expense = null}) => {
     const [date, setDate] = useState(new Date());
     const [stateAlert, setStateAlert] = useState(false);
     const [alert, setAlert] = useState({});
+    const [initialFormState, setInitialFormState] = useState(null);
     const {user} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
       if(expense){
         if(expense.data().uidUser === user.uid){
-          setCategory(expense.data().category)
-          setDate(fromUnixTime(expense.data().date))
-          setInputDescription(expense.data().description)
-          setInputAmount(expense.data().amount)
+          const currentData = expense.data();
+          const initialDate = fromUnixTime(currentData.date);
+          const initialAmount = String(currentData.amount);
+
+          setCategory(currentData.category);
+          setDate(initialDate);
+          setInputDescription(currentData.description);
+          setInputAmount(initialAmount);
+          setInitialFormState({
+            category: currentData.category,
+            description: currentData.description,
+            amount: normalizeAmount(initialAmount),
+            date: getUnixTime(initialDate),
+          });
         } else {
           navigate('/list-of-expenses');
         }
       }
 
     },[expense,user.uid, navigate]);
+
+    useEffect(() => {
+      if (!expense || !initialFormState || !onDirtyChange) {
+        return;
+      }
+
+      const currentFormState = {
+        category,
+        description: inputDescription,
+        amount: normalizeAmount(inputAmount),
+        date: getUnixTime(date),
+      };
+
+      const hasUnsavedChanges =
+        currentFormState.category !== initialFormState.category ||
+        currentFormState.description !== initialFormState.description ||
+        currentFormState.amount !== initialFormState.amount ||
+        currentFormState.date !== initialFormState.date;
+
+      onDirtyChange(hasUnsavedChanges);
+    }, [
+      category,
+      date,
+      expense,
+      initialFormState,
+      inputAmount,
+      inputDescription,
+      onDirtyChange,
+    ]);
 
     const handleChange = (e) => {
     if (e.target.name === 'description') {
@@ -81,6 +126,9 @@ const handleSubmit = (e) =>{
           amount: amount,
           date: getUnixTime(date)
         }).then(() => {
+          if (onDirtyChange) {
+            onDirtyChange(false);
+          }
           navigate('/list-of-expenses')
         }).catch((error) =>{
           console.log(error);
@@ -186,6 +234,7 @@ ExpenseForm.propTypes = {
     id:PropTypes.string,
     data:PropTypes.func,
   }),
+  onDirtyChange: PropTypes.func,
 };
 
 export default ExpenseForm;

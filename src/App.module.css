@@ -1,9 +1,8 @@
 .page {
-  --primary: #2563eb;
-  --secondary: #1d4ed8;
-  --background: #f8fafc;
-  --cards: #ffffff;
-  --text: #0f172a;
+  --primary: #0ea5e9;
+  --secondary: #2563eb;
+  --cards: rgba(255, 255, 255, 0.12);
+  --text: #f8fafc;
 
   width: 100%;
   height: 100%;
@@ -12,14 +11,16 @@
   gap: 0.9rem;
   padding: 1.2rem;
   box-sizing: border-box;
-  background: radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.2), rgba(37, 99, 235, 0) 32%),
-    radial-gradient(circle at 86% 86%, rgba(29, 78, 216, 0.19), rgba(29, 78, 216, 0) 35%), var(--background);
+  background: radial-gradient(circle at 10% 8%, rgba(37, 99, 235, 0.28), rgba(37, 99, 235, 0) 34%),
+    radial-gradient(circle at 90% 84%, rgba(14, 165, 233, 0.26), rgba(14, 165, 233, 0) 42%), #0f172a;
   border-radius: 0.625rem;
 }
 
 .topBar {
-  background: var(--cards);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(155deg, rgba(8, 14, 33, 0.82), rgba(8, 14, 33, 0.72));
+  border: 1px solid rgba(248, 250, 252, 0.24);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
   border-radius: 1rem;
   padding: 0.9rem 1rem;
   display: flex;
@@ -28,10 +29,41 @@
   gap: 1rem;
 }
 
+.topHead {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
 .titleBlock {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+}
+
+.menuToggle {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(248, 250, 252, 0.32);
+  border-radius: 0.65rem;
+  background: rgba(248, 250, 252, 0.14);
+  padding: 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.24rem;
+}
+
+.menuToggle span {
+  width: 1rem;
+  height: 0.12rem;
+  border-radius: 999px;
+  background: #f8fafc;
 }
 
 .title {
@@ -43,7 +75,7 @@
 
 .subtitle {
   margin: 0;
-  color: rgba(15, 23, 42, 0.64);
+  color: rgba(248, 250, 252, 0.88);
   font-size: 0.92rem;
 }
 
@@ -57,6 +89,8 @@
 .actionLink,
 .logoutButton {
   margin-left: 0;
+  width: 100%;
+  box-sizing: border-box;
   min-height: 2.45rem;
   padding: 0.58rem 1.05rem;
   border-radius: 0.78rem;
@@ -64,9 +98,11 @@
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  background: #ffffff;
-  color: #0f172a;
+  border: 1px solid rgba(248, 250, 252, 0.34);
+  background: rgba(248, 250, 252, 0.12);
+  color: #f8fafc;
+  backdrop-filter: blur(0.55rem);
+  -webkit-backdrop-filter: blur(0.55rem);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -77,24 +113,25 @@
 .actionLink:hover,
 .logoutButton:hover {
   transform: translateY(-1px);
-  border-color: rgba(37, 99, 235, 0.44);
-  box-shadow: 0 0.55rem 1.2rem rgba(37, 99, 235, 0.15);
+  border-color: rgba(186, 230, 253, 0.7);
+  box-shadow: 0 0.55rem 1.2rem rgba(2, 6, 23, 0.28);
 }
 
 .logoutButton {
-  background: linear-gradient(95deg, #2563eb 0%, #1d4ed8 100%);
+  background: linear-gradient(95deg, rgba(14, 165, 233, 0.55), rgba(37, 99, 235, 0.5));
   color: #ffffff;
   border: 1px solid transparent;
 }
 
 .logoutButton:hover {
-  box-shadow: 0 0.75rem 1.35rem rgba(29, 78, 216, 0.25);
+  box-shadow: 0 0.75rem 1.35rem rgba(14, 165, 233, 0.28);
 }
 
 .totalWrap {
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 0.9rem 1.7rem rgba(29, 78, 216, 0.18);
+  border: 1px solid rgba(248, 250, 252, 0.22);
+  box-shadow: 0 0.9rem 1.7rem rgba(2, 6, 23, 0.28);
 }
 
 .contentGrid {
@@ -106,10 +143,13 @@
 
 .formShell {
   background: var(--cards);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(248, 250, 252, 0.24);
+  backdrop-filter: blur(0.8rem);
+  -webkit-backdrop-filter: blur(0.8rem);
   border-radius: 1.05rem;
-  box-shadow: 0 1rem 2rem rgba(15, 23, 42, 0.07);
-  overflow: auto;
+  box-shadow: 0 1rem 2rem rgba(2, 6, 23, 0.32);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .sidePanel {
@@ -121,8 +161,10 @@
 
 .panelCard,
 .tipsCard {
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: var(--cards);
+  border: 1px solid rgba(248, 250, 252, 0.24);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
   border-radius: 1rem;
   padding: 1rem;
   box-sizing: border-box;
@@ -131,12 +173,12 @@
 .panelTitle {
   margin: 0;
   font-size: 1rem;
-  color: #0f172a;
+  color: #f8fafc;
 }
 
 .panelText {
   margin: 0.55rem 0 0;
-  color: rgba(15, 23, 42, 0.68);
+  color: rgba(248, 250, 252, 0.86);
   font-size: 0.9rem;
   line-height: 1.4;
 }
@@ -148,9 +190,9 @@
 }
 
 .statItem {
-  background: rgba(37, 99, 235, 0.07);
-  border: 1px solid rgba(37, 99, 235, 0.18);
-  color: #1d4ed8;
+  background: rgba(186, 230, 253, 0.14);
+  border: 1px solid rgba(186, 230, 253, 0.34);
+  color: #f0f9ff;
   border-radius: 0.75rem;
   padding: 0.65rem 0.75rem;
   font-size: 0.82rem;
@@ -160,7 +202,7 @@
 .tipList {
   margin: 0.7rem 0 0;
   padding-left: 1.05rem;
-  color: rgba(15, 23, 42, 0.74);
+  color: rgba(248, 250, 252, 0.88);
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -171,17 +213,27 @@
 
 @media (max-width: 75rem) {
   .page {
+    height: auto;
+    min-height: 100%;
+    grid-template-rows: auto auto auto;
     padding: 0.95rem;
     gap: 0.75rem;
   }
 
   .contentGrid {
     grid-template-columns: 1fr;
+    align-content: start;
+  }
+
+  .formShell {
+    min-height: 28rem;
+    overflow-y: visible;
   }
 
   .sidePanel {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto;
+    align-items: start;
   }
 }
 
@@ -221,14 +273,37 @@
     padding: 0.5rem;
   }
 
+  .topBar {
+    align-items: stretch;
+  }
+
+  .topHead {
+    align-items: flex-start;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+  }
+
   .actions {
-    flex-direction: column;
+    display: none;
     width: 100%;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .actionsOpen {
+    display: flex;
   }
 
   .actionLink,
   .logoutButton {
     width: 100%;
     min-width: 0;
+  }
+
+  .formShell {
+    min-height: 36rem;
   }
 }

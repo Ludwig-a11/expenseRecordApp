@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import ExpenseForm from "./components/ExpenseForm";
 import TotalSpentBar from "./components/TotalSpentBar";
@@ -6,6 +7,12 @@ import LogOutButton from "./components/LogOutButton";
 import styles from "./App.module.css";
 
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <>
       <Helmet>
@@ -14,19 +21,33 @@ function App() {
 
       <main className={styles.page}>
         <header className={styles.topBar}>
-          <div className={styles.titleBlock}>
-            <h1 className={styles.title}>Add Expense</h1>
-            <p className={styles.subtitle}>Capture expenses quickly and keep your monthly budget under control.</p>
+          <div className={styles.topHead}>
+            <div className={styles.titleBlock}>
+              <h1 className={styles.title}>Add Expense</h1>
+              <p className={styles.subtitle}>Capture expenses quickly and keep your monthly budget under control.</p>
+            </div>
+
+            <button
+              type="button"
+              className={styles.menuToggle}
+              aria-expanded={isMobileMenuOpen}
+              aria-label="Open navigation menu"
+              onClick={() => setIsMobileMenuOpen((current) => !current)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
 
-          <nav className={styles.actions}>
-            <Link to="/expenses-by-category" className={styles.actionLink}>
+          <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
+            <Link to="/expenses-by-category" className={styles.actionLink} onClick={closeMobileMenu}>
               Categories
             </Link>
-            <Link to="/list-of-expenses" className={styles.actionLink}>
+            <Link to="/list-of-expenses" className={styles.actionLink} onClick={closeMobileMenu}>
               List of Expenses
             </Link>
-            <LogOutButton className={styles.logoutButton} />
+            <LogOutButton className={styles.logoutButton} onClick={closeMobileMenu} />
           </nav>
         </header>
 

@@ -14,9 +14,18 @@
   z-index: 100;
 }
 
+@media (max-width: 75rem) {
+  .container {
+    height: auto;
+    min-height: 90vh;
+    max-height: none;
+  }
+}
+
 @media (max-width: 60rem) {
   .container {
-    height: 95vh;
+    height: auto;
+    min-height: 100vh;
     max-height: none;
   }
 }

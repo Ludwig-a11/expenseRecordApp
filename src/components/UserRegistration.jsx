@@ -155,9 +155,6 @@ const UserRegistration = () => {
           </div>
 
           <aside className={styles.heroPanel}>
-            <div className={styles.illustration} aria-hidden="true">
-              ✍️
-            </div>
             <h2 className={styles.heroTitle}>Ready To Start?</h2>
             <p className={styles.heroText}>Set up your profile once and keep your expense records organized every month.</p>
           </aside>

@@ -35,10 +35,10 @@ const ExpensesByCategory = () => {
           </div>
 
           <nav className={styles.actions}>
-            <Link to="/" className={styles.primaryBtn}>
+            <Link to="/" className={styles.headerBtn}>
               Add Expense
             </Link>
-            <Link to="/list-of-expenses" className={styles.actionBtn}>
+            <Link to="/list-of-expenses" className={styles.headerBtn}>
               List of Expenses
             </Link>
           </nav>

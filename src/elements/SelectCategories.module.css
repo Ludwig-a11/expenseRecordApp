@@ -1,20 +1,36 @@
 .selectContainer {
   font-family: "Work Sans", sans-serif;
-  background: #f8fafc;
-  border: 1px solid rgba(15, 23, 42, 0.16);
+  background: rgba(248, 250, 252, 0.12);
+  border: 1px solid rgba(248, 250, 252, 0.3);
   cursor: pointer;
   border-radius: 0.85rem;
   position: relative;
-  width: 55%;
-  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 2.1rem 0 1rem;
   min-height: 3.25rem;
   display: flex;
   align-items: center;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.selectContainer::after {
+  content: "";
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 0.32rem solid transparent;
+  border-right: 0.32rem solid transparent;
+  border-top: 0.42rem solid rgba(248, 250, 252, 0.82);
+  transform: translateY(-35%);
+  pointer-events: none;
 }
 
 .selectContainer:hover {
-  border-color: rgba(37, 99, 235, 0.45);
+  border-color: rgba(186, 230, 253, 0.75);
+  background: rgba(248, 250, 252, 0.16);
 }
 
 .selectedOption {
@@ -23,7 +39,7 @@
   border: none;
   background: transparent;
   font-size: 1rem;
-  color: #0f172a;
+  color: #f8fafc;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,8 +47,8 @@
 }
 
 .options {
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(248, 250, 252, 0.3);
   position: absolute;
   top: 3.5rem;
   left: 0;
@@ -41,7 +57,9 @@
   max-height: 16rem;
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow: 0 0.85rem 1.5rem rgba(15, 23, 42, 0.12);
+  box-shadow: 0 0.85rem 1.5rem rgba(2, 6, 23, 0.35);
+  backdrop-filter: blur(0.6rem);
+  -webkit-backdrop-filter: blur(0.6rem);
   z-index: 10;
 }
 
@@ -51,7 +69,7 @@
   box-sizing: border-box;
   padding: 0.8rem 1rem;
   border: none;
-  color: #0f172a;
+  color: #f8fafc;
   background: transparent;
   display: flex;
   align-items: center;
@@ -60,7 +78,7 @@
 }
 
 .option:hover {
-  background: rgba(37, 99, 235, 0.08);
+  background: rgba(186, 230, 253, 0.18);
 }
 
 .optionIcon {

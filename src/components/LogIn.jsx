@@ -76,9 +76,6 @@ const Login = () => {
       <section className={styles.loginPage}>
         <div className={styles.card}>
           <aside className={styles.heroPanel}>
-            <div className={styles.illustration} aria-hidden="true">
-              📘
-            </div>
             <h1 className={styles.heroTitle}>Welcome Back!</h1>
             <p className={styles.heroText}>Track your expenses faster and keep your monthly goals under control.</p>
           </aside>
