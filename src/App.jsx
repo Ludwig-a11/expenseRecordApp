@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ExpenseForm from "./components/ExpenseForm";
 import TotalSpentBar from "./components/TotalSpentBar";
 import LogOutButton from "./components/LogOutButton";
+import ThemeToggle from "./components/ThemeToggle";
 import styles from "./App.module.css";
 
 function App() {
@@ -27,17 +28,20 @@ function App() {
               <p className={styles.subtitle}>Capture expenses quickly and keep your monthly budget under control.</p>
             </div>
 
-            <button
-              type="button"
-              className={styles.menuToggle}
-              aria-expanded={isMobileMenuOpen}
-              aria-label="Open navigation menu"
-              onClick={() => setIsMobileMenuOpen((current) => !current)}
-            >
-              <span />
-              <span />
-              <span />
-            </button>
+            <div className={styles.topControls}>
+              <ThemeToggle />
+              <button
+                type="button"
+                className={styles.menuToggle}
+                aria-expanded={isMobileMenuOpen}
+                aria-label="Open navigation menu"
+                onClick={() => setIsMobileMenuOpen((current) => !current)}
+              >
+                <span />
+                <span />
+                <span />
+              </button>
+            </div>
           </div>
 
           <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>

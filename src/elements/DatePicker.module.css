@@ -6,9 +6,9 @@
 .input {
   font-family: "Work Sans", sans-serif;
   box-sizing: border-box;
-  background: rgba(248, 250, 252, 0.12);
-  border: 1px solid rgba(248, 250, 252, 0.3);
-  color: #f8fafc;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
   cursor: pointer;
   border-radius: 0.85rem;
   min-height: 3.25rem;
@@ -21,14 +21,14 @@
 }
 
 .input:hover {
-  border-color: rgba(186, 230, 253, 0.75);
-  background: rgba(248, 250, 252, 0.16);
+  border-color: var(--focus-border);
+  background: var(--surface-card-hover);
 }
 
 .input:focus {
-  border-color: rgba(186, 230, 253, 0.95);
-  box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.28);
-  background: rgba(248, 250, 252, 0.18);
+  border-color: var(--focus-border);
+  box-shadow: var(--focus-ring);
+  background: var(--surface-card-hover);
 }
 
 .calendarContainer {
@@ -45,10 +45,10 @@
 }
 
 .calendarContainer :global(.rdp-month) {
-  background: rgba(15, 23, 42, 0.9);
-  color: #f8fafc;
-  border: 1px solid rgba(248, 250, 252, 0.28);
-  box-shadow: 0 0.85rem 1.5rem rgba(2, 6, 23, 0.35);
+  background: var(--calendar-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  box-shadow: 0 0.85rem 1.5rem var(--shadow-overlay);
   backdrop-filter: blur(0.6rem);
   -webkit-backdrop-filter: blur(0.6rem);
   padding: 1rem;
@@ -58,15 +58,15 @@
 .calendarContainer :global(.rdp-day_selected),
 .calendarContainer :global(.rdp-day_selected:hover),
 .calendarContainer :global(.rdp-day_selected:focus-visible) {
-  background: linear-gradient(95deg, rgba(14, 165, 233, 0.92), rgba(37, 99, 235, 0.9));
-  color: #f8fafc;
-  border: 1px solid rgba(186, 230, 253, 0.9);
-  box-shadow: 0 0.4rem 0.9rem rgba(14, 165, 233, 0.35);
+  background: var(--button-gradient);
+  color: var(--text-primary);
+  border: 1px solid var(--focus-border);
+  box-shadow: 0 0.4rem 0.9rem var(--shadow-action);
 }
 
 .calendarContainer :global(.rdp-day_today:not(.rdp-day_selected)) {
-  color: #bae6fd;
-  border: 1px solid rgba(186, 230, 253, 0.45);
+  color: var(--accent);
+  border: 1px solid var(--focus-border);
 }
 
 @media (max-width: 60rem) {

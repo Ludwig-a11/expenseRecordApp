@@ -11,20 +11,20 @@
 }
 
 .message {
-  background: #000;
-  color: #fff;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   padding: 1.25rem 2.5rem;
   border-radius: 0.31rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px var(--shadow-overlay);
   text-align: center;
 }
 
 .error {
-  background: #e34747;
+  background: var(--error);
 }
 
 .success {
-  background: #43a854;
+  background: var(--success);
 }
 
 @keyframes slideDown {

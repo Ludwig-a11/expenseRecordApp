@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { format, fromUnixTime } from "date-fns";
 import TotalSpentBar from "./TotalSpentBar";
+import ThemeToggle from "./ThemeToggle";
 import useGetExpenses from "./../hooks/useGetExpenses";
 import convertToCurrency from "./../functions/convertToCurrency";
 import deleteExpense from "./../firebase/deleteExpense";
@@ -47,6 +48,7 @@ const ListOfExpenses = () => {
           </div>
 
           <nav className={styles.actions}>
+            <ThemeToggle />
             <Link to="/" className={styles.headerBtn}>
               Add Expense
             </Link>
@@ -82,11 +84,30 @@ const ListOfExpenses = () => {
                 <p className={styles.description}>{expense.description}</p>
                 <p className={styles.value}>{convertToCurrency(expense.amount)}</p>
                 <div className={styles.rowActions}>
-                  <Link to={`/edit-expense/${expense.id}`} className={styles.actionBtn}>
-                    Edit
+                  <Link
+                    to={`/edit-expense/${expense.id}`}
+                    className={`${styles.actionBtn} ${styles.rowActionBtn}`}
+                    aria-label="Edit expense"
+                    title="Edit"
+                  >
+                    <span className={styles.btnIcon} aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25Zm14.71-9.04a1 1 0 0 0 0-1.41l-2.5-2.5a1 1 0 0 0-1.41 0l-1.42 1.42 3.75 3.75 1.58-1.26Z" />
+                      </svg>
+                    </span>
                   </Link>
-                  <button type="button" className={styles.dangerBtn} onClick={() => handleDeleteExpense(expense.id)}>
-                    Delete
+                  <button
+                    type="button"
+                    className={`${styles.dangerBtn} ${styles.rowActionBtn}`}
+                    onClick={() => handleDeleteExpense(expense.id)}
+                    aria-label="Delete expense"
+                    title="Delete"
+                  >
+                    <span className={styles.btnIcon} aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M9 3h6l1 2h5v2H3V5h5l1-2Zm1 6h2v9h-2V9Zm4 0h2v9h-2V9ZM6 9h2v9H6V9Z" />
+                      </svg>
+                    </span>
                   </button>
                 </div>
               </article>

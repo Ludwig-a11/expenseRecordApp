@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./../firebase/firebase.config";
 import Alert from "./../elements/Alert";
+import ThemeToggle from "./ThemeToggle";
 import styles from "./LogIn.module.css";
 
 const Login = () => {
@@ -83,9 +84,12 @@ const Login = () => {
           <div className={styles.formPanel}>
             <div className={styles.headerRow}>
               <h2 className={styles.title}>Log In</h2>
-              <Link to="/user-registration" className={styles.registerLink}>
-                Create account
-              </Link>
+              <div className={styles.headerActions}>
+                <ThemeToggle />
+                <Link to="/user-registration" className={styles.registerLink}>
+                  Create account
+                </Link>
+              </div>
             </div>
 
             <p className={styles.subtitle}>Welcome back, we missed you.</p>

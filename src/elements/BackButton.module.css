@@ -1,9 +1,9 @@
 .btn {
-  background: #4d4d4d;
+  background: var(--bg-hover);
   margin-left: 1.25rem;
   border: none;
   border-radius: 0.925rem;
-  color: #fff;
+  color: var(--text-primary);
   min-height: 3rem;
   padding: 0.75rem 1rem;
   font-size: 1.15rem;

@@ -24,6 +24,8 @@ const normalizeAmount = (value) => {
   return Number.isNaN(parsedValue) ? "" : parsedValue.toFixed(2);
 };
 
+const MAX_DESCRIPTION_LENGTH = 500;
+
 const ExpenseForm = ({ expense = null, onDirtyChange = null }) => {
 
     const [inputDescription, setInputDescription] = useState('');
@@ -91,7 +93,7 @@ const ExpenseForm = ({ expense = null, onDirtyChange = null }) => {
 
     const handleChange = (e) => {
     if (e.target.name === 'description') {
-        setInputDescription(e.target.value);
+        setInputDescription(e.target.value.slice(0, MAX_DESCRIPTION_LENGTH));
     } else if (e.target.name === 'amount') {
 
         let value = e.target.value;
@@ -192,6 +194,7 @@ const handleSubmit = (e) =>{
                 id="description"
                 placeholder="Example: Weekly groceries"
                 value={inputDescription}
+                maxLength={MAX_DESCRIPTION_LENGTH}
                 onChange={handleChange}
             />
           </div>

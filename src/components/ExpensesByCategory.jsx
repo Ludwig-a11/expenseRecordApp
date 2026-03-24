@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import TotalSpentBar from "./TotalSpentBar";
+import ThemeToggle from "./ThemeToggle";
 import useMonthlyExpensesByCategory from "../hooks/useMonthlyExpensesByCategory";
 import convertToCurrency from "./../functions/convertToCurrency";
 import styles from "./ExpensesByCategory.module.css";
@@ -35,6 +36,7 @@ const ExpensesByCategory = () => {
           </div>
 
           <nav className={styles.actions}>
+            <ThemeToggle />
             <Link to="/" className={styles.headerBtn}>
               Add Expense
             </Link>

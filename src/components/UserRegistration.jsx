@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "./../firebase/firebase.config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Alert from "./../elements/Alert";
+import ThemeToggle from "./ThemeToggle";
 import styles from "./UserRegistration.module.css";
 
 const UserRegistration = () => {
@@ -36,7 +37,7 @@ const UserRegistration = () => {
     setAlert({});
 
     const regExp = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
-    if (!regExp.test(email)) {
+    if (regExp.test(email) === false) {
       setAlertState(true);
       setAlert({
         type: "error",
@@ -98,9 +99,12 @@ const UserRegistration = () => {
           <div className={styles.formPanel}>
             <div className={styles.headerRow}>
               <h1 className={styles.title}>Create Account</h1>
-              <Link to="/log-in" className={styles.loginLink}>
-                Log In
-              </Link>
+              <div className={styles.headerActions}>
+                <ThemeToggle />
+                <Link to="/log-in" className={styles.loginLink}>
+                  Log In
+                </Link>
+              </div>
             </div>
 
             <p className={styles.subtitle}>Create your account and start tracking your spending.</p>

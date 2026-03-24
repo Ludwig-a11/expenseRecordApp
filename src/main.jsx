@@ -16,6 +16,12 @@ import { getMissingFirebaseEnv } from "./config/firebaseEnv.js";
 import ConfigErrorScreen from "./components/ConfigErrorScreen.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import { TotalSpentProvider } from "./context/MonthlyTotalSpent.jsx";
+import { ThemeProvider, THEME_STORAGE_KEY } from "./context/ThemeContext.jsx";
+
+const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+const initialTheme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+document.body.classList.add(`theme-${initialTheme}`);
+document.body.style.colorScheme = initialTheme;
 
 const missingFirebaseEnv = getMissingFirebaseEnv(import.meta.env);
 const hasFirebaseConfigError = missingFirebaseEnv.length > 0;
@@ -29,42 +35,57 @@ createRoot(document.getElementById("root")).render(
         <Helmet>
           <link rel="shortcut icon" href={favicon} type="image/x-icon" />
         </Helmet>
-        <AuthProvider>
-          <TotalSpentProvider>
-            <Router>
-              <Container>
-                <Routes>
-                  <Route path="/log-in" element={<LogIn />} />
-                  <Route path="/user-registration" element={<UserRegistration />} />
-                  
-                  <Route path="/expenses-by-category" element={
-                  <PrivateRoute>
-                    <ExpensesByCategory />
-                  </PrivateRoute>
-                  } />
 
-                  <Route path="/list-of-expenses" element={
-                    <PrivateRoute>
-                      <ListOfExpenses />
-                    </PrivateRoute>
-                  } />
+        <ThemeProvider>
+          <AuthProvider>
+            <TotalSpentProvider>
+              <Router>
+                <Container>
+                  <Routes>
+                    <Route path="/log-in" element={<LogIn />} />
+                    <Route path="/user-registration" element={<UserRegistration />} />
 
-                  <Route path="/edit-expense/:id" element={
-                    <PrivateRoute>
-                      <EditExpense />
-                    </PrivateRoute>
-                  } />
+                    <Route
+                      path="/expenses-by-category"
+                      element={
+                        <PrivateRoute>
+                          <ExpensesByCategory />
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route path="/" element={
-                    <PrivateRoute>
-                      <App />
-                    </PrivateRoute>
-                  } />
-                </Routes>
-              </Container>
-            </Router>
-          </TotalSpentProvider>
-        </AuthProvider>
+                    <Route
+                      path="/list-of-expenses"
+                      element={
+                        <PrivateRoute>
+                          <ListOfExpenses />
+                        </PrivateRoute>
+                      }
+                    />
+
+                    <Route
+                      path="/edit-expense/:id"
+                      element={
+                        <PrivateRoute>
+                          <EditExpense />
+                        </PrivateRoute>
+                      }
+                    />
+
+                    <Route
+                      path="/"
+                      element={
+                        <PrivateRoute>
+                          <App />
+                        </PrivateRoute>
+                      }
+                    />
+                  </Routes>
+                </Container>
+              </Router>
+            </TotalSpentProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </>
     )}
   </StrictMode>

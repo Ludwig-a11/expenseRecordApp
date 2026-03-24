@@ -11,7 +11,7 @@
 
 .listElement {
   padding: 1.25rem 0;
-  border-bottom: 2px solid #f2f2f2;
+  border-bottom: 2px solid var(--divider);
   display: grid;
   gap: 0.31rem;
   justify-content: space-between;
@@ -37,7 +37,7 @@
 
 .elementListOfCategories {
   padding: 1.25rem 0;
-  border-bottom: 2px solid #f2f2f2;
+  border-bottom: 2px solid var(--divider);
   display: flex;
   justify-content: space-between;
 }
@@ -48,6 +48,7 @@
   text-transform: uppercase;
   display: flex;
   align-items: center;
+  color: var(--text-primary);
 }
 
 .category svg {
@@ -61,19 +62,21 @@
   justify-content: center;
   font-size: 1.25rem;
   text-transform: capitalize;
+  color: var(--text-secondary);
 }
 
 .value {
   font-size: 1.25rem;
   font-weight: 700;
   justify-content: end;
+  color: var(--text-primary);
 }
 
 .date {
   border-radius: 0.31rem;
-  background: #5b69e2;
+  background: var(--button-gradient);
   text-align: center;
-  color: #fff;
+  color: var(--text-primary);
   padding: 0.62rem 3.12rem;
   display: inline-block;
   margin: 1.25rem 0;
@@ -86,7 +89,7 @@
 
 .actionButton {
   outline: none;
-  background: #e8eff1;
+  background: var(--surface-card-soft);
   border: none;
   width: 2.5rem;
   height: 2.5rem;
@@ -100,12 +103,12 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  color: #4d4d4d;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
 .actionButton:hover {
-  background: #cbdde2;
+  background: var(--surface-card-hover);
 }
 
 .actionButton svg {
@@ -122,7 +125,7 @@
 }
 
 .subtitle {
-  color: #5b69e2;
+  color: var(--secondary);
   font-weight: 400;
   font-size: 2.5rem;
   padding: 2.5rem 0;
@@ -135,10 +138,10 @@
 }
 
 .uploadMoreButton {
-  background: #5b69e2;
+  background: var(--button-gradient);
   border: none;
   border-radius: 0.44rem;
-  color: #fff;
+  color: var(--text-primary);
   font-family: "Work Sans", sans-serif;
   padding: 1rem 1.87rem;
   font-size: 1.25rem;
@@ -153,7 +156,7 @@
 }
 
 .uploadMoreButton:hover {
-  background: #4a57c7;
+  background: var(--button-gradient-strong);
 }
 
 @media (max-width: 50rem) {

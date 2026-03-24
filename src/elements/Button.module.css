@@ -1,10 +1,10 @@
 .button {
-  background: #4d4d4d;
+  background: var(--bg-hover);
   width: auto;
   margin-left: 0;
   border: none;
   border-radius: 0.925rem;
-  color: #fff;
+  color: var(--text-primary);
   font-family: "Work Sans", sans-serif;
   min-height: 3rem;
   padding: 0.75rem 1rem;
@@ -22,12 +22,12 @@
 
 .button svg {
   height: 0.75rem;
-  fill: #fff;
+  fill: currentColor;
 }
 
 .primary {
-  border: 1px solid rgba(248, 250, 252, 0.42);
-  background: linear-gradient(95deg, rgba(14, 165, 233, 0.55), rgba(37, 99, 235, 0.5));
+  border: 1px solid var(--divider);
+  background: var(--button-gradient);
 }
 
 .withIcon {

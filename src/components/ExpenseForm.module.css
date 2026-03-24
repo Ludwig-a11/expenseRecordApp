@@ -8,8 +8,8 @@
 .topControls {
   padding: 0.5rem;
   border-radius: 1rem;
-  background: rgba(248, 250, 252, 0.1);
-  border: 1px solid rgba(248, 250, 252, 0.22);
+  background: var(--surface-card-soft);
+  border: 1px solid var(--divider);
   backdrop-filter: blur(0.6rem);
   -webkit-backdrop-filter: blur(0.6rem);
   min-width: 0;
@@ -34,7 +34,7 @@
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: rgba(248, 250, 252, 0.88);
+  color: var(--text-secondary);
   padding-left: 0.15rem;
 }
 
@@ -65,16 +65,16 @@
   min-width: 13.5rem;
   border-radius: 0.95rem;
   padding: 0.9rem 1.3rem;
-  border: 1px solid rgba(15, 23, 42, 0.05);
-  box-shadow: 0 0.7rem 1.5rem rgba(2, 6, 23, 0.3);
-  background: linear-gradient(95deg, rgba(14, 165, 233, 0.55), rgba(37, 99, 235, 0.5));
+  border: 1px solid var(--divider);
+  box-shadow: 0 0.7rem 1.5rem var(--shadow-overlay);
+  background: var(--button-gradient);
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
 .submitRow button:hover {
   transform: translateY(-2px);
   filter: brightness(1.03);
-  box-shadow: 0 1rem 1.8rem rgba(14, 165, 233, 0.28);
+  box-shadow: 0 1rem 1.8rem var(--shadow-action);
 }
 
 .submitRow button:active {
