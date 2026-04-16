@@ -215,6 +215,14 @@
   padding: 1rem;
 }
 
+.emptyState > div {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  display: grid;
+  justify-items: center;
+}
+
 .emptyTitle {
   margin: 0;
   color: var(--text-primary);
@@ -224,6 +232,7 @@
 .emptyText {
   margin: 0.45rem 0 1rem;
   color: var(--text-muted);
+  max-width: 30ch;
 }
 
 @media (max-width: 60rem) {
@@ -268,5 +277,13 @@
   .primaryBtn {
     width: 100%;
     min-width: 0;
+  }
+
+  .emptyState {
+    padding: 1rem 0.7rem;
+  }
+
+  .emptyState > div {
+    width: min(100%, 21rem);
   }
 }
