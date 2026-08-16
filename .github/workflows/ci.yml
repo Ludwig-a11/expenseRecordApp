@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run test
+
+      # The Firebase Web config isn't secret by design (it ships in the
+      # client bundle either way), so placeholder values are enough to
+      # verify the build itself doesn't break — no real project needed.
+      - run: npm run build
+        env:
+          VITE_APIKEY: ci-placeholder
+          VITE_AUTHDOMAIN: ci-placeholder
+          VITE_PROJECTID: ci-placeholder
+          VITE_STORAGEBUCKET: ci-placeholder
+          VITE_MESSAGINGSENDERID: ci-placeholder
+          VITE_APPID: ci-placeholder
+
+  firestore-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # The Firestore emulator requires Java 21+; GitHub's default runner
+      # Java isn't guaranteed to be new enough.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - run: npm ci
+
+      - run: npx firebase-tools emulators:exec --only firestore --project demo-expense-record-app "npm run verify:rules"
