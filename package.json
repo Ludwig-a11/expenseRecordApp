@@ -8,6 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "verify:rules": "node scripts/verify-firestore-rules.mjs",
     "emulators:test:rules": "firebase emulators:exec --only firestore \"npm run verify:rules\""
   },
@@ -24,6 +26,9 @@
     "@eslint/js": "^9.17.0",
     "@firebase/rules-unit-testing": "^4.0.1",
     "@svgr/webpack": "^8.1.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.4",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
@@ -33,7 +38,9 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "firebase-tools": "^15.27.0",
     "globals": "^15.14.0",
+    "jsdom": "^29.1.1",
     "vite": "^6.0.5",
-    "vite-plugin-svgr": "^4.3.0"
+    "vite-plugin-svgr": "^4.3.0",
+    "vitest": "^4.1.10"
   }
 }

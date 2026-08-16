@@ -35,4 +35,10 @@ export default [
       ],
     },
   },
+  {
+    files: ['**/*.test.{js,jsx}'],
+    rules: {
+      'react/prop-types': 'off',
+    },
+  },
 ]
