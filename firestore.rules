@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /expenses/{expenseId} {
+
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(data) {
+        return isSignedIn() && request.auth.uid == data.uidUser;
+      }
+
+      function hasValidShape(data) {
+        return data.keys().hasAll(['category', 'description', 'amount', 'date', 'uidUser'])
+          && data.keys().hasOnly(['category', 'description', 'amount', 'date', 'uidUser'])
+          && data.uidUser is string
+          && data.uidUser == request.auth.uid
+          && data.category is string
+          && data.category.size() > 0
+          && data.category.size() <= 60
+          && data.description is string
+          && data.description.size() > 0
+          && data.description.size() <= 500
+          && data.amount is number
+          && data.amount > 0
+          && data.amount < 1000000000
+          && data.date is number
+          && data.date > 0;
+      }
+
+      allow read: if isOwner(resource.data);
+
+      allow create: if isSignedIn() && hasValidShape(request.resource.data);
+
+      allow update: if isOwner(resource.data)
+        && hasValidShape(request.resource.data)
+        // uidUser no se puede cambiar en un update
+        && request.resource.data.uidUser == resource.data.uidUser;
+
+      allow delete: if isOwner(resource.data);
+    }
+
+    // Bloqueo por defecto de cualquier otra colección no contemplada
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
