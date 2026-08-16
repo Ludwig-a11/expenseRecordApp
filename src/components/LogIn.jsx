@@ -85,7 +85,10 @@ const Login = () => {
     try {
       await sendPasswordResetEmail(auth, email);
       setAlertState(true);
-      setAlert({ type: "success", message: "Password reset email sent. Check your inbox." });
+      setAlert({
+        type: "success",
+        message: "Password reset email sent. Check your inbox — if you don't see it in a few minutes, check your spam/junk folder too.",
+      });
     } catch {
       setAlertState(true);
       setAlert({ type: "error", message: "Could not send reset email. Try again later." });
