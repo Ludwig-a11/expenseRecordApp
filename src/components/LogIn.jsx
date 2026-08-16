@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "./../firebase/firebase.config";
 import Alert from "./../elements/Alert";
 import ThemeToggle from "./ThemeToggle";
@@ -68,6 +68,33 @@ const Login = () => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    setAlertState(false);
+    setAlert({});
+
+    const regExp = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+    if (!regExp.test(email)) {
+      setAlertState(true);
+      setAlert({
+        type: "error",
+        message: "Enter your email above first, then click 'Forgot your password?'",
+      });
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setAlertState(true);
+      setAlert({
+        type: "success",
+        message: "Password reset email sent. Check your inbox — if you don't see it in a few minutes, check your spam/junk folder too.",
+      });
+    } catch {
+      setAlertState(true);
+      setAlert({ type: "error", message: "Could not send reset email. Try again later." });
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -125,6 +152,14 @@ const Login = () => {
 
               <button type="submit" className={styles.submitButton}>
                 Sign In
+              </button>
+
+              <button
+                type="button"
+                className={styles.forgotPasswordLink}
+                onClick={handleForgotPassword}
+              >
+                Forgot your password?
               </button>
             </form>
           </div>

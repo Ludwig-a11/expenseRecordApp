@@ -35,6 +35,7 @@ const ExpenseForm = ({ expense = null, onDirtyChange = null }) => {
     const [stateAlert, setStateAlert] = useState(false);
     const [alert, setAlert] = useState({});
     const [initialFormState, setInitialFormState] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const {user} = useAuth();
     const navigate = useNavigate();
 
@@ -116,10 +117,14 @@ const ExpenseForm = ({ expense = null, onDirtyChange = null }) => {
 
 const handleSubmit = (e) =>{
   e.preventDefault();
+  if (isSubmitting) return;
+
   let amount = parseFloat(inputAmount).toFixed(2);
 
   if(inputDescription !== '' && inputAmount !== ''){
     if(amount){
+      setIsSubmitting(true);
+
       if(expense){
         editExpense({
           id: expense.id,
@@ -141,6 +146,8 @@ const handleSubmit = (e) =>{
               ? "You don't have permission to edit this expense"
               : 'Something went wrong. Try again later',
           });
+        }).finally(() => {
+          setIsSubmitting(false);
         })
       } else {
         addExpense({
@@ -163,6 +170,9 @@ const handleSubmit = (e) =>{
           setStateAlert(true);
           setAlert({type: 'error', message: 'Something went wrong. Try again later'})
           console.log(error);
+        })
+        .finally(() => {
+          setIsSubmitting(false);
         })
       }
     } else {
@@ -221,7 +231,7 @@ const handleSubmit = (e) =>{
 
         <div className={styles.submitRow}>
           <ButtonContainer>
-            <Button as="button" primario type="submit">
+            <Button as="button" primario type="submit" disabled={isSubmitting}>
                 {expense ? 'Save Changes': 'Add Expense'}
             </Button>
           </ButtonContainer>
