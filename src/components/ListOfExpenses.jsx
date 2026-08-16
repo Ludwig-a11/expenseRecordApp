@@ -30,6 +30,9 @@ const ListOfExpenses = () => {
   };
 
   const handleDeleteExpense = async (expenseId) => {
+    const confirmed = window.confirm('Are you sure you want to delete this expense? This cannot be undone.');
+    if (!confirmed) return;
+
     try {
       await deleteExpense(expenseId);
       removeExpenseFromState(expenseId);

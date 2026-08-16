@@ -4,7 +4,28 @@ La app no tiene backend propio; los backups se configuran a nivel de infraestruc
 Google Cloud (mismo proyecto que ya usa Firebase), no en este repositorio. Este documento
 describe cómo configurarlos para que sean reproducibles si se pierde la configuración.
 
-## Opción recomendada: exportación automática diaria (Cloud Scheduler + Cloud Function)
+## Opción recomendada: Backups programados nativos de Firestore (sin código)
+
+Firestore incluye una función administrada de backups programados, configurable
+directamente desde la consola (Firebase Console o Google Cloud Console → Firestore →
+pestaña "Backups"). No requiere Cloud Functions, Cloud Scheduler, ni cuentas de servicio
+propias — Google se encarga de ejecutarlo y mantenerlo.
+
+Pasos:
+1. Firebase Console → proyecto → Firestore Database → pestaña **Backups**.
+2. "Create backup schedule" (o "Programar backup").
+3. Elegir frecuencia (diaria y/o semanal) y periodo de retención — la consola muestra las
+   opciones disponibles para el plan del proyecto.
+4. Guardar. Los backups quedan visibles en esa misma pestaña, con posibilidad de restaurar
+   a una nueva base de datos desde ahí.
+
+Esta es la opción preferida por simplicidad y menor mantenimiento. Las secciones de abajo
+(Cloud Scheduler + Cloud Function, y export manual) quedan documentadas como alternativa
+por si el proyecto no tuviera disponible esta función administrada, o se necesitara más
+control granular (ej. exportar a un bucket propio para retención más larga que la que
+ofrece la función nativa).
+
+## Alternativa: exportación automática diaria (Cloud Scheduler + Cloud Function)
 
 Serverless, sin servidor propio que mantener.
 
