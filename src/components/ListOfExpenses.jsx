@@ -8,12 +8,14 @@ import useGetExpenses from "./../hooks/useGetExpenses";
 import convertToCurrency from "./../functions/convertToCurrency";
 import deleteExpense from "./../firebase/deleteExpense";
 import Alert from "./../elements/Alert";
+import ConfirmDialog from "./../elements/ConfirmDialog";
 import styles from "./ListOfExpenses.module.css";
 
 const ListOfExpenses = () => {
   const [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState] = useGetExpenses();
   const [stateAlert, setStateAlert] = useState(false);
   const [alert, setAlert] = useState({});
+  const [expenseIdPendingDelete, setExpenseIdPendingDelete] = useState(null);
 
   const formatDate = (date) => {
     return format(fromUnixTime(date), "dd 'de' MMMM 'de' yyyy");
@@ -29,9 +31,17 @@ const ListOfExpenses = () => {
     return false;
   };
 
-  const handleDeleteExpense = async (expenseId) => {
-    const confirmed = window.confirm('Are you sure you want to delete this expense? This cannot be undone.');
-    if (!confirmed) return;
+  const handleRequestDelete = (expenseId) => {
+    setExpenseIdPendingDelete(expenseId);
+  };
+
+  const handleCancelDelete = () => {
+    setExpenseIdPendingDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    const expenseId = expenseIdPendingDelete;
+    setExpenseIdPendingDelete(null);
 
     try {
       await deleteExpense(expenseId);
@@ -113,7 +123,7 @@ const ListOfExpenses = () => {
                   <button
                     type="button"
                     className={`${styles.dangerBtn} ${styles.rowActionBtn}`}
-                    onClick={() => handleDeleteExpense(expense.id)}
+                    onClick={() => handleRequestDelete(expense.id)}
                     aria-label="Delete expense"
                     title="Delete"
                   >
@@ -143,6 +153,17 @@ const ListOfExpenses = () => {
         message={alert.message}
         alertState={stateAlert}
         setAlertState={setStateAlert}
+      />
+
+      <ConfirmDialog
+        open={expenseIdPendingDelete !== null}
+        title="Delete expense"
+        message="Are you sure you want to delete this expense? This cannot be undone."
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        danger
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
       />
     </>
   );
