@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { format, fromUnixTime } from "date-fns";
 import TotalSpentBar from "./TotalSpentBar";
@@ -6,10 +7,13 @@ import ThemeToggle from "./ThemeToggle";
 import useGetExpenses from "./../hooks/useGetExpenses";
 import convertToCurrency from "./../functions/convertToCurrency";
 import deleteExpense from "./../firebase/deleteExpense";
+import Alert from "./../elements/Alert";
 import styles from "./ListOfExpenses.module.css";
 
 const ListOfExpenses = () => {
   const [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState] = useGetExpenses();
+  const [stateAlert, setStateAlert] = useState(false);
+  const [alert, setAlert] = useState({});
 
   const formatDate = (date) => {
     return format(fromUnixTime(date), "dd 'de' MMMM 'de' yyyy");
@@ -30,7 +34,14 @@ const ListOfExpenses = () => {
       await deleteExpense(expenseId);
       removeExpenseFromState(expenseId);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setStateAlert(true);
+      setAlert({
+        type: 'error',
+        message: error.code === 'permission-denied'
+          ? "You don't have permission to delete this expense"
+          : 'Something went wrong. Try again later',
+      });
     }
   };
 
@@ -123,6 +134,13 @@ const ListOfExpenses = () => {
           )}
         </section>
       </main>
+
+      <Alert
+        type={alert.type}
+        message={alert.message}
+        alertState={stateAlert}
+        setAlertState={setStateAlert}
+      />
     </>
   );
 };

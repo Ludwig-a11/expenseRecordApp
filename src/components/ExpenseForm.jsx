@@ -133,7 +133,14 @@ const handleSubmit = (e) =>{
           }
           navigate('/list-of-expenses')
         }).catch((error) =>{
-          console.log(error);
+          console.error(error);
+          setStateAlert(true);
+          setAlert({
+            type: 'error',
+            message: error.code === 'permission-denied'
+              ? "You don't have permission to edit this expense"
+              : 'Something went wrong. Try again later',
+          });
         })
       } else {
         addExpense({
