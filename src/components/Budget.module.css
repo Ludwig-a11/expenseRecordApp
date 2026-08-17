@@ -24,10 +24,47 @@
   gap: 1rem;
 }
 
+.topHead {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.topControls {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
 .titleWrap {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+}
+
+.menuToggle {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  background: var(--surface-card-soft);
+  padding: 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.24rem;
+}
+
+.menuToggle span {
+  width: 1rem;
+  height: 0.12rem;
+  border-radius: 999px;
+  background: var(--text-primary);
 }
 
 .title {
@@ -52,6 +89,7 @@
 
 .headerBtn {
   margin-left: 0;
+  box-sizing: border-box;
   min-height: 2.45rem;
   padding: 0.58rem 1.05rem;
   border-radius: 0.78rem;
@@ -303,8 +341,20 @@
     font-size: 0.84rem;
   }
 
+  .menuToggle {
+    display: inline-flex;
+  }
+
   .actions {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
     flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .actionsOpen {
+    display: flex;
   }
 
   .headerBtn {

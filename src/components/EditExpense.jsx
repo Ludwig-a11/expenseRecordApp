@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ExpenseForm from "./ExpenseForm";
 import useGetExpense from "../hooks/useGetExpense";
-import TotalSpentBar from "./TotalSpentBar";
+import BudgetSummaryBar from "./BudgetSummaryBar";
 import LogOutButton from "./LogOutButton";
 import Alert from "../elements/Alert";
 import styles from "./../App.module.css";
@@ -84,7 +84,7 @@ const EditExpense = () => {
         </header>
 
         <div className={styles.totalWrap}>
-          <TotalSpentBar />
+          <BudgetSummaryBar />
         </div>
 
         <section className={styles.contentGrid}>

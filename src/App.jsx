@@ -1,19 +1,15 @@
 import { Helmet } from "react-helmet";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import ExpenseForm from "./components/ExpenseForm";
-import TotalSpentBar from "./components/TotalSpentBar";
+import BudgetSummaryBar from "./components/BudgetSummaryBar";
 import LogOutButton from "./components/LogOutButton";
 import ThemeToggle from "./components/ThemeToggle";
 import UserBadge from "./elements/UserBadge";
+import useMobileMenu from "./hooks/useMobileMenu";
 import styles from "./App.module.css";
 
 function App() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } = useMobileMenu();
 
   return (
     <>
@@ -37,7 +33,7 @@ function App() {
                 className={styles.menuToggle}
                 aria-expanded={isMobileMenuOpen}
                 aria-label="Open navigation menu"
-                onClick={() => setIsMobileMenuOpen((current) => !current)}
+                onClick={toggleMobileMenu}
               >
                 <span />
                 <span />
@@ -61,7 +57,7 @@ function App() {
         </header>
 
         <div className={styles.totalWrap}>
-          <TotalSpentBar />
+          <BudgetSummaryBar />
         </div>
 
         <section className={styles.contentGrid}>

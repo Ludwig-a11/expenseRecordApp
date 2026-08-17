@@ -1,12 +1,14 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import TotalSpentBar from "./TotalSpentBar";
+import BudgetSummaryBar from "./BudgetSummaryBar";
 import ThemeToggle from "./ThemeToggle";
 import useMonthlyExpensesByCategory from "../hooks/useMonthlyExpensesByCategory";
+import useMobileMenu from "../hooks/useMobileMenu";
 import convertToCurrency from "./../functions/convertToCurrency";
 import styles from "./ExpensesByCategory.module.css";
 
 const ExpensesByCategory = () => {
+  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } = useMobileMenu();
   const expensesByCategory = useMonthlyExpensesByCategory();
   const total = expensesByCategory.reduce((sum, item) => sum + Number(item.amount || 0), 0);
 
@@ -30,27 +32,43 @@ const ExpensesByCategory = () => {
 
       <main className={styles.page}>
         <header className={styles.topBar}>
-          <div className={styles.titleWrap}>
-            <h1 className={styles.title}>Expenses by Category</h1>
-            <p className={styles.subtitle}>See which categories are consuming most of your monthly budget.</p>
+          <div className={styles.topHead}>
+            <div className={styles.titleWrap}>
+              <h1 className={styles.title}>Expenses by Category</h1>
+              <p className={styles.subtitle}>See which categories are consuming most of your monthly budget.</p>
+            </div>
+
+            <div className={styles.topControls}>
+              <ThemeToggle />
+              <button
+                type="button"
+                className={styles.menuToggle}
+                aria-expanded={isMobileMenuOpen}
+                aria-label="Open navigation menu"
+                onClick={toggleMobileMenu}
+              >
+                <span />
+                <span />
+                <span />
+              </button>
+            </div>
           </div>
 
-          <nav className={styles.actions}>
-            <ThemeToggle />
-            <Link to="/" className={styles.headerBtn}>
+          <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
+            <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
               Add Expense
             </Link>
-            <Link to="/list-of-expenses" className={styles.headerBtn}>
+            <Link to="/list-of-expenses" className={styles.headerBtn} onClick={closeMobileMenu}>
               List of Expenses
             </Link>
-            <Link to="/budget" className={styles.headerBtn}>
+            <Link to="/budget" className={styles.headerBtn} onClick={closeMobileMenu}>
               Budget
             </Link>
           </nav>
         </header>
 
         <div className={styles.totalWrap}>
-          <TotalSpentBar />
+          <BudgetSummaryBar />
         </div>
 
         <section className={styles.listShell}>

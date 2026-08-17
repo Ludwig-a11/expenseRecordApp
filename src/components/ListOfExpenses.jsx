@@ -2,9 +2,10 @@ import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { format, fromUnixTime } from "date-fns";
-import TotalSpentBar from "./TotalSpentBar";
+import BudgetSummaryBar from "./BudgetSummaryBar";
 import ThemeToggle from "./ThemeToggle";
 import useGetExpenses from "./../hooks/useGetExpenses";
+import useMobileMenu from "./../hooks/useMobileMenu";
 import convertToCurrency from "./../functions/convertToCurrency";
 import deleteExpense from "./../firebase/deleteExpense";
 import Alert from "./../elements/Alert";
@@ -12,6 +13,7 @@ import ConfirmDialog from "./../elements/ConfirmDialog";
 import styles from "./ListOfExpenses.module.css";
 
 const ListOfExpenses = () => {
+  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } = useMobileMenu();
   const [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState] = useGetExpenses();
   const [stateAlert, setStateAlert] = useState(false);
   const [alert, setAlert] = useState({});
@@ -66,27 +68,43 @@ const ListOfExpenses = () => {
 
       <main className={styles.page}>
         <header className={styles.topBar}>
-          <div className={styles.titleWrap}>
-            <h1 className={styles.title}>List Of Expenses</h1>
-            <p className={styles.subtitle}>Review, edit or remove your records by date.</p>
+          <div className={styles.topHead}>
+            <div className={styles.titleWrap}>
+              <h1 className={styles.title}>List Of Expenses</h1>
+              <p className={styles.subtitle}>Review, edit or remove your records by date.</p>
+            </div>
+
+            <div className={styles.topControls}>
+              <ThemeToggle />
+              <button
+                type="button"
+                className={styles.menuToggle}
+                aria-expanded={isMobileMenuOpen}
+                aria-label="Open navigation menu"
+                onClick={toggleMobileMenu}
+              >
+                <span />
+                <span />
+                <span />
+              </button>
+            </div>
           </div>
 
-          <nav className={styles.actions}>
-            <ThemeToggle />
-            <Link to="/" className={styles.headerBtn}>
+          <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
+            <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
               Add Expense
             </Link>
-            <Link to="/expenses-by-category" className={styles.headerBtn}>
+            <Link to="/expenses-by-category" className={styles.headerBtn} onClick={closeMobileMenu}>
               Categories
             </Link>
-            <Link to="/budget" className={styles.headerBtn}>
+            <Link to="/budget" className={styles.headerBtn} onClick={closeMobileMenu}>
               Budget
             </Link>
           </nav>
         </header>
 
         <div className={styles.totalWrap}>
-          <TotalSpentBar />
+          <BudgetSummaryBar />
         </div>
 
         <section className={styles.listShell}>

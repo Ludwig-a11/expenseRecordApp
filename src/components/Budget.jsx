@@ -6,10 +6,12 @@ import Alert from "./../elements/Alert";
 import { useBudget } from "./../context/BudgetContext";
 import { PERIOD_TYPES } from "./../functions/getPeriodBoundaries";
 import convertToCurrency from "./../functions/convertToCurrency";
+import useMobileMenu from "./../hooks/useMobileMenu";
 import styles from "./Budget.module.css";
 
 const Budget = () => {
   const { budget, loading, periodLabel, spent, remaining, percentUsed, isOverBudget, saveBudget } = useBudget();
+  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } = useMobileMenu();
 
   const [periodType, setPeriodType] = useState(PERIOD_TYPES.MONTHLY);
   const [inputAmount, setInputAmount] = useState("");
@@ -73,20 +75,36 @@ const Budget = () => {
 
       <main className={styles.page}>
         <header className={styles.topBar}>
-          <div className={styles.titleWrap}>
-            <h1 className={styles.title}>Budget</h1>
-            <p className={styles.subtitle}>Set how much you can spend this period and track it in real time.</p>
+          <div className={styles.topHead}>
+            <div className={styles.titleWrap}>
+              <h1 className={styles.title}>Budget</h1>
+              <p className={styles.subtitle}>Set how much you can spend this period and track it in real time.</p>
+            </div>
+
+            <div className={styles.topControls}>
+              <ThemeToggle />
+              <button
+                type="button"
+                className={styles.menuToggle}
+                aria-expanded={isMobileMenuOpen}
+                aria-label="Open navigation menu"
+                onClick={toggleMobileMenu}
+              >
+                <span />
+                <span />
+                <span />
+              </button>
+            </div>
           </div>
 
-          <nav className={styles.actions}>
-            <ThemeToggle />
-            <Link to="/" className={styles.headerBtn}>
+          <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
+            <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
               Add Expense
             </Link>
-            <Link to="/expenses-by-category" className={styles.headerBtn}>
+            <Link to="/expenses-by-category" className={styles.headerBtn} onClick={closeMobileMenu}>
               Categories
             </Link>
-            <Link to="/list-of-expenses" className={styles.headerBtn}>
+            <Link to="/list-of-expenses" className={styles.headerBtn} onClick={closeMobileMenu}>
               List of Expenses
             </Link>
           </nav>
