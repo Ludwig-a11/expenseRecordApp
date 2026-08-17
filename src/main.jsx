@@ -9,6 +9,7 @@ import UserRegistration from "./components/UserRegistration.jsx";
 import ExpensesByCategory from "./components/ExpensesByCategory.jsx";
 import ListOfExpenses from "./components/ListOfExpenses.jsx";
 import EditExpense from "./components/EditExpense.jsx";
+import Budget from "./components/Budget.jsx";
 import { Helmet } from "react-helmet";
 import favicon from "./images/logo.png";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -17,6 +18,7 @@ import ConfigErrorScreen from "./components/ConfigErrorScreen.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import { TotalSpentProvider } from "./context/MonthlyTotalSpent.jsx";
+import { BudgetProvider } from "./context/BudgetContext.jsx";
 import { ThemeProvider, THEME_STORAGE_KEY } from "./context/ThemeContext.jsx";
 
 const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -41,50 +43,61 @@ createRoot(document.getElementById("root")).render(
           <ErrorBoundary>
             <AuthProvider>
               <TotalSpentProvider>
-                <Router>
-                  <Container>
-                    <Routes>
-                      <Route path="/log-in" element={<LogIn />} />
-                      <Route path="/user-registration" element={<UserRegistration />} />
+                <BudgetProvider>
+                  <Router>
+                    <Container>
+                      <Routes>
+                        <Route path="/log-in" element={<LogIn />} />
+                        <Route path="/user-registration" element={<UserRegistration />} />
 
-                      <Route
-                        path="/expenses-by-category"
-                        element={
-                          <PrivateRoute>
-                            <ExpensesByCategory />
-                          </PrivateRoute>
-                        }
-                      />
+                        <Route
+                          path="/expenses-by-category"
+                          element={
+                            <PrivateRoute>
+                              <ExpensesByCategory />
+                            </PrivateRoute>
+                          }
+                        />
 
-                      <Route
-                        path="/list-of-expenses"
-                        element={
-                          <PrivateRoute>
-                            <ListOfExpenses />
-                          </PrivateRoute>
-                        }
-                      />
+                        <Route
+                          path="/list-of-expenses"
+                          element={
+                            <PrivateRoute>
+                              <ListOfExpenses />
+                            </PrivateRoute>
+                          }
+                        />
 
-                      <Route
-                        path="/edit-expense/:id"
-                        element={
-                          <PrivateRoute>
-                            <EditExpense />
-                          </PrivateRoute>
-                        }
-                      />
+                        <Route
+                          path="/edit-expense/:id"
+                          element={
+                            <PrivateRoute>
+                              <EditExpense />
+                            </PrivateRoute>
+                          }
+                        />
 
-                      <Route
-                        path="/"
-                        element={
-                          <PrivateRoute>
-                            <App />
-                          </PrivateRoute>
-                        }
-                      />
-                    </Routes>
-                  </Container>
-                </Router>
+                        <Route
+                          path="/budget"
+                          element={
+                            <PrivateRoute>
+                              <Budget />
+                            </PrivateRoute>
+                          }
+                        />
+
+                        <Route
+                          path="/"
+                          element={
+                            <PrivateRoute>
+                              <App />
+                            </PrivateRoute>
+                          }
+                        />
+                      </Routes>
+                    </Container>
+                  </Router>
+                </BudgetProvider>
               </TotalSpentProvider>
             </AuthProvider>
           </ErrorBoundary>

@@ -5,6 +5,7 @@ import ExpenseForm from "./components/ExpenseForm";
 import TotalSpentBar from "./components/TotalSpentBar";
 import LogOutButton from "./components/LogOutButton";
 import ThemeToggle from "./components/ThemeToggle";
+import UserBadge from "./elements/UserBadge";
 import styles from "./App.module.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             </div>
 
             <div className={styles.topControls}>
+              <UserBadge />
               <ThemeToggle />
               <button
                 type="button"
@@ -50,6 +52,9 @@ function App() {
             </Link>
             <Link to="/list-of-expenses" className={styles.actionLink} onClick={closeMobileMenu}>
               List of Expenses
+            </Link>
+            <Link to="/budget" className={styles.actionLink} onClick={closeMobileMenu}>
+              Budget
             </Link>
             <LogOutButton className={styles.logoutButton} onClick={closeMobileMenu} />
           </nav>

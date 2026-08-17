@@ -5,6 +5,7 @@ import { auth } from "./../firebase/firebase.config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Alert from "./../elements/Alert";
 import ThemeToggle from "./ThemeToggle";
+import GoogleSignInButton from "./GoogleSignInButton";
 import styles from "./UserRegistration.module.css";
 
 const UserRegistration = () => {
@@ -156,6 +157,10 @@ const UserRegistration = () => {
                 Create Account
               </button>
             </form>
+
+            <div className={styles.divider}>or</div>
+
+            <GoogleSignInButton label="Sign up with Google" />
           </div>
 
           <aside className={styles.heroPanel}>

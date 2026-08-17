@@ -43,6 +43,9 @@ const ExpensesByCategory = () => {
             <Link to="/list-of-expenses" className={styles.headerBtn}>
               List of Expenses
             </Link>
+            <Link to="/budget" className={styles.headerBtn}>
+              Budget
+            </Link>
           </nav>
         </header>
 

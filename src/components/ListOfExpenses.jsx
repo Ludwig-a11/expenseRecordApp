@@ -79,6 +79,9 @@ const ListOfExpenses = () => {
             <Link to="/expenses-by-category" className={styles.headerBtn}>
               Categories
             </Link>
+            <Link to="/budget" className={styles.headerBtn}>
+              Budget
+            </Link>
           </nav>
         </header>
 

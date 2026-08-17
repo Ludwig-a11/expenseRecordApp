@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/aut
 import { auth } from "./../firebase/firebase.config";
 import Alert from "./../elements/Alert";
 import ThemeToggle from "./ThemeToggle";
+import GoogleSignInButton from "./GoogleSignInButton";
 import styles from "./LogIn.module.css";
 
 const Login = () => {
@@ -162,6 +163,10 @@ const Login = () => {
                 Forgot your password?
               </button>
             </form>
+
+            <div className={styles.divider}>or</div>
+
+            <GoogleSignInButton />
           </div>
         </div>
       </section>

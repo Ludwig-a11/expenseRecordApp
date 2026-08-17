@@ -43,6 +43,43 @@ service cloud.firestore {
       allow delete: if isOwner(resource.data);
     }
 
+    match /budgets/{uid} {
+
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner() {
+        return isSignedIn() && request.auth.uid == uid;
+      }
+
+      function hasValidShape(data) {
+        return data.keys().hasAll(['uidUser', 'periodType', 'amount', 'updatedAt'])
+          && data.keys().hasOnly(['uidUser', 'periodType', 'amount', 'updatedAt'])
+          && data.uidUser is string
+          && data.uidUser == uid
+          && data.uidUser == request.auth.uid
+          && data.periodType is string
+          && (data.periodType == 'monthly' || data.periodType == 'biweekly')
+          && data.amount is number
+          && data.amount > 0
+          && data.amount < 1000000000
+          && data.updatedAt is number
+          && data.updatedAt > 0;
+      }
+
+      allow read: if isOwner();
+
+      allow create: if isOwner() && hasValidShape(request.resource.data);
+
+      allow update: if isOwner()
+        && hasValidShape(request.resource.data)
+        // uidUser no se puede cambiar en un update
+        && request.resource.data.uidUser == resource.data.uidUser;
+
+      allow delete: if isOwner();
+    }
+
     // Bloqueo por defecto de cualquier otra colección no contemplada
     match /{document=**} {
       allow read, write: if false;

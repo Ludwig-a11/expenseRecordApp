@@ -1,0 +1,35 @@
+.googleButton {
+  width: 100%;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: 0.82rem 1rem;
+  background: var(--surface-card);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.googleButton:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  box-shadow: 0 0.55rem 1.2rem var(--shadow-overlay);
+  background: var(--surface-card-hover);
+}
+
+.googleButton:focus-visible {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+}

@@ -65,6 +65,14 @@ const seedExpense = async (id, data) => {
   });
 };
 
+const validBudget = (uid, overrides = {}) => ({
+  uidUser: uid,
+  periodType: 'monthly',
+  amount: 500,
+  updatedAt: 1700000000,
+  ...overrides,
+});
+
 const run = async () => {
   testEnv = await initializeTestEnvironment({
     projectId: 'demo-expense-record-app',
@@ -158,6 +166,83 @@ const run = async () => {
   await test('query de A intentando leer los gastos de B es rechazada', async () => {
     const q = query(collection(a, 'expenses'), where('uidUser', '==', USER_B));
     await assertFails(getDocs(q));
+  });
+
+  // Nota de orden: budgets/{uid} es un documento singleton (ver hasValidShape
+  // arriba), así que a diferencia de expenses (donde cada test de "create"
+  // usa un id nuevo), aquí solo existe UNA ruta posible por usuario
+  // (budgets/USER_A). Firestore evalúa `create` solo si el documento no
+  // existe todavía; en cuanto se siembra/crea, cualquier setDoc posterior a
+  // esa misma ruta se evalúa como `update`. Por eso las pruebas de forma en
+  // `create` se ejecutan ANTES de que budgets/USER_A exista, y el propio
+  // "create válido" es el que efectivamente crea el documento que usan las
+  // pruebas de ownership/update de más abajo.
+
+  console.log('\nBudgets — validación de forma en create (documento aún no existe)');
+  await test('create con periodType fuera del enum es rechazado', async () => {
+    await assertFails(
+      setDoc(doc(a, 'budgets', USER_A), validBudget(USER_A, { periodType: 'weekly' }))
+    );
+  });
+  await test('create con amount <= 0 es rechazado', async () => {
+    await assertFails(
+      setDoc(doc(a, 'budgets', USER_A), validBudget(USER_A, { amount: 0 }))
+    );
+  });
+  await test('create sin periodType es rechazado', async () => {
+    const data = validBudget(USER_A);
+    delete data.periodType;
+    await assertFails(setDoc(doc(a, 'budgets', USER_A), data));
+  });
+  await test('create con campo extra no contemplado es rechazado', async () => {
+    await assertFails(
+      setDoc(doc(a, 'budgets', USER_A), validBudget(USER_A, { note: 'no debería existir' }))
+    );
+  });
+  await test('create con uidUser distinto al id del documento es rechazado', async () => {
+    await assertFails(setDoc(doc(a, 'budgets', USER_A), validBudget(USER_B)));
+  });
+  await test('A no puede crear un presupuesto bajo el uid de B, aunque uidUser diga B', async () => {
+    await assertFails(setDoc(doc(a, 'budgets', USER_B), validBudget(USER_B)));
+  });
+  // No hace falta un test de query/list para budgets: a diferencia de expenses,
+  // el acceso siempre es por getDoc/setDoc sobre una ruta conocida (budgets/{uid}),
+  // nunca una colección filtrada, así que no existe una consulta que pueda filtrarse mal.
+
+  await test('create válido de A es aceptado (esto crea el documento para las pruebas siguientes)', async () => {
+    await assertSucceeds(setDoc(doc(a, 'budgets', USER_A), validBudget(USER_A, { amount: 500 })));
+  });
+
+  console.log('\nBudgets — ownership (documento singleton por uid, ya creado arriba)');
+  await test('B no puede leer el presupuesto de A', async () => {
+    await assertFails(getDoc(doc(b, 'budgets', USER_A)));
+  });
+  await test('A sí puede leer su propio presupuesto', async () => {
+    await assertSucceeds(getDoc(doc(a, 'budgets', USER_A)));
+  });
+  await test('B no puede editar el presupuesto de A', async () => {
+    await assertFails(updateDoc(doc(b, 'budgets', USER_A), { amount: 999 }));
+  });
+  await test('A sí puede editar su propio presupuesto', async () => {
+    await assertSucceeds(updateDoc(doc(a, 'budgets', USER_A), { amount: 800, updatedAt: 1700000100 }));
+  });
+  await test('B no puede borrar el presupuesto de A', async () => {
+    await assertFails(deleteDoc(doc(b, 'budgets', USER_A)));
+  });
+  await test('usuario no autenticado no puede leer ningún presupuesto', async () => {
+    await assertFails(getDoc(doc(anon, 'budgets', USER_A)));
+  });
+
+  console.log('\nBudgets — inmutabilidad de uidUser en update');
+  await test('update que intenta cambiar uidUser es rechazado', async () => {
+    await assertFails(
+      updateDoc(doc(a, 'budgets', USER_A), { uidUser: USER_B })
+    );
+  });
+  await test('update con periodType fuera del enum es rechazado', async () => {
+    await assertFails(
+      updateDoc(doc(a, 'budgets', USER_A), { periodType: 'weekly' })
+    );
   });
 
   await testEnv.cleanup();
