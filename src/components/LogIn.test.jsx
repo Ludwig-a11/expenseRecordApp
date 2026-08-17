@@ -32,15 +32,15 @@ describe('LogIn', () => {
     const user = userEvent.setup();
     render(<LogIn />);
 
-    await user.type(screen.getByPlaceholderText('you@email.com'), 'not-an-email');
+    await user.type(screen.getByPlaceholderText('tu@correo.com'), 'not-an-email');
 
     // The native type="email" input blocks a click-triggered submit before
     // React ever sees it (jsdom enforces HTML5 constraint validation), so
     // dispatch the submit event directly to exercise the app's own regex
     // check instead of the browser's built-in one.
-    fireEvent.submit(screen.getByRole('button', { name: /sign in/i }).closest('form'));
+    fireEvent.submit(screen.getByRole('button', { name: /iniciar sesión/i }).closest('form'));
 
-    expect(await screen.findByText(/valid email address/i)).toBeInTheDocument();
+    expect(await screen.findByText(/correo electrónico válido/i)).toBeInTheDocument();
     expect(mockSignIn).not.toHaveBeenCalled();
   });
 
@@ -48,9 +48,9 @@ describe('LogIn', () => {
     const user = userEvent.setup();
     render(<LogIn />);
 
-    await user.click(screen.getByRole('button', { name: /forgot your password/i }));
+    await user.click(screen.getByRole('button', { name: /olvidaste tu contraseña/i }));
 
-    expect(await screen.findByText(/enter your email above first/i)).toBeInTheDocument();
+    expect(await screen.findByText(/ingresa tu correo arriba primero/i)).toBeInTheDocument();
     expect(mockSendPasswordResetEmail).not.toHaveBeenCalled();
   });
 
@@ -59,10 +59,10 @@ describe('LogIn', () => {
     const user = userEvent.setup();
     render(<LogIn />);
 
-    await user.type(screen.getByPlaceholderText('you@email.com'), 'user@example.com');
-    await user.click(screen.getByRole('button', { name: /forgot your password/i }));
+    await user.type(screen.getByPlaceholderText('tu@correo.com'), 'user@example.com');
+    await user.click(screen.getByRole('button', { name: /olvidaste tu contraseña/i }));
 
     await waitFor(() => expect(mockSendPasswordResetEmail).toHaveBeenCalledWith({}, 'user@example.com'));
-    expect(await screen.findByText(/spam\/junk folder/i)).toBeInTheDocument();
+    expect(await screen.findByText(/carpeta de spam/i)).toBeInTheDocument();
   });
 });

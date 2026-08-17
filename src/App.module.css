@@ -138,7 +138,7 @@
 .contentGrid {
   min-height: 0;
   display: grid;
-  grid-template-columns: 1.55fr 1fr;
+  grid-template-columns: 1fr;
   gap: 0.9rem;
 }
 
@@ -153,65 +153,6 @@
   overflow-y: auto;
 }
 
-.sidePanel {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 0.9rem;
-  min-height: 0;
-}
-
-.panelCard,
-.tipsCard {
-  background: var(--surface-card);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(0.75rem);
-  -webkit-backdrop-filter: blur(0.75rem);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.panelTitle {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--text-primary);
-}
-
-.panelText {
-  margin: 0.55rem 0 0;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-.quickStats {
-  margin-top: 0.9rem;
-  display: grid;
-  gap: 0.55rem;
-}
-
-.statItem {
-  background: var(--row-highlight-bg);
-  border: 1px solid var(--row-highlight-border);
-  color: var(--text-primary);
-  border-radius: 0.75rem;
-  padding: 0.65rem 0.75rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
-.tipList {
-  margin: 0.7rem 0 0;
-  padding-left: 1.05rem;
-  color: var(--text-secondary);
-  font-size: 0.88rem;
-  line-height: 1.45;
-}
-
-.tipList li + li {
-  margin-top: 0.45rem;
-}
-
 @media (max-width: 75rem) {
   .page {
     height: auto;
@@ -222,19 +163,12 @@
   }
 
   .contentGrid {
-    grid-template-columns: 1fr;
     align-content: start;
   }
 
   .formShell {
     min-height: 28rem;
     overflow-y: visible;
-  }
-
-  .sidePanel {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    align-items: start;
   }
 }
 
@@ -262,10 +196,6 @@
 
   .title {
     font-size: 1.42rem;
-  }
-
-  .sidePanel {
-    grid-template-columns: 1fr;
   }
 }
 

@@ -47,7 +47,7 @@ const Budget = () => {
 
     if (!inputAmount || Number.isNaN(amount) || amount <= 0) {
       setStateAlert(true);
-      setAlert({ type: "error", message: "Enter a valid budget amount" });
+      setAlert({ type: "error", message: "Ingresa un monto de presupuesto válido" });
       return;
     }
 
@@ -55,12 +55,12 @@ const Budget = () => {
     saveBudget({ periodType, amount })
       .then(() => {
         setStateAlert(true);
-        setAlert({ type: "success", message: "Your budget has been saved" });
+        setAlert({ type: "success", message: "Tu presupuesto se guardó correctamente" });
       })
       .catch((error) => {
         console.error(error);
         setStateAlert(true);
-        setAlert({ type: "error", message: "Something went wrong. Try again later" });
+        setAlert({ type: "error", message: "Algo salió mal. Intenta de nuevo más tarde" });
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -70,15 +70,15 @@ const Budget = () => {
   return (
     <>
       <Helmet>
-        <title>Budget</title>
+        <title>Presupuesto</title>
       </Helmet>
 
       <main className={styles.page}>
         <header className={styles.topBar}>
           <div className={styles.topHead}>
             <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Budget</h1>
-              <p className={styles.subtitle}>Set how much you can spend this period and track it in real time.</p>
+              <h1 className={styles.title}>Presupuesto</h1>
+              <p className={styles.subtitle}>Define cuánto puedes gastar en este periodo y síguelo en tiempo real.</p>
             </div>
 
             <div className={styles.topControls}>
@@ -87,7 +87,7 @@ const Budget = () => {
                 type="button"
                 className={styles.menuToggle}
                 aria-expanded={isMobileMenuOpen}
-                aria-label="Open navigation menu"
+                aria-label="Abrir menú de navegación"
                 onClick={toggleMobileMenu}
               >
                 <span />
@@ -99,27 +99,27 @@ const Budget = () => {
 
           <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
             <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Add Expense
+              Agregar Gasto
             </Link>
             <Link to="/expenses-by-category" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Categories
+              Categorías
             </Link>
             <Link to="/list-of-expenses" className={styles.headerBtn} onClick={closeMobileMenu}>
-              List of Expenses
+              Lista de Gastos
             </Link>
           </nav>
         </header>
 
         <section className={styles.contentShell}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.toggleGroup} role="group" aria-label="Budget period">
+            <div className={styles.toggleGroup} role="group" aria-label="Periodo del presupuesto">
               <button
                 type="button"
                 className={`${styles.toggleBtn} ${periodType === PERIOD_TYPES.BIWEEKLY ? styles.toggleBtnActive : ""}`}
                 onClick={() => setPeriodType(PERIOD_TYPES.BIWEEKLY)}
                 aria-pressed={periodType === PERIOD_TYPES.BIWEEKLY}
               >
-                Biweekly
+                Quincenal
               </button>
               <button
                 type="button"
@@ -127,12 +127,12 @@ const Budget = () => {
                 onClick={() => setPeriodType(PERIOD_TYPES.MONTHLY)}
                 aria-pressed={periodType === PERIOD_TYPES.MONTHLY}
               >
-                Monthly
+                Mensual
               </button>
             </div>
 
             <div className={styles.fieldBlock}>
-              <label htmlFor="budget-amount" className={styles.fieldLabel}>Budget amount</label>
+              <label htmlFor="budget-amount" className={styles.fieldLabel}>Monto del presupuesto</label>
               <input
                 type="text"
                 id="budget-amount"
@@ -145,15 +145,15 @@ const Budget = () => {
             </div>
 
             <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-              {budget ? "Save Changes" : "Set Budget"}
+              {budget ? "Guardar Cambios" : "Guardar Presupuesto"}
             </button>
           </form>
 
           <div className={styles.progressCard}>
             {!loading && !budget ? (
               <div className={styles.emptyState}>
-                <h2 className={styles.emptyTitle}>No budget set yet</h2>
-                <p className={styles.emptyText}>Set a budget on the left to start tracking it here.</p>
+                <h2 className={styles.emptyTitle}>Aún no tienes presupuesto</h2>
+                <p className={styles.emptyText}>Configura uno a la izquierda para empezar a seguirlo aquí.</p>
               </div>
             ) : (
               <>
@@ -168,11 +168,11 @@ const Budget = () => {
 
                 <div className={styles.statsRow}>
                   <div>
-                    <p className={styles.statLabel}>Spent</p>
+                    <p className={styles.statLabel}>Gastado</p>
                     <p className={styles.statValue}>{convertToCurrency(spent)}</p>
                   </div>
                   <div>
-                    <p className={styles.statLabel}>{isOverBudget ? "Over budget by" : "Remaining"}</p>
+                    <p className={styles.statLabel}>{isOverBudget ? "Excedido por" : "Restante"}</p>
                     <p className={`${styles.statValue} ${isOverBudget ? styles.statValueDanger : ""}`}>
                       {convertToCurrency(Math.abs(remaining))}
                     </p>

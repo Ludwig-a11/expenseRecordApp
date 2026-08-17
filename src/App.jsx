@@ -14,15 +14,15 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Expense Tracker App</title>
+        <title>App de Gastos</title>
       </Helmet>
 
       <main className={styles.page}>
         <header className={styles.topBar}>
           <div className={styles.topHead}>
             <div className={styles.titleBlock}>
-              <h1 className={styles.title}>Add Expense</h1>
-              <p className={styles.subtitle}>Capture expenses quickly and keep your monthly budget under control.</p>
+              <h1 className={styles.title}>Agregar Gasto</h1>
+              <p className={styles.subtitle}>Registra tus gastos rápido y mantén tu presupuesto mensual bajo control.</p>
             </div>
 
             <div className={styles.topControls}>
@@ -32,7 +32,7 @@ function App() {
                 type="button"
                 className={styles.menuToggle}
                 aria-expanded={isMobileMenuOpen}
-                aria-label="Open navigation menu"
+                aria-label="Abrir menú de navegación"
                 onClick={toggleMobileMenu}
               >
                 <span />
@@ -44,13 +44,13 @@ function App() {
 
           <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
             <Link to="/expenses-by-category" className={styles.actionLink} onClick={closeMobileMenu}>
-              Categories
+              Categorías
             </Link>
             <Link to="/list-of-expenses" className={styles.actionLink} onClick={closeMobileMenu}>
-              List of Expenses
+              Lista de Gastos
             </Link>
             <Link to="/budget" className={styles.actionLink} onClick={closeMobileMenu}>
-              Budget
+              Presupuesto
             </Link>
             <LogOutButton className={styles.logoutButton} onClick={closeMobileMenu} />
           </nav>
@@ -64,27 +64,6 @@ function App() {
           <div className={styles.formShell}>
             <ExpenseForm />
           </div>
-
-          <aside className={styles.sidePanel}>
-            <article className={styles.panelCard}>
-              <h2 className={styles.panelTitle}>Quick Summary</h2>
-              <p className={styles.panelText}>Use short descriptions and register each expense as soon as it happens.</p>
-              <div className={styles.quickStats}>
-                <div className={styles.statItem}>Tip: Keep names under 35 characters.</div>
-                <div className={styles.statItem}>Tip: Add amount first, then category.</div>
-                <div className={styles.statItem}>Tip: Review categories once per week.</div>
-              </div>
-            </article>
-
-            <article className={styles.tipsCard}>
-              <h2 className={styles.panelTitle}>Suggested Workflow</h2>
-              <ul className={styles.tipList}>
-                <li>Add recurring expenses first (rent, services, transport).</li>
-                <li>Register small daily expenses before ending the day.</li>
-                <li>Check the monthly total and adjust spending early.</li>
-              </ul>
-            </article>
-          </aside>
         </section>
       </main>
     </>

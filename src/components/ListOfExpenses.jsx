@@ -2,11 +2,13 @@ import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { format, fromUnixTime } from "date-fns";
+import { es } from "date-fns/locale";
 import BudgetSummaryBar from "./BudgetSummaryBar";
 import ThemeToggle from "./ThemeToggle";
 import useGetExpenses from "./../hooks/useGetExpenses";
 import useMobileMenu from "./../hooks/useMobileMenu";
 import convertToCurrency from "./../functions/convertToCurrency";
+import { getCategoryLabel } from "./../functions/categoryLabels";
 import deleteExpense from "./../firebase/deleteExpense";
 import Alert from "./../elements/Alert";
 import ConfirmDialog from "./../elements/ConfirmDialog";
@@ -20,7 +22,7 @@ const ListOfExpenses = () => {
   const [expenseIdPendingDelete, setExpenseIdPendingDelete] = useState(null);
 
   const formatDate = (date) => {
-    return format(fromUnixTime(date), "dd 'de' MMMM 'de' yyyy");
+    return format(fromUnixTime(date), "dd 'de' MMMM 'de' yyyy", { locale: es });
   };
 
   const dateIsEqual = (expensesList, index, expense) => {
@@ -54,8 +56,8 @@ const ListOfExpenses = () => {
       setAlert({
         type: 'error',
         message: error.code === 'permission-denied'
-          ? "You don't have permission to delete this expense"
-          : 'Something went wrong. Try again later',
+          ? "No tienes permiso para eliminar este gasto"
+          : 'Algo salió mal. Intenta de nuevo más tarde',
       });
     }
   };
@@ -63,15 +65,15 @@ const ListOfExpenses = () => {
   return (
     <>
       <Helmet>
-        <title>List Of Expenses</title>
+        <title>Lista de Gastos</title>
       </Helmet>
 
       <main className={styles.page}>
         <header className={styles.topBar}>
           <div className={styles.topHead}>
             <div className={styles.titleWrap}>
-              <h1 className={styles.title}>List Of Expenses</h1>
-              <p className={styles.subtitle}>Review, edit or remove your records by date.</p>
+              <h1 className={styles.title}>Lista de Gastos</h1>
+              <p className={styles.subtitle}>Revisa, edita o elimina tus registros por fecha.</p>
             </div>
 
             <div className={styles.topControls}>
@@ -80,7 +82,7 @@ const ListOfExpenses = () => {
                 type="button"
                 className={styles.menuToggle}
                 aria-expanded={isMobileMenuOpen}
-                aria-label="Open navigation menu"
+                aria-label="Abrir menú de navegación"
                 onClick={toggleMobileMenu}
               >
                 <span />
@@ -92,13 +94,13 @@ const ListOfExpenses = () => {
 
           <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
             <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Add Expense
+              Agregar Gasto
             </Link>
             <Link to="/expenses-by-category" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Categories
+              Categorías
             </Link>
             <Link to="/budget" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Budget
+              Presupuesto
             </Link>
           </nav>
         </header>
@@ -111,10 +113,10 @@ const ListOfExpenses = () => {
           {expenses.length === 0 && (
             <div className={styles.emptyState}>
               <div>
-                <h2 className={styles.emptyTitle}>No expenses yet</h2>
-                <p className={styles.emptyText}>Start by adding your first expense to see your history here.</p>
+                <h2 className={styles.emptyTitle}>Aún no hay gastos</h2>
+                <p className={styles.emptyText}>Empieza agregando tu primer gasto para ver tu historial aquí.</p>
                 <Link to="/" className={styles.primaryBtn}>
-                  Add New Expense
+                  Agregar Nuevo Gasto
                 </Link>
               </div>
             </div>
@@ -125,15 +127,15 @@ const ListOfExpenses = () => {
               {!dateIsEqual(expenses, index, expense) && <div className={styles.dateBadge}>{formatDate(expense.date)}</div>}
 
               <article className={styles.itemCard}>
-                <p className={styles.category}>{expense.category}</p>
+                <p className={styles.category}>{getCategoryLabel(expense.category)}</p>
                 <p className={styles.description}>{expense.description}</p>
                 <p className={styles.value}>{convertToCurrency(expense.amount)}</p>
                 <div className={styles.rowActions}>
                   <Link
                     to={`/edit-expense/${expense.id}`}
                     className={`${styles.actionBtn} ${styles.rowActionBtn}`}
-                    aria-label="Edit expense"
-                    title="Edit"
+                    aria-label="Editar gasto"
+                    title="Editar"
                   >
                     <span className={styles.btnIcon} aria-hidden="true">
                       <svg viewBox="0 0 24 24" focusable="false">
@@ -145,8 +147,8 @@ const ListOfExpenses = () => {
                     type="button"
                     className={`${styles.dangerBtn} ${styles.rowActionBtn}`}
                     onClick={() => handleRequestDelete(expense.id)}
-                    aria-label="Delete expense"
-                    title="Delete"
+                    aria-label="Eliminar gasto"
+                    title="Eliminar"
                   >
                     <span className={styles.btnIcon} aria-hidden="true">
                       <svg viewBox="0 0 24 24" focusable="false">
@@ -162,7 +164,7 @@ const ListOfExpenses = () => {
           {thereIsMoreToUpload && (
             <div className={styles.loadMoreWrap}>
               <button type="button" className={styles.loadMoreBtn} onClick={() => getMoreExpenses()}>
-                Load More
+                Cargar Más
               </button>
             </div>
           )}
@@ -178,10 +180,10 @@ const ListOfExpenses = () => {
 
       <ConfirmDialog
         open={expenseIdPendingDelete !== null}
-        title="Delete expense"
-        message="Are you sure you want to delete this expense? This cannot be undone."
-        confirmLabel="Delete"
-        cancelLabel="Cancel"
+        title="Eliminar gasto"
+        message="¿Seguro que quieres eliminar este gasto? Esta acción no se puede deshacer."
+        confirmLabel="Eliminar"
+        cancelLabel="Cancelar"
         danger
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}

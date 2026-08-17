@@ -5,6 +5,7 @@ import ThemeToggle from "./ThemeToggle";
 import useMonthlyExpensesByCategory from "../hooks/useMonthlyExpensesByCategory";
 import useMobileMenu from "../hooks/useMobileMenu";
 import convertToCurrency from "./../functions/convertToCurrency";
+import { getCategoryLabel } from "./../functions/categoryLabels";
 import styles from "./ExpensesByCategory.module.css";
 
 const ExpensesByCategory = () => {
@@ -27,15 +28,15 @@ const ExpensesByCategory = () => {
   return (
     <>
       <Helmet>
-        <title>Expenses by Category</title>
+        <title>Gastos por Categoría</title>
       </Helmet>
 
       <main className={styles.page}>
         <header className={styles.topBar}>
           <div className={styles.topHead}>
             <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Expenses by Category</h1>
-              <p className={styles.subtitle}>See which categories are consuming most of your monthly budget.</p>
+              <h1 className={styles.title}>Gastos por Categoría</h1>
+              <p className={styles.subtitle}>Descubre qué categorías consumen más de tu presupuesto mensual.</p>
             </div>
 
             <div className={styles.topControls}>
@@ -44,7 +45,7 @@ const ExpensesByCategory = () => {
                 type="button"
                 className={styles.menuToggle}
                 aria-expanded={isMobileMenuOpen}
-                aria-label="Open navigation menu"
+                aria-label="Abrir menú de navegación"
                 onClick={toggleMobileMenu}
               >
                 <span />
@@ -56,13 +57,13 @@ const ExpensesByCategory = () => {
 
           <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
             <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Add Expense
+              Agregar Gasto
             </Link>
             <Link to="/list-of-expenses" className={styles.headerBtn} onClick={closeMobileMenu}>
-              List of Expenses
+              Lista de Gastos
             </Link>
             <Link to="/budget" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Budget
+              Presupuesto
             </Link>
           </nav>
         </header>
@@ -74,17 +75,17 @@ const ExpensesByCategory = () => {
         <section className={styles.listShell}>
           {total > 0 && (
             <div className={styles.summaryRow}>
-              Highest category: {sorted[0].category} ({convertToCurrency(sorted[0].amount)})
+              Categoría con más gasto: {getCategoryLabel(sorted[0].category)} ({convertToCurrency(sorted[0].amount)})
             </div>
           )}
 
           {total === 0 ? (
             <div className={styles.emptyState}>
               <div>
-                <h2 className={styles.emptyTitle}>No monthly data yet</h2>
-                <p className={styles.emptyText}>Add expenses to see your category distribution.</p>
+                <h2 className={styles.emptyTitle}>Aún no hay datos este mes</h2>
+                <p className={styles.emptyText}>Agrega gastos para ver la distribución por categoría.</p>
                 <Link to="/" className={styles.primaryBtn}>
-                  Add New Expense
+                  Agregar Nuevo Gasto
                 </Link>
               </div>
             </div>
@@ -93,7 +94,7 @@ const ExpensesByCategory = () => {
               {sorted.map((item) => (
                 <li key={item.category} className={styles.itemCard}>
                   <div className={styles.rowTop}>
-                    <p className={styles.category}>{item.category}</p>
+                    <p className={styles.category}>{getCategoryLabel(item.category)}</p>
                     <p className={styles.value}>{convertToCurrency(item.amount)}</p>
                   </div>
 
@@ -101,7 +102,7 @@ const ExpensesByCategory = () => {
                     <div className={styles.progressFill} style={{ width: `${item.percentage}%` }} />
                   </div>
 
-                  <p className={styles.percent}>{item.percentage.toFixed(1)}% of monthly total</p>
+                  <p className={styles.percent}>{item.percentage.toFixed(1)}% del total mensual</p>
                 </li>
               ))}
             </ul>

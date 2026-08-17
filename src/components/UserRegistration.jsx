@@ -42,7 +42,7 @@ const UserRegistration = () => {
       setAlertState(true);
       setAlert({
         type: "error",
-        message: "Please enter a valid email address",
+        message: "Ingresa un correo electrónico válido",
       });
       return;
     }
@@ -51,7 +51,7 @@ const UserRegistration = () => {
       setAlertState(true);
       setAlert({
         type: "error",
-        message: "All field are required",
+        message: "Todos los campos son obligatorios",
       });
       return;
     }
@@ -60,7 +60,7 @@ const UserRegistration = () => {
       setAlertState(true);
       setAlert({
         type: "error",
-        message: "Passwords don't match",
+        message: "Las contraseñas no coinciden",
       });
       return;
     }
@@ -73,16 +73,16 @@ const UserRegistration = () => {
       let message;
       switch (error.code) {
         case "auth/weak-password":
-          message = "The password is too weak";
+          message = "La contraseña es demasiado débil";
           break;
         case "auth/email-already-in-use":
-          message = "Email is already in use";
+          message = "El correo ya está en uso";
           break;
         case "auth/invalid-email":
-          message = "Email is not valid";
+          message = "El correo no es válido";
           break;
         default:
-          message = "An error occurred";
+          message = "Ocurrió un error";
           break;
       }
       setAlert({ type: "error", message });
@@ -92,33 +92,33 @@ const UserRegistration = () => {
   return (
     <>
       <Helmet>
-        <title>Create Account</title>
+        <title>Crear Cuenta</title>
       </Helmet>
 
       <section className={styles.signupPage}>
         <div className={styles.card}>
           <div className={styles.formPanel}>
             <div className={styles.headerRow}>
-              <h1 className={styles.title}>Create Account</h1>
+              <h1 className={styles.title}>Crear Cuenta</h1>
               <div className={styles.headerActions}>
                 <ThemeToggle />
                 <Link to="/log-in" className={styles.loginLink}>
-                  Log In
+                  Iniciar Sesión
                 </Link>
               </div>
             </div>
 
-            <p className={styles.subtitle}>Create your account and start tracking your spending.</p>
+            <p className={styles.subtitle}>Crea tu cuenta y empieza a registrar tus gastos.</p>
 
             <form className={styles.form} onSubmit={handleSubmit}>
               <label className={styles.fieldLabel} htmlFor="register-email">
-                Email
+                Correo electrónico
               </label>
               <input
                 id="register-email"
                 type="email"
                 name="email"
-                placeholder="you@email.com"
+                placeholder="tu@correo.com"
                 value={email}
                 onChange={handleChange}
                 className={styles.input}
@@ -126,13 +126,13 @@ const UserRegistration = () => {
               />
 
               <label className={styles.fieldLabel} htmlFor="register-password">
-                Password
+                Contraseña
               </label>
               <input
                 id="register-password"
                 type="password"
                 name="password"
-                placeholder="Choose a secure password"
+                placeholder="Elige una contraseña segura"
                 value={password}
                 onChange={handleChange}
                 className={styles.input}
@@ -140,13 +140,13 @@ const UserRegistration = () => {
               />
 
               <label className={styles.fieldLabel} htmlFor="register-password2">
-                Confirm Password
+                Confirmar Contraseña
               </label>
               <input
                 id="register-password2"
                 type="password"
                 name="password2"
-                placeholder="Repeat your password"
+                placeholder="Repite tu contraseña"
                 value={password2}
                 onChange={handleChange}
                 className={styles.input}
@@ -154,18 +154,18 @@ const UserRegistration = () => {
               />
 
               <button type="submit" className={styles.submitButton}>
-                Create Account
+                Crear Cuenta
               </button>
             </form>
 
-            <div className={styles.divider}>or</div>
+            <div className={styles.divider}>o</div>
 
-            <GoogleSignInButton label="Sign up with Google" />
+            <GoogleSignInButton label="Registrarte con Google" />
           </div>
 
           <aside className={styles.heroPanel}>
-            <h2 className={styles.heroTitle}>Ready To Start?</h2>
-            <p className={styles.heroText}>Set up your profile once and keep your expense records organized every month.</p>
+            <h2 className={styles.heroTitle}>¿Listo para empezar?</h2>
+            <p className={styles.heroText}>Configura tu perfil una vez y mantén tus gastos organizados cada mes.</p>
           </aside>
         </div>
       </section>

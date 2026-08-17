@@ -143,8 +143,8 @@ const handleSubmit = (e) =>{
           setAlert({
             type: 'error',
             message: error.code === 'permission-denied'
-              ? "You don't have permission to edit this expense"
-              : 'Something went wrong. Try again later',
+              ? "No tienes permiso para editar este gasto"
+              : 'Algo salió mal. Intenta de nuevo más tarde',
           });
         }).finally(() => {
           setIsSubmitting(false);
@@ -164,11 +164,11 @@ const handleSubmit = (e) =>{
           setDate(new Date());
 
           setStateAlert(true);
-          setAlert({type: 'success', message: 'Your expense has been added successfully'})
+          setAlert({type: 'success', message: 'Tu gasto se agregó correctamente'})
         })
         .catch((error)=>{
           setStateAlert(true);
-          setAlert({type: 'error', message: 'Something went wrong. Try again later'})
+          setAlert({type: 'error', message: 'Algo salió mal. Intenta de nuevo más tarde'})
           console.log(error);
         })
         .finally(() => {
@@ -177,11 +177,11 @@ const handleSubmit = (e) =>{
       }
     } else {
       setStateAlert(true);
-      setAlert({type: 'error', message: 'The value you entered is not correct'})
+      setAlert({type: 'error', message: 'El valor que ingresaste no es válido'})
     }
   } else {
     setStateAlert(true);
-    setAlert({type: 'error', message: 'Fill in all the fields'})
+    setAlert({type: 'error', message: 'Completa todos los campos'})
   }
 
 }
@@ -204,12 +204,12 @@ const handleSubmit = (e) =>{
 
         <div className={styles.fieldsGrid}>
           <div className={styles.fieldBlock}>
-            <label htmlFor="description" className={styles.fieldLabel}>Description</label>
+            <label htmlFor="description" className={styles.fieldLabel}>Descripción</label>
             <Input
                 type="text"
                 name="description"
                 id="description"
-                placeholder="Example: Weekly groceries"
+                placeholder="Ejemplo: Compras de la semana"
                 value={inputDescription}
                 maxLength={MAX_DESCRIPTION_LENGTH}
                 onChange={handleChange}
@@ -217,7 +217,7 @@ const handleSubmit = (e) =>{
           </div>
 
           <div className={styles.fieldBlock}>
-            <label htmlFor="amount" className={styles.fieldLabel}>Amount</label>
+            <label htmlFor="amount" className={styles.fieldLabel}>Monto</label>
             <BigInput
                 type="text"
                 name="amount"
@@ -232,7 +232,7 @@ const handleSubmit = (e) =>{
         <div className={styles.submitRow}>
           <ButtonContainer>
             <Button as="button" primario type="submit" disabled={isSubmitting}>
-                {expense ? 'Save Changes': 'Add Expense'}
+                {expense ? 'Guardar Cambios': 'Agregar Gasto'}
             </Button>
           </ButtonContainer>
         </div>

@@ -27,7 +27,7 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const GoogleSignInButton = ({ label = "Continue with Google" }) => {
+const GoogleSignInButton = ({ label = "Continuar con Google" }) => {
   const navigate = useNavigate();
   const [alertState, setAlertState] = useState(false);
   const [alert, setAlert] = useState({});
@@ -47,10 +47,10 @@ const GoogleSignInButton = ({ label = "Continue with Google" }) => {
       let message;
       switch (error.code) {
         case "auth/account-exists-with-different-credential":
-          message = "An account with this email already exists. Sign in with your email and password instead.";
+          message = "Ya existe una cuenta con este correo. Inicia sesión con tu correo y contraseña en su lugar.";
           break;
         default:
-          message = "Something went wrong signing in with Google. Try again later.";
+          message = "Algo salió mal al iniciar sesión con Google. Intenta de nuevo más tarde.";
           break;
       }
 

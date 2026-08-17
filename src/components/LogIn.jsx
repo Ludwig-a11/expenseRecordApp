@@ -33,7 +33,7 @@ const Login = () => {
       setAlertState(true);
       setAlert({
         type: "error",
-        message: "Please enter a valid email address",
+        message: "Ingresa un correo electrónico válido",
       });
       return;
     }
@@ -42,7 +42,7 @@ const Login = () => {
       setAlertState(true);
       setAlert({
         type: "error",
-        message: "All field are required",
+        message: "Todos los campos son obligatorios",
       });
       return;
     }
@@ -56,13 +56,13 @@ const Login = () => {
       let message;
       switch (error.code) {
         case "auth/wrong-password":
-          message = "The password is incorrect";
+          message = "La contraseña es incorrecta";
           break;
         case "auth/user-not-found":
-          message = "The user does not exist";
+          message = "El usuario no existe";
           break;
         default:
-          message = "An error occurred";
+          message = "Ocurrió un error";
           break;
       }
       setAlert({ type: "error", message });
@@ -78,7 +78,7 @@ const Login = () => {
       setAlertState(true);
       setAlert({
         type: "error",
-        message: "Enter your email above first, then click 'Forgot your password?'",
+        message: "Ingresa tu correo arriba primero y luego haz clic en '¿Olvidaste tu contraseña?'",
       });
       return;
     }
@@ -88,49 +88,49 @@ const Login = () => {
       setAlertState(true);
       setAlert({
         type: "success",
-        message: "Password reset email sent. Check your inbox — if you don't see it in a few minutes, check your spam/junk folder too.",
+        message: "Correo de recuperación enviado. Revisa tu bandeja de entrada — si no lo ves en unos minutos, revisa también la carpeta de spam.",
       });
     } catch {
       setAlertState(true);
-      setAlert({ type: "error", message: "Could not send reset email. Try again later." });
+      setAlert({ type: "error", message: "No se pudo enviar el correo de recuperación. Intenta de nuevo más tarde." });
     }
   };
 
   return (
     <>
       <Helmet>
-        <title>Log In</title>
+        <title>Iniciar Sesión</title>
       </Helmet>
 
       <section className={styles.loginPage}>
         <div className={styles.card}>
           <aside className={styles.heroPanel}>
-            <h1 className={styles.heroTitle}>Welcome Back!</h1>
-            <p className={styles.heroText}>Track your expenses faster and keep your monthly goals under control.</p>
+            <h1 className={styles.heroTitle}>¡Bienvenido de vuelta!</h1>
+            <p className={styles.heroText}>Registra tus gastos más rápido y mantén tus metas mensuales bajo control.</p>
           </aside>
 
           <div className={styles.formPanel}>
             <div className={styles.headerRow}>
-              <h2 className={styles.title}>Log In</h2>
+              <h2 className={styles.title}>Iniciar Sesión</h2>
               <div className={styles.headerActions}>
                 <ThemeToggle />
                 <Link to="/user-registration" className={styles.registerLink}>
-                  Create account
+                  Crear cuenta
                 </Link>
               </div>
             </div>
 
-            <p className={styles.subtitle}>Welcome back, we missed you.</p>
+            <p className={styles.subtitle}>Bienvenido de nuevo, te extrañábamos.</p>
 
             <form className={styles.form} onSubmit={handleSubmit}>
               <label className={styles.fieldLabel} htmlFor="login-email">
-                Email
+                Correo electrónico
               </label>
               <input
                 id="login-email"
                 type="email"
                 name="email"
-                placeholder="you@email.com"
+                placeholder="tu@correo.com"
                 value={email}
                 onChange={handleChange}
                 className={styles.input}
@@ -138,7 +138,7 @@ const Login = () => {
               />
 
               <label className={styles.fieldLabel} htmlFor="login-password">
-                Password
+                Contraseña
               </label>
               <input
                 id="login-password"
@@ -152,7 +152,7 @@ const Login = () => {
               />
 
               <button type="submit" className={styles.submitButton}>
-                Sign In
+                Iniciar Sesión
               </button>
 
               <button
@@ -160,13 +160,13 @@ const Login = () => {
                 className={styles.forgotPasswordLink}
                 onClick={handleForgotPassword}
               >
-                Forgot your password?
+                ¿Olvidaste tu contraseña?
               </button>
             </form>
 
-            <div className={styles.divider}>or</div>
+            <div className={styles.divider}>o</div>
 
-            <GoogleSignInButton />
+            <GoogleSignInButton label="Continuar con Google" />
           </div>
         </div>
       </section>

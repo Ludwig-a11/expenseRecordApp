@@ -1,11 +1,12 @@
 import { startOfMonth, endOfMonth, startOfDay, endOfDay, setDate, getDate, getUnixTime, format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export const PERIOD_TYPES = { MONTHLY: 'monthly', BIWEEKLY: 'biweekly' };
 
 export const getMonthlyPeriod = (referenceDate = new Date()) => ({
   start: startOfMonth(referenceDate),
   end: endOfMonth(referenceDate),
-  label: format(referenceDate, "MMMM yyyy"),
+  label: format(referenceDate, "MMMM yyyy", { locale: es }),
 });
 
 export const getBiweeklyPeriod = (referenceDate = new Date()) => {
@@ -15,14 +16,14 @@ export const getBiweeklyPeriod = (referenceDate = new Date()) => {
     return {
       start: startOfDay(setDate(referenceDate, 1)),
       end: endOfDay(setDate(referenceDate, 15)),
-      label: `${format(referenceDate, "MMMM yyyy")} (1st half)`,
+      label: `${format(referenceDate, "MMMM yyyy", { locale: es })} (1a quincena)`,
     };
   }
 
   return {
     start: startOfDay(setDate(referenceDate, 16)),
     end: endOfDay(endOfMonth(referenceDate)),
-    label: `${format(referenceDate, "MMMM yyyy")} (2nd half)`,
+    label: `${format(referenceDate, "MMMM yyyy", { locale: es })} (2a quincena)`,
   };
 };
 

@@ -6,20 +6,12 @@ import {
   Options,
   Option,
 } from "./../elements/SelectCategories";
+import { CATEGORY_LABELS_ES, getCategoryLabel } from "./../functions/categoryLabels";
 
 const SelectCategories = ({ category, setCategory }) => {
   const [showSelect, setShowSelect] = useState(false);
 
-  const categories = [
-    { id: "Food", text: "Food" },
-    { id: "Accounts and Payments", text: "Accounts and Payments" },
-    { id: "Home", text: "Home" },
-    { id: "Transport", text: "Transport" },
-    { id: "Clothing", text: "Clothing" },
-    { id: "Health and Hygiene", text: "Health and Hygiene" },
-    { id: "Shopping", text: "Shopping" },
-    { id: "Fun", text: "Fun" },
-  ];
+  const categories = Object.entries(CATEGORY_LABELS_ES).map(([id, text]) => ({ id, text }));
 
   const handleClick = (e) => {
     setCategory(e.currentTarget.dataset.value);
@@ -29,7 +21,7 @@ const SelectCategories = ({ category, setCategory }) => {
   return (
     <SelectContainer onClick={() => setShowSelect(!showSelect)}>
       <SelectedOption>
-        {category}
+        {getCategoryLabel(category)}
       </SelectedOption>
       {showSelect && (
         <Options>

@@ -20,7 +20,7 @@ describe('Budget', () => {
     mockUseBudgetReturn = {
       budget: null,
       loading: false,
-      periodLabel: 'August 2026',
+      periodLabel: 'agosto 2026',
       spent: 0,
       remaining: 0,
       percentUsed: 0,
@@ -32,16 +32,16 @@ describe('Budget', () => {
 
   it('shows an empty state when no budget has been set yet', () => {
     render(<Budget />);
-    expect(screen.getByText(/no budget set yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/aún no tienes presupuesto/i)).toBeInTheDocument();
   });
 
   it('shows a validation error and does not save when the amount is empty', async () => {
     const user = userEvent.setup();
     render(<Budget />);
 
-    await user.click(screen.getByRole('button', { name: /set budget/i }));
+    await user.click(screen.getByRole('button', { name: /guardar presupuesto/i }));
 
-    expect(await screen.findByText(/enter a valid budget amount/i)).toBeInTheDocument();
+    expect(await screen.findByText(/ingresa un monto de presupuesto válido/i)).toBeInTheDocument();
     expect(mockSaveBudget).not.toHaveBeenCalled();
   });
 
@@ -50,9 +50,9 @@ describe('Budget', () => {
     const user = userEvent.setup();
     render(<Budget />);
 
-    await user.click(screen.getByRole('button', { name: /biweekly/i }));
+    await user.click(screen.getByRole('button', { name: /quincenal/i }));
     await user.type(screen.getByPlaceholderText('$0.00'), '500');
-    await user.click(screen.getByRole('button', { name: /set budget/i }));
+    await user.click(screen.getByRole('button', { name: /guardar presupuesto/i }));
 
     await waitFor(() => expect(mockSaveBudget).toHaveBeenCalledTimes(1));
     expect(mockSaveBudget).toHaveBeenCalledWith({ periodType: 'biweekly', amount: 500 });
@@ -71,6 +71,6 @@ describe('Budget', () => {
 
     expect(screen.getByText('$400.00')).toBeInTheDocument();
     expect(screen.getByText('$600.00')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /save changes/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /guardar cambios/i })).toBeInTheDocument();
   });
 });

@@ -12,7 +12,7 @@ const BackButton = ({route = "/"}) => {
 
   return (
     <button className={styles.btn} onClick={handleClick}>
-      <img className={styles.icon} src={ArrowIcon} alt="Back" />
+      <img className={styles.icon} src={ArrowIcon} alt="Volver" />
     </button>
   );
 };

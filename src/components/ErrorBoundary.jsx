@@ -19,8 +19,8 @@ class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div style={{ padding: "2rem", textAlign: "center" }}>
-          <h1>Something went wrong</h1>
-          <p>Please reload the page. If the problem continues, try again later.</p>
+          <h1>Algo salió mal</h1>
+          <p>Por favor recarga la página. Si el problema continúa, intenta de nuevo más tarde.</p>
         </div>
       );
     }

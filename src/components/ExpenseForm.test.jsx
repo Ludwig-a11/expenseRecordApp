@@ -34,9 +34,9 @@ describe('ExpenseForm', () => {
     const user = userEvent.setup();
     render(<ExpenseForm />);
 
-    await user.click(screen.getByRole('button', { name: /add expense/i }));
+    await user.click(screen.getByRole('button', { name: /agregar gasto/i }));
 
-    expect(await screen.findByText(/fill in all the fields/i)).toBeInTheDocument();
+    expect(await screen.findByText(/completa todos los campos/i)).toBeInTheDocument();
     expect(mockAddExpense).not.toHaveBeenCalled();
   });
 
@@ -45,9 +45,9 @@ describe('ExpenseForm', () => {
     const user = userEvent.setup();
     render(<ExpenseForm />);
 
-    await user.type(screen.getByPlaceholderText(/weekly groceries/i), 'Coffee');
+    await user.type(screen.getByPlaceholderText(/compras de la semana/i), 'Coffee');
     await user.type(screen.getByPlaceholderText('$0.00'), '4.5');
-    await user.click(screen.getByRole('button', { name: /add expense/i }));
+    await user.click(screen.getByRole('button', { name: /agregar gasto/i }));
 
     await waitFor(() => expect(mockAddExpense).toHaveBeenCalledTimes(1));
     expect(mockAddExpense).toHaveBeenCalledWith(
@@ -66,10 +66,10 @@ describe('ExpenseForm', () => {
     const user = userEvent.setup();
     render(<ExpenseForm />);
 
-    await user.type(screen.getByPlaceholderText(/weekly groceries/i), 'Coffee');
+    await user.type(screen.getByPlaceholderText(/compras de la semana/i), 'Coffee');
     await user.type(screen.getByPlaceholderText('$0.00'), '4.5');
 
-    const submitButton = screen.getByRole('button', { name: /add expense/i });
+    const submitButton = screen.getByRole('button', { name: /agregar gasto/i });
     await user.click(submitButton);
 
     expect(submitButton).toBeDisabled();

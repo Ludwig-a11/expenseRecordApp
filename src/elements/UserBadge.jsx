@@ -22,7 +22,7 @@ const UserBadge = () => {
     return null;
   }
 
-  const label = user.displayName || user.email || "Signed in";
+  const label = user.displayName || user.email || "Sesión iniciada";
 
   return (
     <div className={styles.badge} title={user.email || undefined}>
