@@ -262,17 +262,18 @@
   }
 
   .heroPanel {
-    padding: 2rem 1.6rem;
-    min-height: 14rem;
+    min-height: clamp(4.5rem, 14vh, 9rem);
+    padding: 1rem 1.6rem;
+    justify-content: center;
   }
 
   .heroTitle {
-    font-size: 1.56rem;
+    font-size: 1.05rem;
+    text-align: center;
   }
 
   .heroText {
-    font-size: 0.93rem;
-    max-width: 100%;
+    display: none;
   }
 
   .formPanel {
