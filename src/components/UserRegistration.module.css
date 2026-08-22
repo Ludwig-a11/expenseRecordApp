@@ -226,22 +226,32 @@
 
 @media (max-width: 60rem) {
   .signupPage {
-    padding: 1rem;
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: clamp(1rem, 5vw, 2rem);
+    align-items: stretch;
   }
 
   .card {
-    grid-template-columns: 1fr;
-    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .formPanel {
-    padding: 1.7rem 1.3rem 1.9rem;
-    gap: 1rem;
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    justify-content: flex-start;
+    padding: clamp(1rem, 4vw, 1.9rem) clamp(1rem, 4vw, 1.3rem);
+    gap: clamp(0.6rem, 2vh, 1rem);
   }
 
   .heroPanel {
-    min-height: clamp(4.5rem, 14vh, 9rem);
-    padding: 1rem 1.6rem;
+    flex: 1 5 auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: clamp(0.6rem, 3vh, 1rem) 1.6rem;
     justify-content: center;
   }
 
@@ -275,8 +285,3 @@
   }
 }
 
-@media (max-width: 30rem) {
-  .signupPage {
-    padding: 0.65rem;
-  }
-}
