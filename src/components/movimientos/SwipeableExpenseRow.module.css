@@ -1,0 +1,78 @@
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+}
+
+.actionBtn {
+  width: 4.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: var(--on-primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.actionBtn svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
+}
+
+.editBtn {
+  background: var(--primary);
+}
+
+.deleteBtn {
+  background: var(--error);
+}
+
+.content {
+  background: var(--surface-card);
+  position: relative;
+}
+
+@media (min-width: 60rem) {
+  .wrapper {
+    display: flex;
+    align-items: center;
+    overflow: visible;
+    touch-action: auto;
+  }
+
+  .actions {
+    position: static;
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .wrapper:hover .actions,
+  .wrapper:focus-within .actions {
+    opacity: 1;
+  }
+
+  .actionBtn {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .content {
+    flex: 1;
+    min-width: 0;
+    transform: none !important;
+  }
+}

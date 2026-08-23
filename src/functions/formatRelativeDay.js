@@ -10,4 +10,10 @@ const formatRelativeDay = (unixTimestamp) => {
   return format(date, "dd 'de' MMMM", { locale: es }).toUpperCase();
 };
 
+const formatDayBadge = (unixTimestamp) => {
+  const date = fromUnixTime(unixTimestamp);
+  return format(date, 'EEEE d MMM', { locale: es }).toUpperCase();
+};
+
+export { formatDayBadge };
 export default formatRelativeDay;
