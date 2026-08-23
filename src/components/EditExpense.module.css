@@ -1,0 +1,92 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.formShell {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1rem 2rem var(--shadow-strong);
+}
+
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.panelCard,
+.tipsCard {
+  background: var(--surface-card-soft);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.panelTitle {
+  margin: 0 0 var(--space-2);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+.panelText {
+  margin: 0 0 var(--space-3);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.quickStats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.statItem {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 0.55rem var(--space-3);
+  background: var(--surface-card-hover);
+  border-radius: var(--radius-sm);
+}
+
+.tipList {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+@media (min-width: 60rem) {
+  .contentGrid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+}

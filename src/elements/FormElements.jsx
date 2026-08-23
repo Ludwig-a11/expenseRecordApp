@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./FormElements.module.css";
 
-const FilterContainer = ({ children }) => <div className={styles.filterContainer}>{children}</div>;
 const Form = ({ children, ...props }) => (
   <form className={styles.form} {...props}>
     {children}
@@ -13,8 +12,7 @@ const ButtonContainer = ({ children }) => <div className={styles.buttonContainer
 
 const childrenShape = PropTypes.node.isRequired;
 
-FilterContainer.propTypes = { children: childrenShape };
 Form.propTypes = { children: childrenShape };
 ButtonContainer.propTypes = { children: childrenShape };
 
-export { FilterContainer, Form, Input, BigInput, ButtonContainer };
+export { Form, Input, BigInput, ButtonContainer };

@@ -1,42 +1,74 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  SelectContainer,
-  SelectedOption,
-  Options,
-  Option,
-} from "./../elements/SelectCategories";
 import { CATEGORY_LABELS_ES, getCategoryLabel } from "./../functions/categoryLabels";
+import { getCategoryIcon, PRIMARY_CATEGORY_IDS } from "./../functions/categoryIcons";
+import styles from "./SelectCategories.module.css";
+
+const ALL_CATEGORY_IDS = Object.keys(CATEGORY_LABELS_ES);
+const OVERFLOW_CATEGORY_IDS = ALL_CATEGORY_IDS.filter((id) => !PRIMARY_CATEGORY_IDS.includes(id));
 
 const SelectCategories = ({ category, setCategory }) => {
-  const [showSelect, setShowSelect] = useState(false);
+  const [showOverflow, setShowOverflow] = useState(false);
+  const selectedIsOverflow = OVERFLOW_CATEGORY_IDS.includes(category);
 
-  const categories = Object.entries(CATEGORY_LABELS_ES).map(([id, text]) => ({ id, text }));
-
-  const handleClick = (e) => {
-    setCategory(e.currentTarget.dataset.value);
-  }
-
+  const handleSelect = (id) => {
+    setCategory(id);
+    setShowOverflow(false);
+  };
 
   return (
-    <SelectContainer onClick={() => setShowSelect(!showSelect)}>
-      <SelectedOption>
-        {getCategoryLabel(category)}
-      </SelectedOption>
-      {showSelect && (
-        <Options>
-          {categories.map((category) => {
-            return <Option 
-                      key={category.id}
-                      data-value={category.id}
-                      onClick={handleClick}
-                    >
-                      {category.text}
-                    </Option>;
-          })}
-        </Options>
+    <div className={styles.wrapper}>
+      <div className={styles.chipRow}>
+        {PRIMARY_CATEGORY_IDS.map((id) => (
+          <button
+            key={id}
+            type="button"
+            className={`${styles.chip} ${category === id ? styles.chipActive : ""}`}
+            onClick={() => handleSelect(id)}
+            aria-pressed={category === id}
+          >
+            <span className={styles.chipIcon} aria-hidden="true">{getCategoryIcon(id)}</span>
+            {getCategoryLabel(id)}
+          </button>
+        ))}
+
+        <button
+          type="button"
+          className={`${styles.chip} ${selectedIsOverflow ? styles.chipActive : ""}`}
+          onClick={() => setShowOverflow((current) => !current)}
+          aria-expanded={showOverflow}
+        >
+          {selectedIsOverflow ? (
+            <>
+              <span className={styles.chipIcon} aria-hidden="true">{getCategoryIcon(category)}</span>
+              {getCategoryLabel(category)}
+            </>
+          ) : (
+            <>
+              <span className={styles.chipIcon} aria-hidden="true">···</span>
+              Más
+            </>
+          )}
+        </button>
+      </div>
+
+      {showOverflow && (
+        <div className={styles.overflowRow}>
+          {OVERFLOW_CATEGORY_IDS.map((id) => (
+            <button
+              key={id}
+              type="button"
+              className={`${styles.chip} ${category === id ? styles.chipActive : ""}`}
+              onClick={() => handleSelect(id)}
+              aria-pressed={category === id}
+            >
+              <span className={styles.chipIcon} aria-hidden="true">{getCategoryIcon(id)}</span>
+              {getCategoryLabel(id)}
+            </button>
+          ))}
+        </div>
       )}
-    </SelectContainer>
+    </div>
   );
 };
 

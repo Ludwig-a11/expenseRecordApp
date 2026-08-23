@@ -1,15 +1,13 @@
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 import BudgetSummaryBar from "./BudgetSummaryBar";
-import ThemeToggle from "./ThemeToggle";
 import useMonthlyExpensesByCategory from "../hooks/useMonthlyExpensesByCategory";
-import useMobileMenu from "../hooks/useMobileMenu";
 import convertToCurrency from "./../functions/convertToCurrency";
 import { getCategoryLabel } from "./../functions/categoryLabels";
+import { useAddExpenseModal } from "./../context/AddExpenseModalContext";
 import styles from "./ExpensesByCategory.module.css";
 
 const ExpensesByCategory = () => {
-  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } = useMobileMenu();
+  const { open: openAddExpense } = useAddExpenseModal();
   const expensesByCategory = useMonthlyExpensesByCategory();
   const total = expensesByCategory.reduce((sum, item) => sum + Number(item.amount || 0), 0);
 
@@ -28,44 +26,15 @@ const ExpensesByCategory = () => {
   return (
     <>
       <Helmet>
-        <title>Gastos por Categoría</title>
+        <title>Categorías</title>
       </Helmet>
 
       <main className={styles.page}>
         <header className={styles.topBar}>
-          <div className={styles.topHead}>
-            <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Gastos por Categoría</h1>
-              <p className={styles.subtitle}>Descubre qué categorías consumen más de tu presupuesto mensual.</p>
-            </div>
-
-            <div className={styles.topControls}>
-              <ThemeToggle />
-              <button
-                type="button"
-                className={styles.menuToggle}
-                aria-expanded={isMobileMenuOpen}
-                aria-label="Abrir menú de navegación"
-                onClick={toggleMobileMenu}
-              >
-                <span />
-                <span />
-                <span />
-              </button>
-            </div>
+          <div className={styles.titleWrap}>
+            <h1 className={styles.title}>Categorías</h1>
+            <p className={styles.subtitle}>Descubre qué categorías consumen más de tu presupuesto mensual.</p>
           </div>
-
-          <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
-            <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Agregar Gasto
-            </Link>
-            <Link to="/list-of-expenses" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Lista de Gastos
-            </Link>
-            <Link to="/budget" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Presupuesto
-            </Link>
-          </nav>
         </header>
 
         <div className={styles.totalWrap}>
@@ -84,9 +53,9 @@ const ExpensesByCategory = () => {
               <div>
                 <h2 className={styles.emptyTitle}>Aún no hay datos este mes</h2>
                 <p className={styles.emptyText}>Agrega gastos para ver la distribución por categoría.</p>
-                <Link to="/" className={styles.primaryBtn}>
+                <button type="button" className={styles.primaryBtn} onClick={() => openAddExpense()}>
                   Agregar Nuevo Gasto
-                </Link>
+                </button>
               </div>
             </div>
           ) : (

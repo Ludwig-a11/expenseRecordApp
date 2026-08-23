@@ -4,18 +4,17 @@ import { Link } from "react-router-dom";
 import { format, fromUnixTime } from "date-fns";
 import { es } from "date-fns/locale";
 import BudgetSummaryBar from "./BudgetSummaryBar";
-import ThemeToggle from "./ThemeToggle";
 import useGetExpenses from "./../hooks/useGetExpenses";
-import useMobileMenu from "./../hooks/useMobileMenu";
 import convertToCurrency from "./../functions/convertToCurrency";
 import { getCategoryLabel } from "./../functions/categoryLabels";
 import deleteExpense from "./../firebase/deleteExpense";
 import Alert from "./../elements/Alert";
 import ConfirmDialog from "./../elements/ConfirmDialog";
+import { useAddExpenseModal } from "./../context/AddExpenseModalContext";
 import styles from "./ListOfExpenses.module.css";
 
 const ListOfExpenses = () => {
-  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } = useMobileMenu();
+  const { open: openAddExpense } = useAddExpenseModal();
   const [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState] = useGetExpenses();
   const [stateAlert, setStateAlert] = useState(false);
   const [alert, setAlert] = useState({});
@@ -65,44 +64,15 @@ const ListOfExpenses = () => {
   return (
     <>
       <Helmet>
-        <title>Lista de Gastos</title>
+        <title>Movimientos</title>
       </Helmet>
 
       <main className={styles.page}>
         <header className={styles.topBar}>
-          <div className={styles.topHead}>
-            <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Lista de Gastos</h1>
-              <p className={styles.subtitle}>Revisa, edita o elimina tus registros por fecha.</p>
-            </div>
-
-            <div className={styles.topControls}>
-              <ThemeToggle />
-              <button
-                type="button"
-                className={styles.menuToggle}
-                aria-expanded={isMobileMenuOpen}
-                aria-label="Abrir menú de navegación"
-                onClick={toggleMobileMenu}
-              >
-                <span />
-                <span />
-                <span />
-              </button>
-            </div>
+          <div className={styles.titleWrap}>
+            <h1 className={styles.title}>Movimientos</h1>
+            <p className={styles.subtitle}>Revisa, edita o elimina tus registros por fecha.</p>
           </div>
-
-          <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
-            <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Agregar Gasto
-            </Link>
-            <Link to="/expenses-by-category" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Categorías
-            </Link>
-            <Link to="/budget" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Presupuesto
-            </Link>
-          </nav>
         </header>
 
         <div className={styles.totalWrap}>
@@ -115,9 +85,9 @@ const ListOfExpenses = () => {
               <div>
                 <h2 className={styles.emptyTitle}>Aún no hay gastos</h2>
                 <p className={styles.emptyText}>Empieza agregando tu primer gasto para ver tu historial aquí.</p>
-                <Link to="/" className={styles.primaryBtn}>
+                <button type="button" className={styles.primaryBtn} onClick={() => openAddExpense()}>
                   Agregar Nuevo Gasto
-                </Link>
+                </button>
               </div>
             </div>
           )}
