@@ -1,7 +1,21 @@
 .page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  max-width: 40rem;
+}
+
+.chatColumn {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .title {
@@ -13,4 +27,27 @@
 .subtitle {
   margin: 0;
   color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sideColumn {
+  display: none;
+}
+
+@media (min-width: 60rem) {
+  .page {
+    max-width: none;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .sideColumn {
+    display: block;
+  }
 }
