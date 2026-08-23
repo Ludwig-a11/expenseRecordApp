@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import { differenceInCalendarDays } from "date-fns";
 import { useBudget } from "./../context/BudgetContext";
+import { getPeriodBoundaries } from "./../functions/getPeriodBoundaries";
 import convertToCurrency from "./../functions/convertToCurrency";
 import styles from "./BudgetSummaryBar.module.css";
 
@@ -17,34 +19,32 @@ const BudgetSummaryBar = () => {
 
   if (!budget) {
     return (
-      <div className={styles.summaryBar}>
+      <Link to="/budget" className={styles.summaryBar}>
         <div className={styles.topRow}>
           <p className={styles.label}>Aún no tienes presupuesto</p>
-          <Link to="/budget" className={styles.setBudgetLink}>
-            Configurar presupuesto
-          </Link>
+          <span className={styles.setBudgetLink}>Configurar presupuesto</span>
         </div>
-      </div>
+      </Link>
     );
   }
 
+  const periodEnd = getPeriodBoundaries(budget.periodType).end;
+  const daysRemaining = Math.max(differenceInCalendarDays(periodEnd, new Date()), 0);
+
   return (
-    <div className={styles.summaryBar}>
+    <Link to="/budget" className={styles.summaryBar}>
       <div className={styles.topRow}>
         <p className={styles.label}>{PERIOD_LABELS[budget.periodType] || "Presupuesto"}</p>
+        <p className={styles.daysRemaining}>quedan {daysRemaining} {daysRemaining === 1 ? "día" : "días"}</p>
+      </div>
 
-        <div className={styles.stats}>
-          <span className={styles.stat}>
-            <span className={styles.statLabel}>Gastado</span>
-            <span className={styles.statValue}>{convertToCurrency(spent)}</span>
-          </span>
-          <span className={styles.stat}>
-            <span className={styles.statLabel}>{isOverBudget ? "Excedido por" : "Restante"}</span>
-            <span className={`${styles.statValue} ${isOverBudget ? styles.statValueDanger : ""}`}>
-              {convertToCurrency(Math.abs(remaining))}
-            </span>
-          </span>
-        </div>
+      <div className={styles.amountRow}>
+        <span className={styles.amountValue}>
+          {isOverBudget ? convertToCurrency(0) : convertToCurrency(remaining)}
+        </span>
+        <span className={styles.amountHint}>
+          {isOverBudget ? `excedido por ${convertToCurrency(Math.abs(remaining))}` : `disponibles de ${convertToCurrency(budget.amount)}`}
+        </span>
       </div>
 
       <div className={styles.progressTrack}>
@@ -53,7 +53,12 @@ const BudgetSummaryBar = () => {
           style={{ width: `${percentUsed}%` }}
         />
       </div>
-    </div>
+
+      <div className={styles.bottomRow}>
+        <span className={styles.bottomLabel}>Gastado <strong>{convertToCurrency(spent)}</strong></span>
+        <span className={styles.bottomPercent}>{Math.round(percentUsed)}%</span>
+      </div>
+    </Link>
   );
 };
 

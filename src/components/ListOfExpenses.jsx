@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { format, fromUnixTime } from "date-fns";
 import { es } from "date-fns/locale";
-import BudgetSummaryBar from "./BudgetSummaryBar";
 import useGetExpenses from "./../hooks/useGetExpenses";
 import convertToCurrency from "./../functions/convertToCurrency";
 import { getCategoryLabel } from "./../functions/categoryLabels";
@@ -74,10 +73,6 @@ const ListOfExpenses = () => {
             <p className={styles.subtitle}>Revisa, edita o elimina tus registros por fecha.</p>
           </div>
         </header>
-
-        <div className={styles.totalWrap}>
-          <BudgetSummaryBar />
-        </div>
 
         <section className={styles.listShell}>
           {expenses.length === 0 && (
