@@ -1,23 +1,15 @@
 import { useMemo } from 'react';
 import useGetMonthlyExpenses from './useGetMonthlyExpenses';
+import { CATEGORY_LABELS_ES } from './../functions/categoryLabels';
 
-const CATEGORY_IDS = [
-    'Food',
-    'Accounts and Payments',
-    'Home',
-    'Transport',
-    'Clothing',
-    'Health and Hygiene',
-    'Shopping',
-    'Fun',
-];
+const CATEGORY_IDS = Object.keys(CATEGORY_LABELS_ES);
 
-const useMonthlyExpensesByCategory = () => {
-    const expenses = useGetMonthlyExpenses();
+const useMonthlyExpensesByCategory = (referenceDate = new Date()) => {
+    const expenses = useGetMonthlyExpenses(referenceDate);
 
     const expensesByCategory = useMemo(() => {
         const initialTotals = CATEGORY_IDS.reduce((accumulator, category) => {
-            accumulator[category] = 0;
+            accumulator[category] = { amount: 0, count: 0 };
             return accumulator;
         }, {});
 
@@ -35,14 +27,16 @@ const useMonthlyExpensesByCategory = () => {
             }
 
             const amount = Number(expense?.amount);
-            accumulator[category] += Number.isFinite(amount) ? amount : 0;
+            accumulator[category].amount += Number.isFinite(amount) ? amount : 0;
+            accumulator[category].count += 1;
 
             return accumulator;
         }, initialTotals);
 
         return CATEGORY_IDS.map((category) => ({
             category,
-            amount: totalsByCategory[category],
+            amount: totalsByCategory[category].amount,
+            count: totalsByCategory[category].count,
         }));
     }, [expenses]);
 
