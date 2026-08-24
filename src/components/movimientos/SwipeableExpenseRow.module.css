@@ -38,7 +38,7 @@
 }
 
 .content {
-  background: var(--surface-card);
+  background: var(--surface-solid);
   position: relative;
 }
 
