@@ -16,7 +16,7 @@ import styles from "./ListOfExpenses.module.css";
 
 const ListOfExpenses = () => {
   const { open: openAddExpense } = useAddExpenseModal();
-  const [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState] = useGetExpenses();
+  const [expenses, getMoreExpenses, thereIsMoreToUpload] = useGetExpenses();
   const [searchParams, setSearchParams] = useSearchParams();
   const [viewMode, setViewMode] = useState("detailed");
   const [search, setSearch] = useState("");
@@ -63,7 +63,6 @@ const ListOfExpenses = () => {
 
     try {
       await deleteExpense(expenseId);
-      removeExpenseFromState(expenseId);
     } catch (error) {
       console.error(error);
       setStateAlert(true);

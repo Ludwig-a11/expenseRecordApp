@@ -1,86 +1,37 @@
 import { useState, useEffect } from 'react';
 import { db } from './../firebase/firebase.config';
-import { useAuth } from './../context/AuthContext'; 
-import { collection, getDocs, query, orderBy, where, limit, startAfter } from 'firebase/firestore';
+import { useAuth } from './../context/AuthContext';
+import { collection, onSnapshot, query, orderBy, where, limit } from 'firebase/firestore';
+
+const PAGE_SIZE = 10;
 
 const useGetExpenses = () => {
-    const {user} = useAuth();
+    const { user } = useAuth();
+    const [pageLimit, setPageLimit] = useState(PAGE_SIZE);
     const [expenses, setExpenses] = useState([]);
-    const [lastExpense, setLastExpense] = useState(null);
     const [thereIsMoreToUpload, setThereIsMoreToUpload] = useState(false);
 
-    const removeExpenseFromState = (expenseId) => {
-        setExpenses((previousExpenses) =>
-            previousExpenses.filter((expense) => expense.id !== expenseId)
-        );
-    };
-
-    const getMoreExpenses = async () => {
-        if (!user?.uid || !lastExpense) return;
+    useEffect(() => {
+        if (!user?.uid) return;
 
         const expensesQuery = query(
             collection(db, 'expenses'),
             where('uidUser', "==", user.uid),
             orderBy('date', 'desc'),
-            startAfter(lastExpense),
-            limit(10)
+            limit(pageLimit)
         );
 
-        try {
-            const snapshot = await getDocs(expensesQuery);
+        const unsubscribe = onSnapshot(expensesQuery, (snapshot) => {
+            setExpenses(snapshot.docs.map((document) => ({ ...document.data(), id: document.id })));
+            setThereIsMoreToUpload(snapshot.docs.length === pageLimit);
+        }, (error) => console.log(error));
 
-            if (snapshot.docs.length > 0) {
-                setLastExpense(snapshot.docs[snapshot.docs.length - 1]);
-                setExpenses((previousExpenses) =>
-                    previousExpenses.concat(
-                        snapshot.docs.map((expense) => ({ ...expense.data(), id: expense.id }))
-                    )
-                );
-                setThereIsMoreToUpload(snapshot.docs.length === 10);
-            } else {
-                setThereIsMoreToUpload(false);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-  
-    useEffect(() => {
-        if (!user?.uid) return;
+        return unsubscribe;
+    }, [user, pageLimit]);
 
-        const getFirstExpensesPage = async () => {
-            const expensesQuery = query(
-                collection(db, 'expenses'),
-                where('uidUser', "==", user.uid),
-                orderBy('date', 'desc'),
-                limit(10)
-            );
+    const getMoreExpenses = () => setPageLimit((current) => current + PAGE_SIZE);
 
-            try {
-                const snapshot = await getDocs(expensesQuery);
-
-                if (snapshot.docs.length > 0) {
-                    setLastExpense(snapshot.docs[snapshot.docs.length - 1]);
-                    setThereIsMoreToUpload(snapshot.docs.length === 10);
-                } else {
-                    setLastExpense(null);
-                    setThereIsMoreToUpload(false);
-                }
-
-                setExpenses(
-                    snapshot.docs.map((expense) => {
-                        return { ...expense.data(), id: expense.id };
-                    })
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        getFirstExpensesPage();
-    }, [user]);
-    
-    return [expenses, getMoreExpenses, thereIsMoreToUpload, removeExpenseFromState];
+    return [expenses, getMoreExpenses, thereIsMoreToUpload];
 }
 
 export default useGetExpenses

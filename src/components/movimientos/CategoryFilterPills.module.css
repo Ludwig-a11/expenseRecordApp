@@ -28,3 +28,10 @@
   background: var(--badge-bg);
   color: var(--primary);
 }
+
+@media (min-width: 60rem) {
+  .row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}

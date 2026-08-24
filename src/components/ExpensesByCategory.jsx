@@ -4,14 +4,34 @@ import { format, subMonths } from "date-fns";
 import { es } from "date-fns/locale";
 import useCategoryMonthComparison from "../hooks/useCategoryMonthComparison";
 import { useAddExpenseModal } from "./../context/AddExpenseModalContext";
+import SegmentedToggle from "./../elements/SegmentedToggle";
 import MonthPicker from "./MonthPicker";
 import CategoryCard from "./CategoryCard";
+import CategoryListRow from "./CategoryListRow";
 import InsightBanner from "./InsightBanner";
 import styles from "./ExpensesByCategory.module.css";
+
+const CardsIcon = () => (
+  <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <path d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z" />
+  </svg>
+);
+
+const ListIcon = () => (
+  <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <path d="M4 5h16v3H4V5Zm0 5.5h16v3H4v-3ZM4 16h16v3H4v-3Z" />
+  </svg>
+);
+
+const VIEW_OPTIONS = [
+  { value: "cards", label: "Vista de tarjetas", icon: <CardsIcon /> },
+  { value: "list", label: "Vista de lista", icon: <ListIcon /> },
+];
 
 const ExpensesByCategory = () => {
   const { open: openAddExpense } = useAddExpenseModal();
   const [selectedMonth, setSelectedMonth] = useState(new Date());
+  const [viewMode, setViewMode] = useState("cards");
 
   const categories = useCategoryMonthComparison(selectedMonth);
   const withSpend = categories.filter((item) => item.amount > 0);
@@ -34,7 +54,15 @@ const ExpensesByCategory = () => {
             <p className={styles.subtitle}>Descubre qué categorías consumen más de tu presupuesto mensual.</p>
           </div>
 
-          <MonthPicker selectedMonth={selectedMonth} onChange={setSelectedMonth} />
+          <div className={styles.headerControls}>
+            <SegmentedToggle
+              value={viewMode}
+              onChange={setViewMode}
+              options={VIEW_OPTIONS}
+              groupLabel="Vista de categorías"
+            />
+            <MonthPicker selectedMonth={selectedMonth} onChange={setSelectedMonth} />
+          </div>
         </header>
 
         {total > 0 && <InsightBanner topCategory={withSpend[0]} previousMonthLabel={previousMonthLabel} />}
@@ -49,7 +77,7 @@ const ExpensesByCategory = () => {
               </button>
             </div>
           </div>
-        ) : (
+        ) : viewMode === "cards" ? (
           <div className={styles.categoryGrid}>
             {withSpend.map((item) => (
               <CategoryCard
@@ -60,6 +88,19 @@ const ExpensesByCategory = () => {
                 percentageOfMonth={item.percentageOfMonth}
                 percentChange={item.percentChange}
                 previousMonthLabel={previousMonthShortLabel}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className={styles.categoryList}>
+            {withSpend.map((item) => (
+              <CategoryListRow
+                key={item.category}
+                category={item.category}
+                amount={item.amount}
+                count={item.count}
+                percentageOfMonth={item.percentageOfMonth}
+                percentChange={item.percentChange}
               />
             ))}
           </div>

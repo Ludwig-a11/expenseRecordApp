@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import styles from "./ViewModeToggle.module.css";
+import SegmentedToggle from "./../../elements/SegmentedToggle";
 
 const DetailedIcon = () => (
   <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
@@ -14,29 +14,13 @@ const CompactIcon = () => (
   </svg>
 );
 
+const OPTIONS = [
+  { value: "detailed", label: "Vista detallada", icon: <DetailedIcon /> },
+  { value: "compact", label: "Vista compacta", icon: <CompactIcon /> },
+];
+
 const ViewModeToggle = ({ mode, onChange }) => (
-  <div className={styles.toggle} role="group" aria-label="Vista de movimientos">
-    <button
-      type="button"
-      className={`${styles.btn} ${mode === "detailed" ? styles.btnActive : ""}`}
-      onClick={() => onChange("detailed")}
-      aria-pressed={mode === "detailed"}
-      aria-label="Vista detallada"
-      title="Vista detallada"
-    >
-      <DetailedIcon />
-    </button>
-    <button
-      type="button"
-      className={`${styles.btn} ${mode === "compact" ? styles.btnActive : ""}`}
-      onClick={() => onChange("compact")}
-      aria-pressed={mode === "compact"}
-      aria-label="Vista compacta"
-      title="Vista compacta"
-    >
-      <CompactIcon />
-    </button>
-  </div>
+  <SegmentedToggle value={mode} onChange={onChange} options={OPTIONS} groupLabel="Vista de movimientos" />
 );
 
 ViewModeToggle.propTypes = {
