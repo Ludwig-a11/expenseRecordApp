@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import {
-  FilterContainer,
   Form,
   Input,
   BigInput,
@@ -26,12 +25,12 @@ const normalizeAmount = (value) => {
 
 const MAX_DESCRIPTION_LENGTH = 500;
 
-const ExpenseForm = ({ expense = null, onDirtyChange = null }) => {
+const ExpenseForm = ({ expense = null, onDirtyChange = null, onSuccess = null, initialValues = null }) => {
 
-    const [inputDescription, setInputDescription] = useState('');
-    const [inputAmount, setInputAmount] = useState('');
-    const [category, setCategory] = useState('Home');
-    const [date, setDate] = useState(new Date());
+    const [inputDescription, setInputDescription] = useState(initialValues?.description || '');
+    const [inputAmount, setInputAmount] = useState(initialValues?.amount ? String(initialValues.amount) : '');
+    const [category, setCategory] = useState(initialValues?.category || 'Home');
+    const [date, setDate] = useState(initialValues?.date || new Date());
     const [stateAlert, setStateAlert] = useState(false);
     const [alert, setAlert] = useState({});
     const [initialFormState, setInitialFormState] = useState(null);
@@ -165,6 +164,10 @@ const handleSubmit = (e) =>{
 
           setStateAlert(true);
           setAlert({type: 'success', message: 'Tu gasto se agregó correctamente'})
+
+          if (onSuccess) {
+            onSuccess();
+          }
         })
         .catch((error)=>{
           setStateAlert(true);
@@ -189,20 +192,28 @@ const handleSubmit = (e) =>{
   return (
     <Form onSubmit={handleSubmit}>
       <div className={styles.formLayout}>
-        <div className={styles.topControls}>
-          <FilterContainer>
-            <SelectCategories
-              category={category}
-              setCategory={setCategory}
-            />
-            <DatePicker
-              date={date}
-              setDate={setDate}
-            />
-          </FilterContainer>
+        <div className={styles.fieldBlock}>
+          <label htmlFor="amount" className={styles.amountLabel}>Monto</label>
+          <BigInput
+              type="text"
+              name="amount"
+              id="amount"
+              placeholder="$0.00"
+              className={styles.amountInput}
+              value={inputAmount}
+              onChange={handleChange}
+          />
         </div>
 
-        <div className={styles.fieldsGrid}>
+        <div className={styles.fieldBlock}>
+          <span className={styles.fieldLabel}>Categoría</span>
+          <SelectCategories
+            category={category}
+            setCategory={setCategory}
+          />
+        </div>
+
+        <div className={styles.detailsGrid}>
           <div className={styles.fieldBlock}>
             <label htmlFor="description" className={styles.fieldLabel}>Descripción</label>
             <Input
@@ -217,14 +228,10 @@ const handleSubmit = (e) =>{
           </div>
 
           <div className={styles.fieldBlock}>
-            <label htmlFor="amount" className={styles.fieldLabel}>Monto</label>
-            <BigInput
-                type="text"
-                name="amount"
-                id="amount"
-                placeholder="$0.00"
-                value={inputAmount}
-                onChange={handleChange}
+            <span className={styles.fieldLabel}>Fecha</span>
+            <DatePicker
+              date={date}
+              setDate={setDate}
             />
           </div>
         </div>
@@ -255,6 +262,13 @@ ExpenseForm.propTypes = {
     data:PropTypes.func,
   }),
   onDirtyChange: PropTypes.func,
+  onSuccess: PropTypes.func,
+  initialValues: PropTypes.shape({
+    description: PropTypes.string,
+    amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    category: PropTypes.string,
+    date: PropTypes.instanceOf(Date),
+  }),
 };
 
 export default ExpenseForm;

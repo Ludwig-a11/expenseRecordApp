@@ -1,17 +1,13 @@
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
 import Alert from "./../elements/Alert";
 import { useBudget } from "./../context/BudgetContext";
 import { PERIOD_TYPES } from "./../functions/getPeriodBoundaries";
 import convertToCurrency from "./../functions/convertToCurrency";
-import useMobileMenu from "./../hooks/useMobileMenu";
 import styles from "./Budget.module.css";
 
 const Budget = () => {
   const { budget, loading, periodLabel, spent, remaining, percentUsed, isOverBudget, saveBudget } = useBudget();
-  const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } = useMobileMenu();
 
   const [periodType, setPeriodType] = useState(PERIOD_TYPES.MONTHLY);
   const [inputAmount, setInputAmount] = useState("");
@@ -75,39 +71,10 @@ const Budget = () => {
 
       <main className={styles.page}>
         <header className={styles.topBar}>
-          <div className={styles.topHead}>
-            <div className={styles.titleWrap}>
-              <h1 className={styles.title}>Presupuesto</h1>
-              <p className={styles.subtitle}>Define cuánto puedes gastar en este periodo y síguelo en tiempo real.</p>
-            </div>
-
-            <div className={styles.topControls}>
-              <ThemeToggle />
-              <button
-                type="button"
-                className={styles.menuToggle}
-                aria-expanded={isMobileMenuOpen}
-                aria-label="Abrir menú de navegación"
-                onClick={toggleMobileMenu}
-              >
-                <span />
-                <span />
-                <span />
-              </button>
-            </div>
+          <div className={styles.titleWrap}>
+            <h1 className={styles.title}>Presupuesto</h1>
+            <p className={styles.subtitle}>Define cuánto puedes gastar en este periodo y síguelo en tiempo real.</p>
           </div>
-
-          <nav className={`${styles.actions} ${isMobileMenuOpen ? styles.actionsOpen : ""}`}>
-            <Link to="/" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Agregar Gasto
-            </Link>
-            <Link to="/expenses-by-category" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Categorías
-            </Link>
-            <Link to="/list-of-expenses" className={styles.headerBtn} onClick={closeMobileMenu}>
-              Lista de Gastos
-            </Link>
-          </nav>
         </header>
 
         <section className={styles.contentShell}>

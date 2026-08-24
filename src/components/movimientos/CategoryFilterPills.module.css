@@ -1,0 +1,37 @@
+.row {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.2rem;
+  scrollbar-width: none;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.pill {
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  padding: 0.45rem 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pillActive {
+  border-color: var(--primary);
+  background: var(--badge-bg);
+  color: var(--primary);
+}
+
+@media (min-width: 60rem) {
+  .row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}

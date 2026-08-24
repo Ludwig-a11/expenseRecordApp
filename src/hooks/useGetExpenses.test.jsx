@@ -3,8 +3,9 @@ import { renderHook, waitFor, act } from '@testing-library/react';
 import useGetExpenses from './useGetExpenses';
 
 const mockUseAuth = vi.fn();
-const mockGetDocs = vi.fn();
+const mockOnSnapshot = vi.fn();
 const mockWhere = vi.fn((...args) => ({ type: 'where', args }));
+const mockLimit = vi.fn((...args) => ({ type: 'limit', args }));
 
 vi.mock('./../context/AuthContext', () => ({
   useAuth: () => mockUseAuth(),
@@ -19,9 +20,8 @@ vi.mock('firebase/firestore', () => ({
   query: (...args) => ({ type: 'query', args }),
   orderBy: (...args) => ({ type: 'orderBy', args }),
   where: (...args) => mockWhere(...args),
-  limit: (...args) => ({ type: 'limit', args }),
-  startAfter: (...args) => ({ type: 'startAfter', args }),
-  getDocs: (...args) => mockGetDocs(...args),
+  limit: (...args) => mockLimit(...args),
+  onSnapshot: (...args) => mockOnSnapshot(...args),
 }));
 
 const fakeSnapshot = (docs) => ({
@@ -31,61 +31,64 @@ const fakeSnapshot = (docs) => ({
   })),
 });
 
+const emitSnapshot = (docs) => {
+  const [, onNext] = mockOnSnapshot.mock.calls[mockOnSnapshot.mock.calls.length - 1];
+  act(() => {
+    onNext(fakeSnapshot(docs));
+  });
+};
+
 describe('useGetExpenses', () => {
   beforeEach(() => {
     mockWhere.mockClear();
-    mockGetDocs.mockReset();
+    mockLimit.mockClear();
+    mockOnSnapshot.mockReset();
+    mockOnSnapshot.mockReturnValue(() => {});
     mockUseAuth.mockReturnValue({ user: { uid: 'userA' } });
   });
 
-  it('always filters the query by the current user uid', async () => {
-    mockGetDocs.mockResolvedValue(fakeSnapshot([{ id: '1', uidUser: 'userA', amount: 10 }]));
-
+  it('always filters the query by the current user uid', () => {
     renderHook(() => useGetExpenses());
 
-    await waitFor(() => {
-      expect(mockGetDocs).toHaveBeenCalled();
-    });
-
+    expect(mockOnSnapshot).toHaveBeenCalled();
     expect(mockWhere).toHaveBeenCalledWith('uidUser', '==', 'userA');
   });
 
-  it('exposes the expenses returned for the current user', async () => {
-    mockGetDocs.mockResolvedValue(
-      fakeSnapshot([
-        { id: '1', uidUser: 'userA', amount: 10 },
-        { id: '2', uidUser: 'userA', amount: 20 },
-      ])
-    );
-
+  it('exposes the expenses emitted by the live listener', () => {
     const { result } = renderHook(() => useGetExpenses());
 
-    await waitFor(() => {
-      expect(result.current[0]).toHaveLength(2);
-    });
+    emitSnapshot([
+      { id: '1', uidUser: 'userA', amount: 10 },
+      { id: '2', uidUser: 'userA', amount: 20 },
+    ]);
 
     expect(result.current[0].map((e) => e.id)).toEqual(['1', '2']);
   });
 
-  it('removeExpenseFromState removes only the targeted expense', async () => {
-    mockGetDocs.mockResolvedValue(
-      fakeSnapshot([
-        { id: '1', uidUser: 'userA', amount: 10 },
-        { id: '2', uidUser: 'userA', amount: 20 },
-      ])
-    );
-
+  it('picks up a newly added expense without needing a manual refetch', () => {
     const { result } = renderHook(() => useGetExpenses());
 
-    await waitFor(() => {
-      expect(result.current[0]).toHaveLength(2);
-    });
+    emitSnapshot([{ id: '1', uidUser: 'userA', amount: 10 }]);
+    expect(result.current[0]).toHaveLength(1);
+
+    emitSnapshot([
+      { id: '2', uidUser: 'userA', amount: 30 },
+      { id: '1', uidUser: 'userA', amount: 10 },
+    ]);
+    expect(result.current[0].map((e) => e.id)).toEqual(['2', '1']);
+  });
+
+  it('getMoreExpenses increases the page limit passed to the query', async () => {
+    const { result } = renderHook(() => useGetExpenses());
+    emitSnapshot([{ id: '1', uidUser: 'userA', amount: 10 }]);
 
     act(() => {
-      result.current[3]('1');
+      result.current[1]();
     });
 
-    expect(result.current[0].map((e) => e.id)).toEqual(['2']);
+    await waitFor(() => {
+      expect(mockLimit).toHaveBeenLastCalledWith(20);
+    });
   });
 
   it('does not query at all when there is no authenticated user', () => {
@@ -93,6 +96,6 @@ describe('useGetExpenses', () => {
 
     renderHook(() => useGetExpenses());
 
-    expect(mockGetDocs).not.toHaveBeenCalled();
+    expect(mockOnSnapshot).not.toHaveBeenCalled();
   });
 });

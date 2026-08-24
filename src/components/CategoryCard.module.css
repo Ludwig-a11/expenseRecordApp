@@ -1,0 +1,73 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.8rem 1.6rem var(--shadow-soft);
+}
+
+.rowTop {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.icon {
+  width: 2.1rem;
+  height: 2.1rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--badge-bg);
+  font-size: 1.05rem;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.98rem;
+}
+
+.amount {
+  font-weight: 800;
+  color: var(--text-primary);
+  font-size: 1.02rem;
+  white-space: nowrap;
+}
+
+.rowBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.rowBottomRight {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.dot {
+  color: var(--text-muted);
+}
+
+.vsLabel {
+  color: var(--text-muted);
+}

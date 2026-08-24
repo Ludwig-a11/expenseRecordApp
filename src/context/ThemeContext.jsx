@@ -6,7 +6,7 @@ const DARK_THEME = "dark";
 const LIGHT_THEME = "light";
 
 const ThemeContext = createContext({
-  theme: DARK_THEME,
+  theme: LIGHT_THEME,
   toggleTheme: () => {},
   setTheme: () => {},
 });
@@ -15,11 +15,11 @@ const isValidTheme = (value) => value === DARK_THEME || value === LIGHT_THEME;
 
 const getInitialTheme = () => {
   if (typeof window === "undefined") {
-    return DARK_THEME;
+    return LIGHT_THEME;
   }
 
   const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-  return isValidTheme(savedTheme) ? savedTheme : DARK_THEME;
+  return isValidTheme(savedTheme) ? savedTheme : LIGHT_THEME;
 };
 
 const ThemeProvider = ({ children }) => {

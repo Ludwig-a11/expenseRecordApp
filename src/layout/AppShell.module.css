@@ -1,0 +1,21 @@
+.shellRoot {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.shellMain {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: var(--space-4);
+  padding-top: 3.75rem;
+  padding-bottom: 5.5rem;
+}
+
+@media (min-width: 60rem) {
+  .shellMain {
+    padding: var(--space-6);
+  }
+}
