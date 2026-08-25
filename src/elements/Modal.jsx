@@ -3,6 +3,18 @@ import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import styles from "./Modal.module.css";
 
+let bodyScrollLockCount = 0;
+
+const lockBodyScroll = () => {
+  bodyScrollLockCount += 1;
+  document.body.style.overflow = "hidden";
+};
+
+const unlockBodyScroll = () => {
+  bodyScrollLockCount = Math.max(0, bodyScrollLockCount - 1);
+  if (bodyScrollLockCount === 0) document.body.style.overflow = "";
+};
+
 const Modal = ({ isOpen, onClose, labelledBy, children }) => {
   const triggerRef = useRef(null);
 
@@ -16,11 +28,11 @@ const Modal = ({ isOpen, onClose, labelledBy, children }) => {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
+    lockBodyScroll();
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
+      unlockBodyScroll();
       if (triggerRef.current instanceof HTMLElement) {
         triggerRef.current.focus();
       }
