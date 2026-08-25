@@ -98,8 +98,6 @@ body.theme-dark {
   --danger-bg: rgba(239, 68, 68, 0.18);
   --danger-border: rgba(248, 113, 113, 0.4);
   --danger-text: #fecaca;
-
-  --calendar-bg: #201c38;
 }
 
 body.theme-light {
@@ -156,6 +154,4 @@ body.theme-light {
   --danger-bg: rgba(239, 68, 68, 0.12);
   --danger-border: rgba(239, 68, 68, 0.35);
   --danger-text: #7f1d1d;
-
-  --calendar-bg: #ffffff;
 }
